@@ -561,8 +561,10 @@ class CanvasMainWindow(QMainWindow):
             QAction(self.tr("Freeze"), self,
                     objectName="signal-freeze-action",
                     checkable=True,
+                    checked=True,
                     toolTip=self.tr("Freeze signal propagation."),
                     triggered=self.set_signal_freeze,
+                    shortcut=QKeySequence(Qt.Key_Space),
                     icon=canvas_icons("Pause.svg")
                     )
 
