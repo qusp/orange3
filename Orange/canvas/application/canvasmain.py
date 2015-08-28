@@ -316,7 +316,8 @@ class CanvasMainWindow(QMainWindow):
 
         # Tool bar in the collapsed dock state (has the same actions as
         # the tool bar in the CanvasToolDock
-        actions_toolbar = QToolBar(orientation=Qt.Vertical)
+        actions_toolbar = QToolBar()
+        actions_toolbar.setOrientation(Qt.Vertical)
         actions_toolbar.setFixedWidth(38)
         actions_toolbar.layout().setSpacing(0)
 
