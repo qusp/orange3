@@ -18,6 +18,7 @@ companion :class:`WidgetsSignalManager` class.
 """
 import sys
 import logging
+import numpy as np
 
 import sip
 from PyQt4.QtGui import (
@@ -80,9 +81,23 @@ class WidgetsScheme(Scheme):
         for node in self.nodes:
             widget = self.widget_for_node(node)
             settings = widget.settingsHandler.pack_data(widget)
-            if settings != node.properties:
-                node.properties = settings
+            changed = False
+            if settings.keys() != node.properties.keys():
                 changed = True
+            else:
+                changed = False
+                for n in settings.keys():
+                    a = settings[n]
+                    b = node.properties[n]
+                    if isinstance(a, np.ndarray) or isinstance(b, np.ndarray):
+                        if np.any(a != b):
+                            changed = True
+                            break
+                    elif a != b:
+                        changed = True
+                        break
+            if changed:
+                node.properties = settings
         log.debug("Scheme node properties sync (changed: %s)", changed)
         return changed
 
