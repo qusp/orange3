@@ -32,6 +32,8 @@ from .scheme import Scheme, SchemeNode
 from .node import UserMessage
 from ..utils import name_lookup
 from ..resources import icon_loader
+from .neuropypesignalmanager import NeuropypeSignalManager
+
 
 log = logging.getLogger(__name__)
 
@@ -50,9 +52,10 @@ class WidgetsScheme(Scheme):
     def __init__(self, parent=None, title=None, description=None):
         Scheme.__init__(self, parent, title, description)
 
-        self.signal_manager = WidgetsSignalManager(self)
+        self.signal_manager = NeuropypeSignalManager(self)
         self.widget_manager = WidgetManager()
         self.widget_manager.set_scheme(self)
+        self.signal_manager.link_to_widget_manager(self.widget_manager)
 
     def widget_for_node(self, node):
         """
