@@ -11,6 +11,7 @@ import logging
 import optparse
 import pickle
 import shlex
+import shutil
 
 import pkg_resources
 
@@ -86,11 +87,13 @@ def main(argv=None):
                       action="store_true",
                       help="Don't run widget discovery "
                            "(use full cache instead)")
-
     parser.add_option("--force-discovery",
                       action="store_true",
                       help="Force full widget discovery "
                            "(invalidate cache)")
+    parser.add_option("--clear-widget-settings",
+                      action="store_true",
+                      help="Remove stored widget setting")
     parser.add_option("--no-welcome",
                       action="store_true",
                       help="Don't show welcome dialog.")
@@ -156,6 +159,16 @@ def main(argv=None):
 
     # NOTE: config.init() must be called after the QApplication constructor
     config.init()
+
+    clear_settings_flag = os.path.join(
+        config.widget_settings_dir(), "DELETE_ON_START")
+
+    if options.clear_widget_settings or \
+            os.path.isfile(clear_settings_flag):
+        log.info("Clearing widget settings")
+        shutil.rmtree(
+            config.widget_settings_dir(),
+            ignore_errors=True)
 
     file_handler = logging.FileHandler(
         filename=os.path.join(config.log_dir(), "canvas.log"),
