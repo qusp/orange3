@@ -57,6 +57,8 @@ from .. import config
 
 from . import tutorials
 
+from . import quickstart_wizards
+
 log = logging.getLogger(__name__)
 
 # TODO: Orange Version in the base link
@@ -441,6 +443,15 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Get Started.svg")
                     )
 
+        self.quickstart_wizards_action = \
+            QAction(self.tr("Quickstart Wizards"), self,
+                    objectName="quickstart-wizards-action",
+                    toolTip=self.tr("Browse quickstart wizards."),
+                    triggered=self.browse_quickstart_wizards,
+                    icon=canvas_icons("Get Started.svg"),
+                    shortcut=QKeySequence(Qt.CTRL + Qt.Key_Q)
+                    )
+
         self.tutorials_action = \
             QAction(self.tr("Tutorials"), self,
                     objectName="tutorial-action",
@@ -667,6 +678,7 @@ class CanvasMainWindow(QMainWindow):
         self.help_menu = QMenu(self.tr("&Help"), self)
         self.help_menu.addAction(self.about_action)
         self.help_menu.addAction(self.welcome_action)
+        self.help_menu.addAction(self.quickstart_wizards_action)
         self.help_menu.addAction(self.tutorials_action)
         self.help_menu.addAction(self.documentation_action)
         menu_bar.addMenu(self.help_menu)
@@ -1271,6 +1283,80 @@ class CanvasMainWindow(QMainWindow):
 
         return status
 
+    def browse_quickstart_wizards(self, *args):
+        wizards = quickstart_wizards.quickstart_wizards()
+        items = [previewmodel.PreviewItem(path=w.abspath()) for w in wizards]
+        model = previewmodel.PreviewModel(items=items)
+        dialog = previewdialog.PreviewDialog(self)
+        title = self.tr("Quickstart Wizards")
+        dialog.setWindowTitle(title)
+        template = ('<h3 style="font-size: 26px">\n'
+                    '{0}\n'
+                    '</h3>')
+
+        dialog.setHeading(template.format(title))
+        dialog.setModel(model)
+
+        model.delayedScanUpdate()
+        status = dialog.exec_()
+        index = dialog.currentIndex()
+
+        dialog.deleteLater()
+
+        if status == QDialog.Accepted:
+            return self.run_quickstart_wizard(wizards[index], model.item(index))
+
+        return status
+
+    def run_quickstart_wizard(self, quickstart_wizard, preview_item):
+        dialog = quickstart_wizard.dialog(self)
+        title = self.tr('Quickstart Wizard')
+        dialog.setWindowTitle(title)
+
+        if preview_item.name():
+            dialog.setHeading('<h3>{0}</h3>'.format(preview_item.name()))
+
+        status = dialog.exec_()
+        patch = dialog.get_patch()    # Patch gets applied to the newly loaded scheme to 'customize' it (see below).
+
+        dialog.deleteLater()
+
+        if status == QDialog.Accepted:
+            doc = self.current_document()
+            if doc.isModifiedStrict():
+                if self.ask_save_changes() == QDialog.Rejected:
+                    return QDialog.Rejected
+
+            new_scheme = self.new_scheme_from(str(preview_item.path()))
+            if new_scheme is not None:
+                nodes = new_scheme.nodes
+
+                def find_widget(name):
+                    for node in nodes:
+                        try:
+                            if node.title == name:
+                                widget = new_scheme.widget_for_node(node)
+                                return widget
+                        except Exception:
+                            continue
+                    return None
+
+                def apply_patch(widget, patch):
+                    for name, value in patch.items():
+                        setattr(widget, name, value)
+                        widget.property_changed(name)
+                        log.info('Applied patch (%r, %r) to widget %r %r.', name, value, widget.name, widget)
+
+                # Apply patch.
+                for name, value in patch.items():
+                    widget = find_widget(name)
+                    if widget:
+                        apply_patch(widget, value)
+
+                self.set_new_scheme(new_scheme)
+
+        return status
+
     def tutorial_scheme(self, *args):
         """Browse a collection of tutorial schemes. Returns QDialog.Rejected
         if the user canceled the dialog else loads the selected scheme into
@@ -1330,6 +1416,10 @@ class CanvasMainWindow(QMainWindow):
             if self.recent_scheme() == QDialog.Accepted:
                 dialog.accept()
 
+        def quickstart():
+            if self.browse_quickstart_wizards() == QDialog.Accepted:
+                dialog.accept()
+
         def tutorial():
             if self.tutorial_scheme() == QDialog.Accepted:
                 dialog.accept()
@@ -1361,6 +1451,14 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Recent.svg")
                     )
 
+        quickstart_action = \
+            QAction(self.tr("Quickstart"), dialog,
+                    objectName="welcome-quickstart-action",
+                    toolTip=self.tr("Browse quickstart wizards."),
+                    triggered=quickstart,
+                    icon=canvas_icons("Get Started.svg")
+                    )
+
         tutorials_action = \
             QAction(self.tr("Tutorial"), dialog,
                     objectName="welcome-tutorial-action",
@@ -1369,7 +1467,7 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Tutorials.svg")
                     )
 
-        bottom_row = [self.get_started_action, tutorials_action,
+        bottom_row = [quickstart_action, tutorials_action,
                       self.documentation_action]
 
         self.new_action.triggered.connect(dialog.accept)
