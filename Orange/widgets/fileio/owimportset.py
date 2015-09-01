@@ -20,7 +20,7 @@ class OWImportSET(widget.OWWidget):
     category = "Fileio"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
     ]
 
     outputs = [

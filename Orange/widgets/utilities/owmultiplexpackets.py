@@ -20,7 +20,7 @@ class OWMultiplexPackets(widget.OWWidget):
     category = "Utilities"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'In0', 'type': neuropype.engine.packet.Packet, 'handler': 'set_in0', 'flags': 0},
         {'name': 'In1', 'type': neuropype.engine.packet.Packet, 'handler': 'set_in1', 'flags': 0},
         {'name': 'In2', 'type': neuropype.engine.packet.Packet, 'handler': 'set_in2', 'flags': 0},

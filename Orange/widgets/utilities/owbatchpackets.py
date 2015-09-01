@@ -20,7 +20,7 @@ class OWBatchPackets(widget.OWWidget):
     category = "Utilities"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data', 'type': builtins.object, 'handler': 'set_data', 'flags': 0},
     ]
 

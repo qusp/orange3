@@ -20,7 +20,7 @@ class OWRegularizedCommonSpatialPatterns(widget.OWWidget):
     category = "Filters"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_data', 'flags': 0},
         {'name': 'Artifact Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_artifact_data', 'flags': 0},
         {'name': 'Other Data', 'type': builtins.list, 'handler': 'set_other_data', 'flags': 0},

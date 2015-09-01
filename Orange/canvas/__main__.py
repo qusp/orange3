@@ -259,7 +259,7 @@ def main(argv=None):
     )
 
     want_splash = \
-        settings.value("startup/show-splash-screen", True, type=bool) and \
+        settings.value("startup/show-splash-screen", False, type=bool) and \
         not options.no_splash
 
     if want_splash:

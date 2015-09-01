@@ -20,7 +20,7 @@ class OWEnsureIdentical(widget.OWWidget):
     category = "Utilities"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data1', 'type': builtins.object, 'handler': 'set_data1', 'flags': 0},
         {'name': 'Data2', 'type': builtins.object, 'handler': 'set_data2', 'flags': 0},
     ]

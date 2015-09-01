@@ -20,7 +20,7 @@ class OW{{ node.__name__ }}(widget.OWWidget):
     category = "{{ category|title }}"
 
     inputs = [{% for name, port in node.ports(direction='IN*', editable=False).items() %}
-        {'name': '{{ port.verbose_name|title }}', 'type': {{ port.value_type.__module__ }}.{{ port.value_type.__name__ }}, 'handler': 'set_{{ name }}', 'flags': {{'widget.Explicit' if port.implicit else '0'}}},{% endfor %}
+        {'name': '{{ port.verbose_name|title }}', 'type': {{ port.value_type.__module__ }}.{{ port.value_type.__name__ }}, 'handler': 'set_{{ name }}', 'flags': {{'widget.Explicit' if port.builtin else '0'}}},{% endfor %}
     ]
 
     outputs = [{% for name, port in node.ports(direction='*OUT', editable=False).items() %}

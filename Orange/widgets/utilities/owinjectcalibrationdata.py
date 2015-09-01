@@ -20,7 +20,7 @@ class OWInjectCalibrationData(widget.OWWidget):
     category = "Utilities"
 
     inputs = [
-        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
+        {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Streaming Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_streaming_data', 'flags': 0},
         {'name': 'Calib Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_calib_data', 'flags': 0},
     ]
