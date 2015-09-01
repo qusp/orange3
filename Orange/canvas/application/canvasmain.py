@@ -201,6 +201,10 @@ class CanvasMainWindow(QMainWindow):
 
         self.restore()
 
+        # ensure that we are frozen, regardless of persistent settings
+        if not self.freeze_action.isChecked():
+            self.freeze_action.trigger()
+
     def setup_ui(self):
         """Setup main canvas ui
         """
@@ -395,12 +399,12 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Open.svg")
                     )
 
-        self.open_and_freeze_action = \
-            QAction(self.tr("Open and Freeze"), self,
-                    objectName="action-open-and-freeze",
-                    toolTip=self.tr("Open a new workflow and freeze signal "
+        self.open_and_unfreeze_action = \
+            QAction(self.tr("Open and Unfreeze"), self,
+                    objectName="action-open-and-unfreeze",
+                    toolTip=self.tr("Open a new workflow and unfreeze signal "
                                     "propagation."),
-                    triggered=self.open_and_freeze_scheme
+                    triggered=self.open_and_unfreeze_scheme
                     )
 
         self.save_action = \
@@ -596,7 +600,7 @@ class CanvasMainWindow(QMainWindow):
         file_menu = QMenu(self.tr("&File"), menu_bar)
         file_menu.addAction(self.new_action)
         file_menu.addAction(self.open_action)
-        file_menu.addAction(self.open_and_freeze_action)
+        file_menu.addAction(self.open_and_unfreeze_action)
         file_menu.addAction(self.reload_last_action)
 
         # File -> Open Recent submenu
@@ -905,21 +909,22 @@ class CanvasMainWindow(QMainWindow):
         else:
             return QDialog.Rejected
 
-    def open_and_freeze_scheme(self):
+    def open_and_unfreeze_scheme(self):
         """
-        Open a new scheme and freeze signal propagation. Return
+        Open a new scheme and unfreeze signal propagation. Return
         QDialog.Rejected if the user canceled the operation and
         QDialog.Accepted otherwise.
 
         """
         frozen = self.freeze_action.isChecked()
-        if not frozen:
+        if frozen:
             self.freeze_action.trigger()
 
         state = self.open_scheme()
+
         if state == QDialog.Rejected:
             # If the action was rejected restore the original frozen state
-            if not frozen:
+            if frozen:
                 self.freeze_action.trigger()
         return state
 
@@ -1016,9 +1021,8 @@ class CanvasMainWindow(QMainWindow):
         scheme_doc = self.current_document()
         old_scheme = scheme_doc.scheme()
 
-        manager = new_scheme.signal_manager
-        if self.freeze_action.isChecked():
-            manager.pause()
+        if not self.freeze_action.isChecked():
+            self.freeze_action.trigger()
 
         scheme_doc.setScheme(new_scheme)
 

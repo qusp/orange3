@@ -235,7 +235,11 @@ class SettingsHandler:
         Opens a file and calls :obj:`write_defaults_file`. Derived classes
         should overload the latter."""
         filename = self.get_settings_filename()
-        settings_file = open(filename, "wb")
+        try:
+            settings_file = open(filename, "wb")
+        except FileNotFoundError:
+            print("Could not write settings.")
+            return
         try:
             self.write_defaults_file(settings_file)
         except (EOFError, IOError, pickle.PicklingError):
