@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import MultiplexPackets
 
 
 class OWMultiplexPackets(widget.OWWidget):
-    name = 'Multiplex Packets'
-    description = 'Multiplex multiple packets into a dict of packets.'
-    author = 'Christian Kothe'
-    icon = 'icons/MultiplexPackets.svg'
+    name = "Multiplex Packets"
+    description = "Multiplex multiple packets into a dict of packets."
+    author = "Christian Kothe"
+    icon = "icons/MultiplexPackets.svg"
     priority = 10
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -137,7 +137,7 @@ class OWMultiplexPackets(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

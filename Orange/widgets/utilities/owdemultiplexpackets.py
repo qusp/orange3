@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import DemultiplexPackets
 
 
 class OWDemultiplexPackets(widget.OWWidget):
-    name = 'Demultiplex Packets'
-    description = 'Demultiplex packets from a dict of packets into multiple output packets.'
-    author = 'Christian Kothe'
-    icon = 'icons/DemultiplexPackets.svg'
+    name = "Demultiplex Packets"
+    description = "Demultiplex packets from a dict of packets into multiple output packets."
+    author = "Christian Kothe"
+    icon = "icons/DemultiplexPackets.svg"
     priority = 6
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -137,7 +137,7 @@ class OWDemultiplexPackets(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import AlignChunks
 
 
 class OWAlignChunks(widget.OWWidget):
-    name = 'Align Chunks'
-    description = 'Turn interleaved multi-modal chunks into chunks with time-aligned data.'
-    author = 'Christian Kothe'
-    icon = 'icons/AlignChunks.svg'
+    name = "Align Chunks"
+    description = "Turn interleaved multi-modal chunks into chunks with time-aligned data."
+    author = "Christian Kothe"
+    icon = "icons/AlignChunks.svg"
     priority = 2
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWAlignChunks(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import IncrementalPrincipalComponentAnal
 
 
 class OWIncrementalPrincipalComponentAnalysis(widget.OWWidget):
-    name = 'Incremental Principal Component Analysis'
-    description = 'Reduce dimensionality using Principal Component Analysis (PCA). This method updates on streaming chunks and resets on non-streaming chunks.'
-    author = 'Christian Kothe'
-    icon = 'icons/IncrementalPrincipalComponentAnalysis.svg'
+    name = "Incremental Principal Component Analysis"
+    description = "Reduce dimensionality using Principal Component Analysis (PCA). This method updates on streaming chunks and resets on non-streaming chunks."
+    author = "Christian Kothe"
+    icon = "icons/IncrementalPrincipalComponentAnalysis.svg"
     priority = 4
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -116,7 +116,7 @@ class OWIncrementalPrincipalComponentAnalysis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

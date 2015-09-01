@@ -12,12 +12,12 @@ from neuropype.nodes.elementwise import Sigmoid
 
 
 class OWSigmoid(widget.OWWidget):
-    name = 'Sigmoid'
-    description = 'Sigmoidal transform of numeric values.'
-    author = 'Christian Kothe'
-    icon = 'icons/Sigmoid.svg'
+    name = "Sigmoid"
+    description = "Sigmoidal transform of numeric values."
+    author = "Christian Kothe"
+    icon = "icons/Sigmoid.svg"
     priority = 15
-    category = 'Elementwise'
+    category = "Elementwise"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -108,7 +108,7 @@ class OWSigmoid(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

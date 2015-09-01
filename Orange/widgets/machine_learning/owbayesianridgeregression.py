@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import BayesianRidgeRegression
 
 
 class OWBayesianRidgeRegression(widget.OWWidget):
-    name = 'Bayesian Ridge Regression'
-    description = 'Implements the Bayesian ridge regression method (a regularized form of linear regression). See also sklearn.linear_model.BayesianRidge.'
-    author = 'Christian Kothe'
-    icon = 'icons/BayesianRidgeRegression.svg'
+    name = "Bayesian Ridge Regression"
+    description = "Implements the Bayesian ridge regression method (a regularized form of linear regression). See also sklearn.linear_model.BayesianRidge."
+    author = "Christian Kothe"
+    icon = "icons/BayesianRidgeRegression.svg"
     priority = 1
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -124,7 +124,7 @@ class OWBayesianRidgeRegression(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

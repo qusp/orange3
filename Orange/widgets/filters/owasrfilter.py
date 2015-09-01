@@ -12,12 +12,12 @@ from neuropype.nodes.filters import ASRFilter
 
 
 class OWASRFilter(widget.OWWidget):
-    name = 'Artifact Removal'
-    description = 'This is used to clean a multi-channel signal using an advanced method.'
-    author = 'Christian Kothe and Alejandro Ojeda'
-    icon = 'icons/ASRFilter.svg'
+    name = "Artifact Removal"
+    description = "This is used to clean a multi-channel signal using an advanced method."
+    author = "Christian Kothe and Alejandro Ojeda"
+    icon = "icons/ASRFilter.svg"
     priority = 1
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -144,7 +144,7 @@ class OWASRFilter(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

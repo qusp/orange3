@@ -12,12 +12,12 @@ from neuropype.nodes.filters import FIRFilter
 
 
 class OWFIRFilter(widget.OWWidget):
-    name = 'FIR Filter'
-    description = 'Apply FIR filter to data. This node is used to implement frequency filtering, for instance to realize low-pass, high-pass, band-pass, or band-stop filters. When band edges lie in low frequencies (under 5 Hz) then the filter will incur a substantial delay unless the minimum_phase option is enabled. Also, this filter is rather slow when long kernels are applied to long signals.'
-    author = 'Christian Kothe'
-    icon = 'icons/FIRFilter.svg'
+    name = "FIR Filter"
+    description = "Apply FIR filter to data. This node is used to implement frequency filtering, for instance to realize low-pass, high-pass, band-pass, or band-stop filters. When band edges lie in low frequencies (under 5 Hz) then the filter will incur a substantial delay unless the minimum_phase option is enabled. Also, this filter is rather slow when long kernels are applied to long signals."
+    author = "Christian Kothe"
+    icon = "icons/FIRFilter.svg"
     priority = 4
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -120,7 +120,7 @@ class OWFIRFilter(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

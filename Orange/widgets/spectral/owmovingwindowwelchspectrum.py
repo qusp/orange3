@@ -12,12 +12,12 @@ from neuropype.nodes.spectral import MovingWindowWelchSpectrum
 
 
 class OWMovingWindowWelchSpectrum(widget.OWWidget):
-    name = 'Moving Window Welch Spectrum'
-    description = 'Calculate the power spectrum using the Welch method on a sliding window.'
-    author = 'Christian Kothe'
-    icon = 'icons/MovingWindowWelchSpectrum.svg'
+    name = "Moving Window Welch Spectrum"
+    description = "Calculate the power spectrum using the Welch method on a sliding window."
+    author = "Christian Kothe"
+    icon = "icons/MovingWindowWelchSpectrum.svg"
     priority = 3
-    category = 'Spectral'
+    category = "Spectral"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -116,7 +116,7 @@ class OWMovingWindowWelchSpectrum(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

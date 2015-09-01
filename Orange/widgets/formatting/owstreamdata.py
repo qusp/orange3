@@ -12,12 +12,12 @@ from neuropype.nodes.formatting import StreamData
 
 
 class OWStreamData(widget.OWWidget):
-    name = 'Stream Data'
-    description = 'Stream pre-recorded data at a particular rate.'
-    author = 'Christian Kothe'
-    icon = 'icons/StreamData.svg'
+    name = "Stream Data"
+    description = "Stream pre-recorded data at a particular rate."
+    author = "Christian Kothe"
+    icon = "icons/StreamData.svg"
     priority = 2
-    category = 'Formatting'
+    category = "Formatting"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -116,7 +116,7 @@ class OWStreamData(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

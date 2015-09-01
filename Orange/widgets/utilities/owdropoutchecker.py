@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import DropoutChecker
 
 
 class OWDropoutChecker(widget.OWWidget):
-    name = 'Check for Dropouts'
-    description = 'Checks for dropped samples.'
-    author = 'Christian Kothe'
-    icon = 'icons/DropoutChecker.svg'
+    name = "Check for Dropouts"
+    description = "Checks for dropped samples."
+    author = "Christian Kothe"
+    icon = "icons/DropoutChecker.svg"
     priority = 7
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWDropoutChecker(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

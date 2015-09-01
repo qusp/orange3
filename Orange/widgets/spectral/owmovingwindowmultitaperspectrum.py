@@ -12,12 +12,12 @@ from neuropype.nodes.spectral import MovingWindowMultitaperSpectrum
 
 
 class OWMovingWindowMultitaperSpectrum(widget.OWWidget):
-    name = 'Moving Window Multitaper Spectrum'
-    description = 'Calculate the power spectrum using the Multitaper method on a sliding window.'
-    author = 'Christian Kothe'
-    icon = 'icons/MovingWindowMultitaperSpectrum.svg'
+    name = "Moving Window Multitaper Spectrum"
+    description = "Calculate the power spectrum using the Multitaper method on a sliding window."
+    author = "Christian Kothe"
+    icon = "icons/MovingWindowMultitaperSpectrum.svg"
     priority = 2
-    category = 'Spectral'
+    category = "Spectral"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -108,7 +108,7 @@ class OWMovingWindowMultitaperSpectrum(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import NaiveBayes
 
 
 class OWNaiveBayes(widget.OWWidget):
-    name = 'Gaussian Naive Bayes'
-    description = 'Use naive Bayes to classify data instances. See also scikit.naive_bayes.GaussianNB.'
-    author = 'Christian Kothe'
-    icon = 'icons/NaiveBayes.svg'
+    name = "Gaussian Naive Bayes"
+    description = "Use naive Bayes to classify data instances. See also scikit.naive_bayes.GaussianNB."
+    author = "Christian Kothe"
+    icon = "icons/NaiveBayes.svg"
     priority = 11
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWNaiveBayes(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

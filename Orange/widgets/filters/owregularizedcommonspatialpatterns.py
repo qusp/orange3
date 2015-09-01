@@ -12,12 +12,12 @@ from neuropype.nodes.filters import RegularizedCommonSpatialPatterns
 
 
 class OWRegularizedCommonSpatialPatterns(widget.OWWidget):
-    name = 'Regularized Common Spatial Patterns'
-    description = 'Filter the given signal using Regularized Common Spatial Patterns.Multiple regularizers are supported, and the default setting yieldsunregularized CSP.'
-    author = 'Christian Kothe'
-    icon = 'icons/RegularizedCommonSpatialPatterns.svg'
+    name = "Regularized Common Spatial Patterns"
+    description = "Filter the given signal using Regularized Common Spatial Patterns.Multiple regularizers are supported, and the default setting yieldsunregularized CSP."
+    author = "Christian Kothe"
+    icon = "icons/RegularizedCommonSpatialPatterns.svg"
     priority = 12
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -164,7 +164,7 @@ class OWRegularizedCommonSpatialPatterns(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

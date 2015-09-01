@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import BatchPackets
 
 
 class OWBatchPackets(widget.OWWidget):
-    name = 'Merge Successive Packets'
-    description = 'Merges successive packets to maintain real-time rates. Normally, the pipeline is driven by input plugins that output all data since the last update, which naturally increases the chunk size if necessary to maintain real-time rates. However, when the pipeline is driven with a fixed chunk size that is too small for real time, this node can be inserted to merge successive  chunks (actually packets) in order to achieve real-time behavior.'
-    author = 'Christian Kothe'
-    icon = 'icons/BatchPackets.svg'
+    name = "Merge Successive Packets"
+    description = "Merges successive packets to maintain real-time rates. Normally, the pipeline is driven by input plugins that output all data since the last update, which naturally increases the chunk size if necessary to maintain real-time rates. However, when the pipeline is driven with a fixed chunk size that is too small for real time, this node can be inserted to merge successive  chunks (actually packets) in order to achieve real-time behavior."
+    author = "Christian Kothe"
+    icon = "icons/BatchPackets.svg"
     priority = 4
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -108,7 +108,7 @@ class OWBatchPackets(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

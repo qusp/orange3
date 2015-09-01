@@ -12,12 +12,12 @@ from neuropype.nodes.custom import ConcentrationIndex
 
 
 class OWConcentrationIndex(widget.OWWidget):
-    name = 'Concentration Index'
-    description = 'Computes a concentration index as defined in http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4042686.'
-    author = 'Alejandro Ojeda (alejandro.ojeda@syntrogi.com)'
-    icon = 'icons/ConcentrationIndex.svg'
+    name = "Concentration Index"
+    description = "Computes a concentration index as defined in http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4042686."
+    author = "Alejandro Ojeda (alejandro.ojeda@syntrogi.com)"
+    icon = "icons/ConcentrationIndex.svg"
     priority = 1
-    category = 'Custom'
+    category = "Custom"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -96,7 +96,7 @@ class OWConcentrationIndex(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

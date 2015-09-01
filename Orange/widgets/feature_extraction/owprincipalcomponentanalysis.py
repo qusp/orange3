@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import PrincipalComponentAnalysis
 
 
 class OWPrincipalComponentAnalysis(widget.OWWidget):
-    name = 'Principal Component Analysis'
-    description = 'Reduce dimensionality using Principal Component Analysis (PCA).'
-    author = 'Christian Kothe'
-    icon = 'icons/PrincipalComponentAnalysis.svg'
+    name = "Principal Component Analysis"
+    description = "Reduce dimensionality using Principal Component Analysis (PCA)."
+    author = "Christian Kothe"
+    icon = "icons/PrincipalComponentAnalysis.svg"
     priority = 9
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -112,7 +112,7 @@ class OWPrincipalComponentAnalysis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

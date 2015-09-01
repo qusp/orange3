@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import LinearDiscriminantAnalysis
 
 
 class OWLinearDiscriminantAnalysis(widget.OWWidget):
-    name = 'Linear Discriminant Analysis'
-    description = 'Use Linear Discriminant Analysis (LDA) to classify data instances. See also scikit.lda.LDA.'
-    author = 'Christian Kothe'
-    icon = 'icons/LinearDiscriminantAnalysis.svg'
+    name = "Linear Discriminant Analysis"
+    description = "Use Linear Discriminant Analysis (LDA) to classify data instances. See also scikit.lda.LDA."
+    author = "Christian Kothe"
+    icon = "icons/LinearDiscriminantAnalysis.svg"
     priority = 7
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -120,7 +120,7 @@ class OWLinearDiscriminantAnalysis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

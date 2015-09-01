@@ -12,12 +12,12 @@ from neuropype.nodes.general import FiniteDifferences
 
 
 class OWFiniteDifferences(widget.OWWidget):
-    name = 'Finite Differences'
-    description = 'Calculate finite differences along a given axis, up to a given order.'
-    author = 'Christian Kothe'
-    icon = 'icons/FiniteDifferences.svg'
+    name = "Finite Differences"
+    description = "Calculate finite differences along a given axis, up to a given order."
+    author = "Christian Kothe"
+    icon = "icons/FiniteDifferences.svg"
     priority = 5
-    category = 'General'
+    category = "General"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -96,7 +96,7 @@ class OWFiniteDifferences(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.filters import ImpedanceChannelRejection
 
 
 class OWImpedanceChannelRejection(widget.OWWidget):
-    name = 'Impedance Channel Rejection'
-    description = 'Reject channels based on their impedance. Requires hardware support (e.g. Cognionics).'
-    author = 'Tim Mullen and Christian Kothe'
-    icon = 'icons/ImpedanceChannelRejection.svg'
+    name = "Impedance Channel Rejection"
+    description = "Reject channels based on their impedance. Requires hardware support (e.g. Cognionics)."
+    author = "Tim Mullen and Christian Kothe"
+    icon = "icons/ImpedanceChannelRejection.svg"
     priority = 7
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -104,7 +104,7 @@ class OWImpedanceChannelRejection(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import WhiteningTransform
 
 
 class OWWhiteningTransform(widget.OWWidget):
-    name = 'Whitening Transform'
-    description = 'Whiten (decorrelate and normalize) the given data without rotation.'
-    author = 'Christian Kothe'
-    icon = 'icons/WhiteningTransform.svg'
+    name = "Whitening Transform"
+    description = "Whiten (decorrelate and normalize) the given data without rotation."
+    author = "Christian Kothe"
+    icon = "icons/WhiteningTransform.svg"
     priority = 12
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -120,7 +120,7 @@ class OWWhiteningTransform(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.network import ZMQInput
 
 
 class OWZMQInput(widget.OWWidget):
-    name = 'ZMQ Input'
-    description = 'Read incoming messages from a bound ZeroMQ socket'
-    author = 'Aaron McCoy'
-    icon = 'icons/ZMQInput.svg'
+    name = "ZMQ Input"
+    description = "Read incoming messages from a bound ZeroMQ socket"
+    author = "Aaron McCoy"
+    icon = "icons/ZMQInput.svg"
     priority = 3
-    category = 'Network'
+    category = "Network"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -95,7 +95,7 @@ class OWZMQInput(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.elementwise import Scaling
 
 
 class OWScaling(widget.OWWidget):
-    name = 'Scaling'
-    description = 'Scale data by a constant factor.'
-    author = 'Christian Kothe'
-    icon = 'icons/Scaling.svg'
+    name = "Scaling"
+    description = "Scale data by a constant factor."
+    author = "Christian Kothe"
+    icon = "icons/Scaling.svg"
     priority = 13
-    category = 'Elementwise'
+    category = "Elementwise"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -96,7 +96,7 @@ class OWScaling(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

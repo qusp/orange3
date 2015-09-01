@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import HierarchicalDiscriminantComponentAn
 
 
 class OWHierarchicalDiscriminantComponentAnalysis(widget.OWWidget):
-    name = 'Hierarchical Discriminant Component Analysis'
-    description = 'Use Hierarchical Discriminant Component Analysis (HDCA) to classify data instances.'
-    author = 'Christian Kothe'
-    icon = 'icons/HierarchicalDiscriminantComponentAnalysis.svg'
+    name = "Hierarchical Discriminant Component Analysis"
+    description = "Use Hierarchical Discriminant Component Analysis (HDCA) to classify data instances."
+    author = "Christian Kothe"
+    icon = "icons/HierarchicalDiscriminantComponentAnalysis.svg"
     priority = 4
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -104,7 +104,7 @@ class OWHierarchicalDiscriminantComponentAnalysis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

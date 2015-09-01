@@ -102,7 +102,7 @@ def main(argv=None):
                       help="Don't show splash screen.")
     parser.add_option("-l", "--log-level",
                       help="Logging level (0, 1, 2, 3, 4)",
-                      type="int", default=1)
+                      type="int", default=2)
     parser.add_option("--no-redirect",
                       action="store_true",
                       help="Do not redirect stdout/err to canvas output view.")
@@ -168,7 +168,7 @@ def main(argv=None):
         log.info("Clearing widget settings")
         shutil.rmtree(
             config.widget_settings_dir(),
-            ignore_errors=True)
+            ignore_errors=False)
 
     file_handler = logging.FileHandler(
         filename=os.path.join(config.log_dir(), "canvas.log"),

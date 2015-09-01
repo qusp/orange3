@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import OnlineDictionaryLearning
 
 
 class OWOnlineDictionaryLearning(widget.OWWidget):
-    name = 'Online Dictionary Learning'
-    description = 'Perform online sparse dictionary learning.'
-    author = 'Christian Kothe'
-    icon = 'icons/OnlineDictionaryLearning.svg'
+    name = "Online Dictionary Learning"
+    description = "Perform online sparse dictionary learning."
+    author = "Christian Kothe"
+    icon = "icons/OnlineDictionaryLearning.svg"
     priority = 7
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -156,7 +156,7 @@ class OWOnlineDictionaryLearning(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

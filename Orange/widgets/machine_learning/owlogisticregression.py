@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import LogisticRegression
 
 
 class OWLogisticRegression(widget.OWWidget):
-    name = 'Logistic Regression'
-    description = 'Use Logistic Regression (logreg) to classify data instances. . See also linear_model.LogisticRegression.'
-    author = 'Christian Kothe'
-    icon = 'icons/LogisticRegression.svg'
+    name = "Logistic Regression"
+    description = "Use Logistic Regression (logreg) to classify data instances. . See also linear_model.LogisticRegression."
+    author = "Christian Kothe"
+    icon = "icons/LogisticRegression.svg"
     priority = 9
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -148,7 +148,7 @@ class OWLogisticRegression(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

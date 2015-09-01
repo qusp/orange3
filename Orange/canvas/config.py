@@ -196,7 +196,9 @@ def widget_settings_dir():
     """
     Return the widget settings directory.
     """
-    return os.path.join(data_dir(), 'widgets')
+    from Orange.canvas.utils import environ
+    # Remove cached settings for Orange widgets to avoid stale defaults.
+    return os.path.abspath(environ.widget_settings_dir)
 
 
 def open_config():

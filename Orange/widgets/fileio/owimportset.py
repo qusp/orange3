@@ -12,12 +12,12 @@ from neuropype.nodes.fileio import ImportSET
 
 
 class OWImportSET(widget.OWWidget):
-    name = 'Import SET'
-    description = 'Load data from a .set file'
-    author = 'Christian Kothe'
-    icon = 'icons/ImportSET.svg'
+    name = "Import SET"
+    description = "Load data from a .set file"
+    author = "Christian Kothe"
+    icon = "icons/ImportSET.svg"
     priority = 1
-    category = 'Fileio'
+    category = "Fileio"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -91,7 +91,7 @@ class OWImportSET(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

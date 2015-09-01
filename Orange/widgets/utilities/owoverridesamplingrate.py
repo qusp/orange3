@@ -12,12 +12,12 @@ from neuropype.nodes.utilities import OverrideSamplingRate
 
 
 class OWOverrideSamplingRate(widget.OWWidget):
-    name = 'Override Sampling Rate'
-    description = 'Override the sampling rate in the given data's time axis.'
-    author = 'Christian Kothe'
-    icon = 'icons/OverrideSamplingRate.svg'
+    name = "Override Sampling Rate"
+    description = "Override the sampling rate in the given data's time axis."
+    author = "Christian Kothe"
+    icon = "icons/OverrideSamplingRate.svg"
     priority = 11
-    category = 'Utilities'
+    category = "Utilities"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWOverrideSamplingRate(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

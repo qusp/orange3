@@ -12,12 +12,12 @@ from neuropype.nodes.custom import RewriteMarkersFlanker
 
 
 class OWRewriteMarkersFlanker(widget.OWWidget):
-    name = 'Rewrite Markers (Flanker)'
-    description = 'Rewrite raw markers for the flanker analysis pipeline.'
-    author = 'Christian Kothe'
-    icon = 'icons/RewriteMarkersFlanker.svg'
+    name = "Rewrite Markers (Flanker)"
+    description = "Rewrite raw markers for the flanker analysis pipeline."
+    author = "Christian Kothe"
+    icon = "icons/RewriteMarkersFlanker.svg"
     priority = 3
-    category = 'Custom'
+    category = "Custom"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -90,7 +90,7 @@ class OWRewriteMarkersFlanker(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

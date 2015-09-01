@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import SupportVectorRegression
 
 
 class OWSupportVectorRegression(widget.OWWidget):
-    name = 'Support Vector Regression'
-    description = 'Regression using support vector machines.'
-    author = 'Christian Kothe'
-    icon = 'icons/SupportVectorRegression.svg'
+    name = "Support Vector Regression"
+    description = "Regression using support vector machines."
+    author = "Christian Kothe"
+    icon = "icons/SupportVectorRegression.svg"
     priority = 19
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -140,7 +140,7 @@ class OWSupportVectorRegression(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

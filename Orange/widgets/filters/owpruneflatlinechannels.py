@@ -12,12 +12,12 @@ from neuropype.nodes.filters import PruneFlatlineChannels
 
 
 class OWPruneFlatlineChannels(widget.OWWidget):
-    name = 'Prune Flatline Channels'
-    description = 'Prune data that has flat-line channels. This node updates its removal mask on non-incremental chunks and carries the mask over to incremental chunks.'
-    author = 'Christian Kothe'
-    icon = 'icons/PruneFlatlineChannels.svg'
+    name = "Prune Flatline Channels"
+    description = "Prune data that has flat-line channels. This node updates its removal mask on non-incremental chunks and carries the mask over to incremental chunks."
+    author = "Christian Kothe"
+    icon = "icons/PruneFlatlineChannels.svg"
     priority = 11
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -104,7 +104,7 @@ class OWPruneFlatlineChannels(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

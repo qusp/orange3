@@ -12,12 +12,12 @@ from neuropype.nodes.general import PruneBadData
 
 
 class OWPruneBadData(widget.OWWidget):
-    name = 'Prune Value'
-    description = 'Prune data based on a given value criterion. This node updates its removal mask on non-incremental chunks and carries the mask over to incremental chunks.'
-    author = 'Christian Kothe'
-    icon = 'icons/PruneBadData.svg'
+    name = "Prune Value"
+    description = "Prune data based on a given value criterion. This node updates its removal mask on non-incremental chunks and carries the mask over to incremental chunks."
+    author = "Christian Kothe"
+    icon = "icons/PruneBadData.svg"
     priority = 8
-    category = 'General'
+    category = "General"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -96,7 +96,7 @@ class OWPruneBadData(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

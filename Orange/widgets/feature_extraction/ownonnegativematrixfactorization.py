@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import NonNegativeMatrixFactorization
 
 
 class OWNonNegativeMatrixFactorization(widget.OWWidget):
-    name = 'Non-Negative Matrix Factorization'
-    description = 'Perform non-negative matrix factorization.'
-    author = 'Christian Kothe'
-    icon = 'icons/NonNegativeMatrixFactorization.svg'
+    name = "Non-Negative Matrix Factorization"
+    description = "Perform non-negative matrix factorization."
+    author = "Christian Kothe"
+    icon = "icons/NonNegativeMatrixFactorization.svg"
     priority = 6
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -140,7 +140,7 @@ class OWNonNegativeMatrixFactorization(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import SparsePrincipalComponentAnalysis
 
 
 class OWSparsePrincipalComponentAnalysis(widget.OWWidget):
-    name = 'Sparse Principal Component Analysis'
-    description = 'Perform sparse principal component analysis.'
-    author = 'Christian Kothe'
-    icon = 'icons/SparsePrincipalComponentAnalysis.svg'
+    name = "Sparse Principal Component Analysis"
+    description = "Perform sparse principal component analysis."
+    author = "Christian Kothe"
+    icon = "icons/SparsePrincipalComponentAnalysis.svg"
     priority = 11
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -140,7 +140,7 @@ class OWSparsePrincipalComponentAnalysis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

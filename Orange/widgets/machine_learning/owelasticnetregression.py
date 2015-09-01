@@ -12,12 +12,12 @@ from neuropype.nodes.machine_learning import ElasticNetRegression
 
 
 class OWElasticNetRegression(widget.OWWidget):
-    name = 'Elastic Net Regression'
-    description = 'Implements the Elastic Net regression method (a form of sparse linear regression). See also sklearn.linear_model.ElasticNetCV.'
-    author = 'Christian Kothe'
-    icon = 'icons/ElasticNetRegression.svg'
+    name = "Elastic Net Regression"
+    description = "Implements the Elastic Net regression method (a form of sparse linear regression). See also sklearn.linear_model.ElasticNetCV."
+    author = "Christian Kothe"
+    icon = "icons/ElasticNetRegression.svg"
     priority = 3
-    category = 'Machine_Learning'
+    category = "Machine_Learning"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -148,7 +148,7 @@ class OWElasticNetRegression(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

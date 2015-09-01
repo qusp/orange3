@@ -12,12 +12,12 @@ from neuropype.nodes.filters import InfomaxICA
 
 
 class OWInfomaxICA(widget.OWWidget):
-    name = 'Infomax Independent Component Analysis'
-    description = 'Transform the given signal into independent component space.'
-    author = 'Christian Kothe'
-    icon = 'icons/InfomaxICA.svg'
+    name = "Infomax Independent Component Analysis"
+    description = "Transform the given signal into independent component space."
+    author = "Christian Kothe"
+    icon = "icons/InfomaxICA.svg"
     priority = 8
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -104,7 +104,7 @@ class OWInfomaxICA(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.general import FoldIntoAxis
 
 
 class OWFoldIntoAxis(widget.OWWidget):
-    name = 'Fold Into Axis'
-    description = '"Fold an axis into another axis. The target axis must have per-element names (e.g., space, feature). This will generate an elongated axis that has new names of the form OldName-1, OldName-2, OldName-3, etc.'
-    author = 'Christian Kothe'
-    icon = 'icons/FoldIntoAxis.svg'
+    name = "Fold Into Axis"
+    description = "Fold an axis into another axis. The target axis must have per-element names (e.g., space, feature). This will generate an elongated axis that has new names of the form OldName-1, OldName-2, OldName-3, etc."
+    author = "Christian Kothe"
+    icon = "icons/FoldIntoAxis.svg"
     priority = 6
-    category = 'General'
+    category = "General"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -100,7 +100,7 @@ class OWFoldIntoAxis(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

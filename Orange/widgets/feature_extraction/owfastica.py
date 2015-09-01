@@ -12,12 +12,12 @@ from neuropype.nodes.feature_extraction import FastICA
 
 
 class OWFastICA(widget.OWWidget):
-    name = 'Independent Component Analysis (FastICA)'
-    description = 'Perform independent component analysis using the FastICA method.'
-    author = 'Christian Kothe'
-    icon = 'icons/FastICA.svg'
+    name = "Independent Component Analysis (FastICA)"
+    description = "Perform independent component analysis using the FastICA method."
+    author = "Christian Kothe"
+    icon = "icons/FastICA.svg"
     priority = 3
-    category = 'Feature_Extraction'
+    category = "Feature_Extraction"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -132,7 +132,7 @@ class OWFastICA(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

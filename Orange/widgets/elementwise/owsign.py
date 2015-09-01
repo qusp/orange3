@@ -12,12 +12,12 @@ from neuropype.nodes.elementwise import Sign
 
 
 class OWSign(widget.OWWidget):
-    name = 'Sign'
-    description = 'Take the sign of the given numbers.'
-    author = 'Christian Kothe'
-    icon = 'icons/Sign.svg'
+    name = "Sign"
+    description = "Take the sign of the given numbers."
+    author = "Christian Kothe"
+    icon = "icons/Sign.svg"
     priority = 16
-    category = 'Elementwise'
+    category = "Elementwise"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWSign(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

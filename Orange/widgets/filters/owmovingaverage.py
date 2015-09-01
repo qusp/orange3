@@ -12,12 +12,12 @@ from neuropype.nodes.filters import MovingAverage
 
 
 class OWMovingAverage(widget.OWWidget):
-    name = 'Moving Average'
-    description = 'Apply a moving-average filter to the data.'
-    author = 'Christian Kothe'
-    icon = 'icons/MovingAverage.svg'
+    name = "Moving Average"
+    description = "Apply a moving-average filter to the data."
+    author = "Christian Kothe"
+    icon = "icons/MovingAverage.svg"
     priority = 10
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -100,7 +100,7 @@ class OWMovingAverage(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

@@ -12,12 +12,12 @@ from neuropype.nodes.fileio import PlayBackREC
 
 
 class OWPlayBackREC(widget.OWWidget):
-    name = 'LoadFromFile'
-    description = 'Retrieve the next data packet from a file using pickle.'
-    author = 'Alejandro Ojeda'
-    icon = 'icons/PlayBackREC.svg'
+    name = "LoadFromFile"
+    description = "Retrieve the next data packet from a file using pickle."
+    author = "Alejandro Ojeda"
+    icon = "icons/PlayBackREC.svg"
     priority = 3
-    category = 'Fileio'
+    category = "Fileio"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -91,7 +91,7 @@ class OWPlayBackREC(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

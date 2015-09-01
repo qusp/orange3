@@ -12,12 +12,12 @@ from {{ node.__module__ }} import {{ node.__name__ }}
 
 
 class OW{{ node.__name__ }}(widget.OWWidget):
-    name = '{{ node.description().name }}'
-    description = '{{ node.description().description }}'
-    author = '{{ node.description().author }}'
-    icon = '{{ icon }}'
+    name = "{{ node.description().name }}"
+    description = "{{ node.description().description }}"
+    author = "{{ node.description().author }}"
+    icon = "{{ icon }}"
     priority = {{ priority }}
-    category = '{{ category|title }}'
+    category = "{{ category|title }}"
 
     inputs = [{% for name, port in node.ports(direction='IN*', editable=False).items() %}
         {'name': '{{ port.verbose_name|title }}', 'type': {{ port.value_type.__module__ }}.{{ port.value_type.__name__ }}, 'handler': 'set_{{ name }}', 'flags': {{'widget.Explicit' if port.implicit else '0'}}},{% endfor %}
@@ -92,7 +92,7 @@ class OW{{ node.__name__ }}(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

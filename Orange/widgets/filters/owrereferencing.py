@@ -12,12 +12,12 @@ from neuropype.nodes.filters import Rereferencing
 
 
 class OWRereferencing(widget.OWWidget):
-    name = 'Re-referencing'
-    description = 'Re-reference the data across a given axis (usually across \'space\').'
-    author = 'Christian Kothe'
-    icon = 'icons/Rereferencing.svg'
+    name = "Re-referencing"
+    description = "Re-reference the data across a given axis (usually across \'space\')."
+    author = "Christian Kothe"
+    icon = "icons/Rereferencing.svg"
     priority = 13
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -104,7 +104,7 @@ class OWRereferencing(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

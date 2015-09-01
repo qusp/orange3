@@ -12,12 +12,12 @@ from neuropype.nodes.filters import DelayEmbedding
 
 
 class OWDelayEmbedding(widget.OWWidget):
-    name = 'Delay Embedding'
-    description = 'Perform delay embedding of the given signal; this will create a new axis of type LagAxis (which can be folded into other axes using a separate node.'
-    author = 'Christian Kothe'
-    icon = 'icons/DelayEmbedding.svg'
+    name = "Delay Embedding"
+    description = "Perform delay embedding of the given signal; this will create a new axis of type LagAxis (which can be folded into other axes using a separate node."
+    author = "Christian Kothe"
+    icon = "icons/DelayEmbedding.svg"
     priority = 3
-    category = 'Filters'
+    category = "Filters"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -92,7 +92,7 @@ class OWDelayEmbedding(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)

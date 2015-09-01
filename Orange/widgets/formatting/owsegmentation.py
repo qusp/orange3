@@ -12,12 +12,12 @@ from neuropype.nodes.formatting import Segmentation
 
 
 class OWSegmentation(widget.OWWidget):
-    name = 'Segmentation'
-    description = 'Extract segments from a continuous time series.'
-    author = 'Christian Kothe'
-    icon = 'icons/Segmentation.svg'
+    name = "Segmentation"
+    description = "Extract segments from a continuous time series."
+    author = "Christian Kothe"
+    icon = "icons/Segmentation.svg"
     priority = 1
-    category = 'Formatting'
+    category = "Formatting"
 
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': 0},
@@ -100,7 +100,7 @@ class OWSegmentation(widget.OWWidget):
             if self.node.port(name).value_type in (bool, str):
                 value = getattr(self, name)
             else:
-            # Evaluate string as pure Python code.
+                # Evaluate string as pure Python code.
                 value = eval(getattr(self, name))
 
             setattr(self.node, name, value)
