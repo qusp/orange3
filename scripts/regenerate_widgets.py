@@ -38,41 +38,42 @@ def snake2camel(s, with_spaces=False):
     return sep.join(word.capitalize() for word in s.split('_'))
 
 
-def sanitize_neuropype_path(path_to_neuropype):
+def sanitize_neuropype_path(neuropype_path):
     """Resolve the path to neuropype if necessary and ensure that we can impor
     from that path."""
-    if not path_to_neuropype:
+    if not neuropype_path:
         import neuropype
-        path_to_neuropype = os.path.dirname(neuropype.__file__)
+        neuropype_path = os.path.dirname(neuropype.__file__)
     else:
-        sys.path.insert(0, os.path.dirname(path_to_neuropype))
+        sys.path.insert(0, os.path.dirname(neuropype_path))
         import neuropype
-        if path_to_neuropype != os.path.dirname(neuropype.__file__):
+        if neuropype_path != os.path.dirname(neuropype.__file__):
             print("Could not import neuropype from given path: %s" %
-                  path_to_neuropype)
+                  neuropype_path)
             sys.exit(1)
 
-    if not os.path.exists(path_to_neuropype):
-        print("Error: path does not exist: %s" % path_to_neuropype)
+    if not os.path.exists(neuropype_path):
+        print("Error: path does not exist: %s" % neuropype_path)
         sys.exit(1)
     else:
-        print("Assuming NeuroPyPE path: %s" % path_to_neuropype)
+        print("Assuming NeuroPyPE path: %s" % neuropype_path)
 
-    return path_to_neuropype
+    return neuropype_path
 
 
-def sanitize_orange_path(path_to_orange):
+def sanitize_orange_path(orange_path):
     """Resolve the path to Orange if necessary."""
-    if not path_to_orange:
-        path_to_orange = os.path.join(__file__, '..', 'Orange')
+    if not orange_path:
+        script_dir = os.path.dirname(__file__)
+        orange_path = os.path.normpath(os.path.join(script_dir, '..', 'Orange'))
 
-    if not os.path.exists(path_to_orange):
-        print("Error: path does not exist: %s" % path_to_orange)
+    if not os.path.exists(orange_path):
+        print("Error: path does not exist: %s" % orange_path)
         sys.exit(1)
     else:
-        print("Assuming Orange path: %s" % path_to_orange)
+        print("Assuming Orange path: %s" % orange_path)
 
-    return path_to_orange
+    return orange_path
 
 
 def sanitize_resource_path(resource_path):
@@ -132,14 +133,18 @@ def update_setup_py(filename, modules):
 
     # find the PACKAGES += [...] declaration
     pkgs_ext_patt = re.compile(r"^PACKAGES \+= \[.*?\]$", flags)
-    pkgs_ext_decl = pkgs_ext_patt.search(content).span()
+    pkgs_ext_decl = pkgs_ext_patt.search(content)
 
     if not pkgs_ext_decl:
         # if not present, place it after the packages decl
-        pkgs_ext_decl = [pkgs_decl[1], pkgs_decl[1]]
+        content = content[:pkgs_decl[1]] + '\n\n' + content[pkgs_decl[1]:]
+        pkgs_ext_decl = [pkgs_decl[1]+2, pkgs_decl[1]+2]
+    else:
+        pkgs_ext_decl = pkgs_ext_decl.span()
 
     # insert the new modules in place of the packages extension decl
-    content[pkgs_ext_decl[0]:pkgs_ext_decl[1]] = new_pkgs_decl
+    content = (content[:pkgs_ext_decl[0]] + new_pkgs_decl +
+               content[pkgs_ext_decl[1]+1:])
 
     # additional package data clause to insert into file
     new_pkgdata = ',\n'.join(['    "Orange.widgets.%s": ["icons/*.svg"]' %
@@ -152,15 +157,18 @@ def update_setup_py(filename, modules):
 
     # find the PACKAGE_DATA.update({...}) declaration
     pkgdata_ext_patt = re.compile(r"^PACKAGE_DATA\.update\(\{.*?\}\)$", flags)
-    pkgdata_ext_decl = pkgdata_ext_patt.search(content).span()
+    pkgdata_ext_decl = pkgdata_ext_patt.search(content)
 
     if not pkgdata_ext_decl:
         # if not present, place it after the packages decl
-        pkgdata_ext_decl = [pkgdata_decl[1], pkgdata_decl[1]]
+        content = content[:pkgdata_decl[1]] + '\n\n' + content[pkgdata_decl[1]:]
+        pkgdata_ext_decl = [pkgdata_decl[1]+2, pkgdata_decl[1]+2]
+    else:
+        pkgdata_ext_decl = pkgdata_ext_decl.span()
 
     # insert the new modules in place of the packages extension decl
-    content[pkgdata_ext_decl[0]:pkgdata_ext_decl[1]] = new_pkgdata_decl
-
+    content = (content[:pkgdata_ext_decl[0]] + new_pkgdata_decl +
+               content[pkgdata_ext_decl[1]+1:])
     # now write the new content to the file
     with open(filename, 'w') as f:
         f.write(content)
@@ -178,13 +186,14 @@ def update_widget_registration(filename, modules):
         content = f.read()
 
     # find the pkgs = [...] declaration
-    pkgs_patt = re.compile(r"^pkgs = \[.*?\]$", re.DOTALL | re.MULTILINE)
+    pkgs_patt = re.compile(r"pkgs = \[.*?\]", re.DOTALL | re.MULTILINE)
     pkgs_decl = pkgs_patt.search(content).span()
 
     # replace by a new declaration
-    new_pkgs = ',\n'.join(['    "Orange.widgets.%s"' % m for m in modules])
-    new_pkgs_decl = 'pkgs = [\n%s\n]\n' % new_pkgs
-    content[pkgs_decl[0]:pkgs_decl[1]] = new_pkgs_decl
+    new_pkgs = ',\n'.join(['         "Orange.widgets.%s"' % m for m in modules])
+    new_pkgs_decl = 'pkgs = [\n%s]' % new_pkgs
+    content = (content[:pkgs_decl[0]] + new_pkgs_decl +
+               content[pkgs_decl[1]:])
 
     # rewrite file
     with open(filename, 'w') as f:
@@ -229,17 +238,18 @@ def create_widget_init_files(widget_path, modules):
             try:
                 node = importlib.import_module('neuropype.nodes.%s' % m)
                 desc = node.__doc__.split('\n')[0]
-            except ImportError:
+            except ImportError as e:
                 print("  could not import neuropype.nodes.%s; leaving package "
-                      "description unassigned." % m)
+                      "description unassigned (%s)." % (m, e))
                 desc = '(no description)'
-            print("DESCRIPTION = '%s'" % desc)
+            print("DESCRIPTION = '%s'" % desc, file=f)
             icon_path = "icons/Category-%s.svg" % snake2camel(m)
-            print("ICON = '%s'" % icon_path)
+            print("ICON = '%s'" % icon_path, file=f)
             icon_path_full = os.path.join(widget_path, m, icon_path)
             icons_needed.append(icon_path_full)
-            print("BACKGROUND = '%s'" % widget_colors[k % len(widget_colors)])
-            print("PRIORITY = %i" % k)
+            print("BACKGROUND = '%s'" % widget_colors[k % len(widget_colors)],
+                  file=f)
+            print("PRIORITY = %i" % (k+1), file=f)
 
     print("done.")
 
@@ -261,24 +271,30 @@ def generate_widget_code(resource_path, widget_path, modules):
         try:
             module = importlib.import_module('neuropype.nodes.%s' % modname)
             for key, value in inspect.getmembers(module):
-                if isinstance(value, type) and issubclass(value, Node):
+                if (isinstance(value, type) and issubclass(value, Node)
+                        and value != Node):
                     nodes.append(value)
         except ImportError as e:
             print("  could not import module neuropype.nodes.%s; ignoring "
                   "contained nodes (%s)." % (modname, e))
 
-        nodes.sort()
+        nodes.sort(key=lambda n: n.__name__)
         for k, node in enumerate(nodes):
 
             # generate code from template
-            content = template.render(node=node, category=modname,
-                                      icon=node.__name__, priority=k)
+            content = template.render(node=node, category=modname, priority=k+1,
+                                      icon='icons/%s.svg' % node.__name__)
 
             # write to disk
             out_path = os.path.join(widget_path, modname, 'ow%s.py' %
                                     node.__name__.lower())
             with open(out_path, 'wb') as f:
                 f.write(content.encode('utf-8'))
+
+            # also register needed icons
+            icon_path = os.path.join(widget_path, modname, 'icons',
+                                     node.__name__ + '.svg')
+            icons_needed.append(icon_path)
 
     print("done.")
 
@@ -304,30 +320,30 @@ def copy_icons(source_folder, dest_paths):
     print("done.")
 
 
-def regenerate_widgets(path_to_neuropype=None, path_to_orange=None,
+def regenerate_widgets(neuropype_path=None, orange_path=None,
                        resource_path=None):
     """List nodes in a given source neuropype installation and generate a widget
     hierarchy in a target Orange installation.
     """
 
     # check/set the paths first
-    path_to_neuropype = sanitize_neuropype_path(path_to_neuropype)
-    path_to_orange = sanitize_orange_path(path_to_orange)
+    neuropype_path = sanitize_neuropype_path(neuropype_path)
+    orange_path = sanitize_orange_path(orange_path)
     resource_path = sanitize_resource_path(resource_path)
 
     # find module list
-    modules = find_modules(path_to_neuropype)
+    modules = find_modules(neuropype_path)
 
     # process setup.py
-    setup_path = os.path.join(path_to_orange, '..', 'setup.py')
+    setup_path = os.path.normpath(os.path.join(orange_path, '..', 'setup.py'))
     update_setup_py(setup_path, modules)
 
     # process widget/__init__.py
-    init_path = os.path.join(path_to_orange, 'widgets', '__init__.py')
+    init_path = os.path.join(orange_path, 'widgets', '__init__.py')
     update_widget_registration(init_path, modules)
 
     # create and empty widget directories
-    widget_path = os.path.join(path_to_orange, 'widgets')
+    widget_path = os.path.join(orange_path, 'widgets')
     recreate_widget_directories(widget_path, modules)
 
     # create the __init__.py file for the new widget packages
@@ -337,7 +353,8 @@ def regenerate_widgets(path_to_neuropype=None, path_to_orange=None,
     generate_widget_code(resource_path, widget_path, modules)
 
     # copy over the icon files
-    copy_icons(resource_path, icons_needed)
+    icon_path = os.path.join(resource_path, 'icons')
+    copy_icons(icon_path, icons_needed)
 
 
 if __name__ == '__main__':

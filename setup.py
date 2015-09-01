@@ -173,24 +173,23 @@ PACKAGES = [
     "Orange.canvas.scheme",
     "Orange.canvas.styles",
     "Orange.canvas.utils",
-    "Orange.classification",
-    "Orange.data",
-    "Orange.data.sql",
-    "Orange.evaluation",
-    "Orange.feature",
-    "Orange.misc",
-    "Orange.statistics",
-    "Orange.testing",
-    "Orange.widgets",
-    "Orange.widgets.data",
-    "Orange.widgets.visualize",
-    "Orange.widgets.classify",
-    "Orange.widgets.regression",
-    "Orange.widgets.evaluate",
-    "Orange.widgets.unsupervised",
     "Orange.widgets.utils",
     "Orange.widgets.utils.plot",
     "Orange.widgets.utils.plot.primitives"
+]
+
+PACKAGES += [
+    "Orange.widgets.custom",
+    "Orange.widgets.elementwise",
+    "Orange.widgets.feature_extraction",
+    "Orange.widgets.fileio",
+    "Orange.widgets.filters",
+    "Orange.widgets.formatting",
+    "Orange.widgets.general",
+    "Orange.widgets.machine_learning",
+    "Orange.widgets.network",
+    "Orange.widgets.spectral",
+    "Orange.widgets.utilities"
 ]
 
 PACKAGE_DATA = {
@@ -200,15 +199,23 @@ PACKAGE_DATA = {
     "Orange.canvas.application.quickstart_wizards": ["*.ows"],
     "Orange.canvas.application.tutorials": ["*.ows"],
     "Orange.widgets": ["icons/*.png", "icons/*.svg"],
-    "Orange.widgets.data": ["icons/*.svg", "icons/paintdata/*.png", "icons/paintdata/*.svg"],
-    "Orange.widgets.visualize": ["icons/*.svg"],
-    "Orange.widgets.classify": ["icons/*.svg"],
-    "Orange.widgets.regression": ["icons/*.svg"],
-    "Orange.widgets.evaluate": ["icons/*.svg"],
-    "Orange.widgets.unsupervised": ["icons/*.svg"],
     "Orange.widgets.plot": ["*.fs", "*.gs", "*.vs"],
     "Orange.widgets.plot.primitives": ["*.obj"],
 }
+
+PACKAGE_DATA.update({
+    "Orange.widgets.custom": ["icons/*.svg"],
+    "Orange.widgets.elementwise": ["icons/*.svg"],
+    "Orange.widgets.feature_extraction": ["icons/*.svg"],
+    "Orange.widgets.fileio": ["icons/*.svg"],
+    "Orange.widgets.filters": ["icons/*.svg"],
+    "Orange.widgets.formatting": ["icons/*.svg"],
+    "Orange.widgets.general": ["icons/*.svg"],
+    "Orange.widgets.machine_learning": ["icons/*.svg"],
+    "Orange.widgets.network": ["icons/*.svg"],
+    "Orange.widgets.spectral": ["icons/*.svg"],
+    "Orange.widgets.utilities": ["icons/*.svg"]
+})
 
 
 def setup_package():
