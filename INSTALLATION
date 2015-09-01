@@ -23,22 +23,29 @@ On Linux
 
 * clone CPE & install its dependencies into orange3 venv:
   $ git clone https://github.com/qusp/cpe
+  $ git checkout your-branch (could be develop, master, or a tag/release)
   $ pip install -r cpe/requirements.txt
 
 * auto-generate widgets for CPE nodes:
   $ python scripts/regenerate_widgets.py --neuropype-path /your/path/to/cpe
   (you can re-invoke this command whenever you have edited your CPE code)
 
-* for a good development experience, we recommend that you install PyCharm,
-  open the orange3 folder with it, and then under
-  Settings / Project: orange3 / Project Interpreter / Project Interpreter click the
-  gear icon, click Add local..., and select the python executable in your
-  orange3_venv/bin folder. Then accept and close the settings dialog.
-  Next, click Open, select the cpe directory and accept, and select
-  "open in current window" and "add to current project". Now, in the Project
-  pane to the left, go to Orange/canvas/__main__.py, right-click and select
-  "Create '__main__'". Now in the window that just opened, change the name to
-  VPE, and under Script parameters, add: --clear-widget-settings
-  Now you can select VPE in the pull-down menu on the top left and either click
-  the play button for a normal run or the bug button for a debug run.
-
+* for a good development experience, we recommend
+  that you install and set up PyCharm:
+  * open the orange3 folder from PyCharm
+  * under Settings / Project: orange3 / Project Interpreter / Project Interpreter
+    click the gear icon
+  * click Add local..., and select the python executable in your orange3_venv/bin
+    folder.
+  * accept and close the settings dialog.
+  * click Open, select the cpe directory and accept, and select
+    "open in current window" and "add to current project".
+  * in the Project pane to the left, navigate to Orange/canvas/__main__.py
+  * right-click and select "Create '__main__'".
+  * in the window that just opened, change the name to VPE, and under
+    Script parameters, add: --clear-widget-settings
+  * Now you can select VPE in the pull-down menu on the top left and either
+    click the play button for a normal run or the bug button for a debug run.
+  * to regenerate widgets in the VPE after a CPE code change, just right-click
+    the file orange3/scripts/regenerate_widgets.py,
+    and choose Run 'regenerate_widgets'
