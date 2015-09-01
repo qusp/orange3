@@ -1,0 +1,44 @@
+On Linux
+========
+
+* install the following packages through your package manager (following guide
+  written for apt-get, tested on Ubuntu 14.10):
+  - build-essential
+  - python3
+  - python3-dev
+  - python3-pyqt
+
+* create a virtual environment:
+  $ pip install virtualenv
+  $ cd /path/to/orange3
+  $ virtualenv venv_orange3 --python=python3 --system-site-packages
+
+* activate virtual environment:
+  $ source venv_orange3/bin/activate
+
+* install requirements
+  $ pip install numpy
+  $ pip install -r orange3/requirements.txt
+  $ python setup.py develop
+
+* clone CPE & install its dependencies into orange3 venv:
+  $ git clone https://github.com/qusp/cpe
+  $ pip install -r cpe/requirements.txt
+
+* auto-generate widgets for CPE nodes:
+  $ python scripts/regenerate_widgets.py --neuropype-path /your/path/to/cpe
+  (you can re-invoke this command whenever you have edited your CPE code)
+
+* for a good development experience, we recommend that you install PyCharm,
+  open the orange3 folder with it, and then under
+  Settings / Project: orange3 / Project Interpreter / Project Interpreter click the
+  gear icon, click Add local..., and select the python executable in your
+  orange3_venv/bin folder. Then accept and close the settings dialog.
+  Next, click Open, select the cpe directory and accept, and select
+  "open in current window" and "add to current project". Now, in the Project
+  pane to the left, go to Orange/canvas/__main__.py, right-click and select
+  "Create '__main__'". Now in the window that just opened, change the name to
+  VPE, and under Script parameters, add: --clear-widget-settings
+  Now you can select VPE in the pull-down menu on the top left and either click
+  the play button for a normal run or the bug button for a debug run.
+

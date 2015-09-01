@@ -295,7 +295,9 @@ class WidgetDiscovery(object):
                 if desc is None:
                     try:
                         module = asmodule(name)
-                    except ImportError:
+                    except ImportError as e:
+                        raise e
+                        print("Could not import module %s (%s)" % (name, e))
                         log.info("Could not import %r.", name, exc_info=True)
                         continue
                     except Exception:

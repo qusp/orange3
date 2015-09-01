@@ -7,6 +7,7 @@ from PyQt4 import QtGui
 
 from Orange.widgets import widget, gui
 from Orange.widgets.settings import Setting
+import neuropype.engine
 from neuropype.nodes.spectral import WelchSpectrum
 
 
