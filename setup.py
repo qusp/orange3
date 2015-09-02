@@ -189,7 +189,8 @@ PACKAGES += [
     "Orange.widgets.machine_learning",
     "Orange.widgets.network",
     "Orange.widgets.spectral",
-    "Orange.widgets.utilities"
+    "Orange.widgets.utilities",
+    "Orange.widgets.visualization"
 ]
 
 PACKAGE_DATA = {
@@ -214,7 +215,8 @@ PACKAGE_DATA.update({
     "Orange.widgets.machine_learning": ["icons/*.svg"],
     "Orange.widgets.network": ["icons/*.svg"],
     "Orange.widgets.spectral": ["icons/*.svg"],
-    "Orange.widgets.utilities": ["icons/*.svg"]
+    "Orange.widgets.utilities": ["icons/*.svg"],
+    "Orange.widgets.visualization": ["icons/*.svg"]
 })
 
 
