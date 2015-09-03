@@ -56,9 +56,9 @@ class OWCovariance(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.shrinkage_control = gui.lineEdit(box, self, 'shrinkage', 'Shrinkage:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('shrinkage'))
-        self.cov_axis_control = gui.lineEdit(box, self, 'cov_axis', 'Cov axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('cov_axis'))
-        self.avg_axis_control = gui.lineEdit(box, self, 'avg_axis', 'Avg axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('avg_axis'))
+        self.shrinkage_control = gui.lineEdit(box, self, 'shrinkage', 'Shrinkage:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('shrinkage'), tooltip="Amount of shrinkage to apply to covariance estimate.  This is a regularization method that protects against degenerate matrices.")
+        self.cov_axis_control = gui.lineEdit(box, self, 'cov_axis', 'Cov axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('cov_axis'), tooltip="Axis to take covariance of. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
+        self.avg_axis_control = gui.lineEdit(box, self, 'avg_axis', 'Avg axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('avg_axis'), tooltip="Axis to average over. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

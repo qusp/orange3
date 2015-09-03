@@ -50,7 +50,7 @@ class OWDelayEmbedding(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.lags_control = gui.lineEdit(box, self, 'lags', 'Lags:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lags'))
+        self.lags_control = gui.lineEdit(box, self, 'lags', 'Lags:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lags'), tooltip="Lags to use. This is a sequence of positive offsets in samples, referring to past samples.Default: (0, 1, 2, 3).")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

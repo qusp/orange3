@@ -70,14 +70,14 @@ class OWLSLInput(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.query_control = gui.lineEdit(box, self, 'query', 'Query:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('query'))
-        self.marker_query_control = gui.lineEdit(box, self, 'marker_query', 'Marker query:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('marker_query'))
-        self.max_buflen_control = gui.lineEdit(box, self, 'max_buflen', 'Max buflen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_buflen'))
-        self.max_chunklen_control = gui.lineEdit(box, self, 'max_chunklen', 'Max chunklen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_chunklen'))
-        self.max_blocklen_control = gui.lineEdit(box, self, 'max_blocklen', 'Max blocklen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_blocklen'))
-        self.recover_control = gui.checkBox(box, self, 'recover', 'Recover', callback=lambda: self.property_changed('recover'))
-        self.channel_names_control = gui.lineEdit(box, self, 'channel_names', 'Channel names:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('channel_names'))
-        self.nominal_rate_control = gui.lineEdit(box, self, 'nominal_rate', 'Nominal rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('nominal_rate'))
+        self.query_control = gui.lineEdit(box, self, 'query', 'Query:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('query'), tooltip="Query string to find a data stream. This is an LSL query (XPath predicate).")
+        self.marker_query_control = gui.lineEdit(box, self, 'marker_query', 'Marker query:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('marker_query'), tooltip="Query string to find a marker stream. This is an LSL query (XPath predicate).")
+        self.max_buflen_control = gui.lineEdit(box, self, 'max_buflen', 'Max buflen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_buflen'), tooltip="Maximum buffer length. This is the size of the network buffer to use, in s.")
+        self.max_chunklen_control = gui.lineEdit(box, self, 'max_chunklen', 'Max chunklen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_chunklen'), tooltip="Maximum transmission chunk length. The preferred # of samples in chunks received from LSL.")
+        self.max_blocklen_control = gui.lineEdit(box, self, 'max_blocklen', 'Max blocklen:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_blocklen'), tooltip="Maximum emitted block length. The preferred # of samples in blocks emitted by the node.")
+        self.recover_control = gui.checkBox(box, self, 'recover', 'Recover', callback=lambda: self.property_changed('recover'), tooltip="Recover lost streams. Whether to attempt silent recovery of a lost LSL stream.")
+        self.channel_names_control = gui.lineEdit(box, self, 'channel_names', 'Channel names:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('channel_names'), tooltip="Channel override. Allows to override the channel names of the data source.")
+        self.nominal_rate_control = gui.lineEdit(box, self, 'nominal_rate', 'Nominal rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('nominal_rate'), tooltip="Sampling rate override. Allows to override the sampling rate of the data source.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

@@ -59,10 +59,10 @@ class OWImpedanceChannelRejection(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.threshold_control = gui.lineEdit(box, self, 'threshold', 'Threshold:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold'))
-        self.period_control = gui.lineEdit(box, self, 'period', 'Period:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('period'))
-        self.unit_conversion_control = gui.lineEdit(box, self, 'unit_conversion', 'Unit conversion:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('unit_conversion'))
-        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'))
+        self.threshold_control = gui.lineEdit(box, self, 'threshold', 'Threshold:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold'), tooltip="Impedance threshold (Mohms). Channels with impedance higher than this will be rejected.")
+        self.period_control = gui.lineEdit(box, self, 'period', 'Period:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('period'), tooltip="Impedance signal period (samples).")
+        self.unit_conversion_control = gui.lineEdit(box, self, 'unit_conversion', 'Unit conversion:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('unit_conversion'), tooltip="Factor for converting signal units to volts. This is usually taken care of by the data acquisition system.")
+        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'), tooltip="Minimum number of seconds used for calibration.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

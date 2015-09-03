@@ -74,15 +74,15 @@ class OWTimeSeriesPlot(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.scale_control = gui.lineEdit(box, self, 'scale', 'Scale:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('scale'))
-        self.time_range_control = gui.lineEdit(box, self, 'time_range', 'Time range:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('time_range'))
-        self.stream_name_control = gui.lineEdit(box, self, 'stream_name', 'Stream name:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('stream_name'))
-        self.title_control = gui.lineEdit(box, self, 'title', 'Title:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('title'))
-        self.background_color_control = gui.lineEdit(box, self, 'background_color', 'Background color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('background_color'))
-        self.line_color_control = gui.lineEdit(box, self, 'line_color', 'Line color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('line_color'))
-        self.zero_color_control = gui.lineEdit(box, self, 'zero_color', 'Zero color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('zero_color'))
-        self.antialiased_control = gui.checkBox(box, self, 'antialiased', 'Antialiased', callback=lambda: self.property_changed('antialiased'))
-        self.downsampled_control = gui.checkBox(box, self, 'downsampled', 'Downsampled', callback=lambda: self.property_changed('downsampled'))
+        self.scale_control = gui.lineEdit(box, self, 'scale', 'Scale:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('scale'), tooltip="Data scale.")
+        self.time_range_control = gui.lineEdit(box, self, 'time_range', 'Time range:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('time_range'), tooltip="Time range to display. This is the number of seconds of recent data that shall be plotted.")
+        self.stream_name_control = gui.lineEdit(box, self, 'stream_name', 'Stream name:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('stream_name'), tooltip="Name of stream to display. Only streams whose name starts with this string are displayed.")
+        self.title_control = gui.lineEdit(box, self, 'title', 'Title:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('title'), tooltip="Title of the plot.")
+        self.background_color_control = gui.lineEdit(box, self, 'background_color', 'Background color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('background_color'), tooltip="Background color. In hexadecimal notation (#RRGGBB).")
+        self.line_color_control = gui.lineEdit(box, self, 'line_color', 'Line color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('line_color'), tooltip="Color of the graph lines. In hexadecimal notation (#RRGGBB).")
+        self.zero_color_control = gui.lineEdit(box, self, 'zero_color', 'Zero color:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('zero_color'), tooltip="Color of the zero line.")
+        self.antialiased_control = gui.checkBox(box, self, 'antialiased', 'Antialiased', callback=lambda: self.property_changed('antialiased'), tooltip="Draw graphics antialiased. Can slow down plotting.")
+        self.downsampled_control = gui.checkBox(box, self, 'downsampled', 'Downsampled', callback=lambda: self.property_changed('downsampled'), tooltip="Draw downsampled graphics. Can speed up plotting for dense time series.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

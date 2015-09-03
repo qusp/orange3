@@ -53,8 +53,8 @@ class OWXDAWN(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.erp_duration_control = gui.lineEdit(box, self, 'erp_duration', 'Erp duration:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('erp_duration'))
-        self.num_components_control = gui.lineEdit(box, self, 'num_components', 'Num components:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('num_components'))
+        self.erp_duration_control = gui.lineEdit(box, self, 'erp_duration', 'Erp duration:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('erp_duration'), tooltip="Duration of the stimulus-evoked activity, in seconds.")
+        self.num_components_control = gui.lineEdit(box, self, 'num_components', 'Num components:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('num_components'), tooltip="Number of xDAWN components to retain.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

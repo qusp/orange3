@@ -65,12 +65,12 @@ class OWCoherence(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.segment_samples_control = gui.lineEdit(box, self, 'segment_samples', 'Segment samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('segment_samples'))
-        self.overlap_samples_control = gui.lineEdit(box, self, 'overlap_samples', 'Overlap samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('overlap_samples'))
-        self.window_control = gui.lineEdit(box, self, 'window', 'Window:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window'))
-        self.detrend_control = gui.lineEdit(box, self, 'detrend', 'Detrend:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('detrend'))
-        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'))
-        self.fft_size_control = gui.lineEdit(box, self, 'fft_size', 'Fft size:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('fft_size'))
+        self.segment_samples_control = gui.lineEdit(box, self, 'segment_samples', 'Segment samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('segment_samples'), tooltip="Segment length. In samples.")
+        self.overlap_samples_control = gui.lineEdit(box, self, 'overlap_samples', 'Overlap samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('overlap_samples'), tooltip="Number of overlapped samples. If None, defaults to half of segment_samples.")
+        self.window_control = gui.lineEdit(box, self, 'window', 'Window:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window'), tooltip="Type of window function to use.")
+        self.detrend_control = gui.lineEdit(box, self, 'detrend', 'Detrend:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('detrend'), tooltip="Detrending method.")
+        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'), tooltip="Return one-sided spectrum. For complex data, the spectrum is always two-sided.")
+        self.fft_size_control = gui.lineEdit(box, self, 'fft_size', 'Fft size:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('fft_size'), tooltip="Length of the FFT used, if a zero padded FFT is desired.  If None,  the FFT length equals segment_samples.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

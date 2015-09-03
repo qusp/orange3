@@ -59,10 +59,10 @@ class OWInfomaxICA(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.max_iters_control = gui.lineEdit(box, self, 'max_iters', 'Max iters:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_iters'))
-        self.verbosity_control = gui.lineEdit(box, self, 'verbosity', 'Verbosity:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('verbosity'))
-        self.learning_rate_control = gui.lineEdit(box, self, 'learning_rate', 'Learning rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('learning_rate'))
-        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'))
+        self.max_iters_control = gui.lineEdit(box, self, 'max_iters', 'Max iters:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_iters'), tooltip="Maximum number of iterations.")
+        self.verbosity_control = gui.lineEdit(box, self, 'verbosity', 'Verbosity:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('verbosity'), tooltip="Verbosity level.")
+        self.learning_rate_control = gui.lineEdit(box, self, 'learning_rate', 'Learning rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('learning_rate'), tooltip="Learning rate. Reduce if the algorithm diverges.")
+        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'), tooltip="Data length for calibration. In seconds. Note that for many channels, ICA needs quite a bit of calibration data.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

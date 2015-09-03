@@ -56,9 +56,9 @@ class OWAverages(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.windows_control = gui.lineEdit(box, self, 'windows', 'Windows:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('windows'))
-        self.unit_control = gui.lineEdit(box, self, 'unit', 'Unit:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('unit'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to average over. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
+        self.windows_control = gui.lineEdit(box, self, 'windows', 'Windows:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('windows'), tooltip="List of window edges. Each window is given as a tuple of the start and end of the segment. None instead of a numeric value stands for the beginning/end of the whole data range as in Python slices. The last sample in the segment is excluded.")
+        self.unit_control = gui.lineEdit(box, self, 'unit', 'Unit:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

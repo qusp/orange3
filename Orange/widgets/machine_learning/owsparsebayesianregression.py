@@ -77,16 +77,16 @@ class OWSparseBayesianRegression(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.max_iter_control = gui.lineEdit(box, self, 'max_iter', 'Max iter:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_iter'))
-        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', 'Tolerance:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tolerance'))
-        self.verbosity_control = gui.lineEdit(box, self, 'verbosity', 'Verbosity:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('verbosity'))
-        self.include_bias_control = gui.checkBox(box, self, 'include_bias', 'Include bias', callback=lambda: self.property_changed('include_bias'))
-        self.normalize_features_control = gui.checkBox(box, self, 'normalize_features', 'Normalize features', callback=lambda: self.property_changed('normalize_features'))
-        self.threshold_lambda_control = gui.lineEdit(box, self, 'threshold_lambda', 'Threshold lambda:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold_lambda'))
-        self.alpha_shape_control = gui.lineEdit(box, self, 'alpha_shape', 'Alpha shape:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('alpha_shape'))
-        self.alpha_rate_control = gui.lineEdit(box, self, 'alpha_rate', 'Alpha rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('alpha_rate'))
-        self.lambda_shape_control = gui.lineEdit(box, self, 'lambda_shape', 'Lambda shape:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lambda_shape'))
-        self.lambda_rate_control = gui.lineEdit(box, self, 'lambda_rate', 'Lambda rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lambda_rate'))
+        self.max_iter_control = gui.lineEdit(box, self, 'max_iter', 'Max iter:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_iter'), tooltip="Maximum number of iterations. Additional stopping criterion to limit compute time.")
+        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', 'Tolerance:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tolerance'), tooltip="Optimization tolerance. The default stopping criterion. Can be increased to speed up computation.")
+        self.verbosity_control = gui.lineEdit(box, self, 'verbosity', 'Verbosity:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('verbosity'), tooltip="Verbosity level.")
+        self.include_bias_control = gui.checkBox(box, self, 'include_bias', 'Include bias', callback=lambda: self.property_changed('include_bias'), tooltip="Include bias term. If false, your data needs to be centered or include a dummy feature set to 1.")
+        self.normalize_features_control = gui.checkBox(box, self, 'normalize_features', 'Normalize features', callback=lambda: self.property_changed('normalize_features'), tooltip="Normalize features. Should only be disabled if the data comes in with a predictable scale (e.g., normalized in some other way).")
+        self.threshold_lambda_control = gui.lineEdit(box, self, 'threshold_lambda', 'Threshold lambda:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold_lambda'), tooltip="Weight pruning threshold. Lower values can lead to somewhat faster optimization potentially at the cost of some accuracy.")
+        self.alpha_shape_control = gui.lineEdit(box, self, 'alpha_shape', 'Alpha shape:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('alpha_shape'), tooltip="Alpha shape parameter. Shape parameter for the Gamma distribution prior over the alpha parameter.")
+        self.alpha_rate_control = gui.lineEdit(box, self, 'alpha_rate', 'Alpha rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('alpha_rate'), tooltip="Alpha rate parameter. Rate parameter for the Gamma distribution prior over the alpha parameter.")
+        self.lambda_shape_control = gui.lineEdit(box, self, 'lambda_shape', 'Lambda shape:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lambda_shape'), tooltip="Lambda shape parameter. Shape parameter for the Gamma distribution prior over the lambda parameter.")
+        self.lambda_rate_control = gui.lineEdit(box, self, 'lambda_rate', 'Lambda rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('lambda_rate'), tooltip="Lambda rate parameter. Rate parameter for the Gamma distribution prior over the lambda parameter.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

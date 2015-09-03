@@ -86,16 +86,16 @@ class OWMultiplexPackets(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.name0_control = gui.lineEdit(box, self, 'name0', 'Name0:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name0'))
-        self.name1_control = gui.lineEdit(box, self, 'name1', 'Name1:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name1'))
-        self.name2_control = gui.lineEdit(box, self, 'name2', 'Name2:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name2'))
-        self.name3_control = gui.lineEdit(box, self, 'name3', 'Name3:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name3'))
-        self.name4_control = gui.lineEdit(box, self, 'name4', 'Name4:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name4'))
-        self.name5_control = gui.lineEdit(box, self, 'name5', 'Name5:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name5'))
-        self.name6_control = gui.lineEdit(box, self, 'name6', 'Name6:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name6'))
-        self.name7_control = gui.lineEdit(box, self, 'name7', 'Name7:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name7'))
-        self.name8_control = gui.lineEdit(box, self, 'name8', 'Name8:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name8'))
-        self.name9_control = gui.lineEdit(box, self, 'name9', 'Name9:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name9'))
+        self.name0_control = gui.lineEdit(box, self, 'name0', 'Name0:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name0'), tooltip="Name 0.")
+        self.name1_control = gui.lineEdit(box, self, 'name1', 'Name1:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name1'), tooltip="Name 1.")
+        self.name2_control = gui.lineEdit(box, self, 'name2', 'Name2:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name2'), tooltip="Name 2.")
+        self.name3_control = gui.lineEdit(box, self, 'name3', 'Name3:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name3'), tooltip="Name 3.")
+        self.name4_control = gui.lineEdit(box, self, 'name4', 'Name4:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name4'), tooltip="Name 4.")
+        self.name5_control = gui.lineEdit(box, self, 'name5', 'Name5:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name5'), tooltip="Name 5.")
+        self.name6_control = gui.lineEdit(box, self, 'name6', 'Name6:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name6'), tooltip="Name 6.")
+        self.name7_control = gui.lineEdit(box, self, 'name7', 'Name7:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name7'), tooltip="Name 7.")
+        self.name8_control = gui.lineEdit(box, self, 'name8', 'Name8:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name8'), tooltip="Name 8.")
+        self.name9_control = gui.lineEdit(box, self, 'name9', 'Name9:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('name9'), tooltip="Name 9.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

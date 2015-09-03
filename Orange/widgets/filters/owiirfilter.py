@@ -68,13 +68,13 @@ class OWIIRFilter(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.frequencies_control = gui.lineEdit(box, self, 'frequencies', 'Frequencies:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies'))
-        self.mode_control = gui.lineEdit(box, self, 'mode', 'Mode:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('mode'))
-        self.design_control = gui.lineEdit(box, self, 'design', 'Design:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('design'))
-        self.pass_loss_control = gui.lineEdit(box, self, 'pass_loss', 'Pass loss:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('pass_loss'))
-        self.stop_atten_control = gui.lineEdit(box, self, 'stop_atten', 'Stop atten:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('stop_atten'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to apply filter to. This is a string that identifies the axis to use (e.g., 'time', 'space', 'frequency'). Default: 'time'.")
+        self.frequencies_control = gui.lineEdit(box, self, 'frequencies', 'Frequencies:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies'), tooltip="Transition frequencies. The values in freq must be nondecreasing. For a low/high-pass filter, this is: [transition-start, transition-end], in Hz. For a band-pass/stop filter, this is: [low-transition-start, low-transition-end, hi-transition-start, hi-transition-end], in Hz. Default: None.")
+        self.mode_control = gui.lineEdit(box, self, 'mode', 'Mode:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('mode'), tooltip="Filter mode. Default: 'bandpass'.")
+        self.design_control = gui.lineEdit(box, self, 'design', 'Design:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('design'), tooltip="Filter design. This the the filter design rule to use. Default: 'butter'.")
+        self.pass_loss_control = gui.lineEdit(box, self, 'pass_loss', 'Pass loss:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('pass_loss'), tooltip="Maximum loss in pass-band. In dB. Default: 3.0.")
+        self.stop_atten_control = gui.lineEdit(box, self, 'stop_atten', 'Stop atten:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('stop_atten'), tooltip="Minimum attenuation in stop-band. In dB. Default: 40.0.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be filtered. Default: True.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

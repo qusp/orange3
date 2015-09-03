@@ -52,8 +52,8 @@ class OWZMQOutput(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.endpoint_control = gui.lineEdit(box, self, 'endpoint', 'Endpoint:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('endpoint'))
-        self.encoding_control = gui.lineEdit(box, self, 'encoding', 'Encoding:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('encoding'))
+        self.endpoint_control = gui.lineEdit(box, self, 'endpoint', 'Endpoint:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('endpoint'), tooltip="Endpoint on which to connect the ZeroMQ socket to write outgoing messages. This is specified as a unique combination of protocol, host and port. For more information, see the ZeroMQ documentation.")
+        self.encoding_control = gui.lineEdit(box, self, 'encoding', 'Encoding:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('encoding'), tooltip="Encoding type. Messages written to the connected ZeroMQ socket are encoded based on the value of this setting.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

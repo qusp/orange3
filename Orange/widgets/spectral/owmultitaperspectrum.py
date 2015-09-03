@@ -59,10 +59,10 @@ class OWMultitaperSpectrum(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.half_bandwidth_control = gui.lineEdit(box, self, 'half_bandwidth', 'Half bandwidth:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('half_bandwidth'))
-        self.num_tapers_control = gui.lineEdit(box, self, 'num_tapers', 'Num tapers:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('num_tapers'))
-        self.tapers_control = gui.lineEdit(box, self, 'tapers', 'Tapers:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tapers'))
-        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'))
+        self.half_bandwidth_control = gui.lineEdit(box, self, 'half_bandwidth', 'Half bandwidth:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('half_bandwidth'), tooltip="The spectral bandwidth (Hz) parameter.")
+        self.num_tapers_control = gui.lineEdit(box, self, 'num_tapers', 'Num tapers:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('num_tapers'), tooltip="If the value is None, then we use the maximum number of tapers. For the DPSS tapers, this is 2*NW-1, where N is the window length and 2*W is the bandwidth.")
+        self.tapers_control = gui.lineEdit(box, self, 'tapers', 'Tapers:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tapers'), tooltip="A matrix of tapering windows. Optional; if not given, tapers will be computed by dpss.")
+        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'), tooltip="Return one-sided spectrum. For complex data, the spectrum is always two-sided. Default: True.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

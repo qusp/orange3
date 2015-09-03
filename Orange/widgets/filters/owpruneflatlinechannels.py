@@ -59,10 +59,10 @@ class OWPruneFlatlineChannels(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.max_duration_control = gui.lineEdit(box, self, 'max_duration', 'Max duration:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_duration'))
-        self.max_jitter_rel_control = gui.lineEdit(box, self, 'max_jitter_rel', 'Max jitter rel:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_jitter_rel'))
-        self.max_jitter_abs_control = gui.lineEdit(box, self, 'max_jitter_abs', 'Max jitter abs:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_jitter_abs'))
-        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'))
+        self.max_duration_control = gui.lineEdit(box, self, 'max_duration', 'Max duration:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_duration'), tooltip="Maximum flat-line duration. If a channel has a longer flatline than this, it will be removed. In seconds.")
+        self.max_jitter_rel_control = gui.lineEdit(box, self, 'max_jitter_rel', 'Max jitter rel:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_jitter_rel'), tooltip="Allowed relative jitter. This is relative to the absolute signal value.")
+        self.max_jitter_abs_control = gui.lineEdit(box, self, 'max_jitter_abs', 'Max jitter abs:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_jitter_abs'), tooltip="Allowed absolute jitter.")
+        self.calib_seconds_control = gui.lineEdit(box, self, 'calib_seconds', 'Calib seconds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('calib_seconds'), tooltip="Data length for calibration. In seconds. Default: 15.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

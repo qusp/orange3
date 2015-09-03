@@ -56,9 +56,9 @@ class OWWindowFunction(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.func_control = gui.lineEdit(box, self, 'func', 'Func:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('func'))
-        self.param_control = gui.lineEdit(box, self, 'param', 'Param:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('param'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to apply filter to. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency'). Default: 'time'.")
+        self.func_control = gui.lineEdit(box, self, 'func', 'Func:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('func'), tooltip="Type of window function to use. Default: 'hann'.")
+        self.param_control = gui.lineEdit(box, self, 'param', 'Param:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('param'), tooltip="Window parameter. Needed for kaiser, gaussian, slepian, chebwin. Default: None.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

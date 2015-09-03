@@ -53,8 +53,8 @@ class OWMin(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.threshold_control = gui.lineEdit(box, self, 'threshold', 'Threshold:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.threshold_control = gui.lineEdit(box, self, 'threshold', 'Threshold:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('threshold'), tooltip="Threshold for minimum computation.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

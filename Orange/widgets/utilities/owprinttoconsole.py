@@ -50,7 +50,7 @@ class OWPrintToConsole(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.only_nonempty_control = gui.checkBox(box, self, 'only_nonempty', 'Only nonempty', callback=lambda: self.property_changed('only_nonempty'))
+        self.only_nonempty_control = gui.checkBox(box, self, 'only_nonempty', 'Only nonempty', callback=lambda: self.property_changed('only_nonempty'), tooltip="Only print non-empty packets.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

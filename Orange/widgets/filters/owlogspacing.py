@@ -53,8 +53,8 @@ class OWLogSpacing(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.points_control = gui.lineEdit(box, self, 'points', 'Points:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('points'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
+        self.points_control = gui.lineEdit(box, self, 'points', 'Points:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('points'), tooltip="Number of sampling points.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

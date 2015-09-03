@@ -53,8 +53,8 @@ class OWDecimate(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.factor_control = gui.lineEdit(box, self, 'factor', 'Factor:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('factor'))
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
+        self.factor_control = gui.lineEdit(box, self, 'factor', 'Factor:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('factor'), tooltip="Decimation factor.")
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to apply filter to. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency'). Default: 'time'.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

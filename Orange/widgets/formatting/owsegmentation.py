@@ -56,9 +56,9 @@ class OWSegmentation(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.time_bounds_control = gui.lineEdit(box, self, 'time_bounds', 'Time bounds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('time_bounds'))
-        self.online_epoching_control = gui.lineEdit(box, self, 'online_epoching', 'Online epoching:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('online_epoching'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.time_bounds_control = gui.lineEdit(box, self, 'time_bounds', 'Time bounds:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('time_bounds'), tooltip="Time window relative to markers. For each target marker, a segment will be extracted that lies relative to the marker.")
+        self.online_epoching_control = gui.lineEdit(box, self, 'online_epoching', 'Online epoching:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('online_epoching'), tooltip="How to extract segments when streaming. When using 'marker-locked', windows are extracted relative to the target markers; when using 'sliding', a single sliding window is extracted that lies at the end of the data.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Segment signal chunks. If unset, any numeric chunk with a time axis will be segmented. Note that marker chunks are generally segmented, too.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

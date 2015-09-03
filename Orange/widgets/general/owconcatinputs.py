@@ -68,10 +68,10 @@ class OWConcatInputs(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.create_new_control = gui.checkBox(box, self, 'create_new', 'Create new', callback=lambda: self.property_changed('create_new'))
-        self.properties_control = gui.lineEdit(box, self, 'properties', 'Properties:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('properties'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="New axis type to fold into.")
+        self.create_new_control = gui.checkBox(box, self, 'create_new', 'Create new', callback=lambda: self.property_changed('create_new'), tooltip="Whether to create a new axis.")
+        self.properties_control = gui.lineEdit(box, self, 'properties', 'Properties:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('properties'), tooltip="Values for the primary property of the axis, e.g., names if the axis is 'space'). Only applies when creating a new axis.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Concatenate only the signal chunks. If true, the non-signal chunks will be taken from the first input data port.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

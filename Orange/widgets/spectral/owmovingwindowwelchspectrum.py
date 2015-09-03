@@ -68,13 +68,13 @@ class OWMovingWindowWelchSpectrum(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.window_length_control = gui.lineEdit(box, self, 'window_length', 'Window length:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window_length'))
-        self.segment_samples_control = gui.lineEdit(box, self, 'segment_samples', 'Segment samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('segment_samples'))
-        self.overlap_samples_control = gui.lineEdit(box, self, 'overlap_samples', 'Overlap samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('overlap_samples'))
-        self.window_control = gui.lineEdit(box, self, 'window', 'Window:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window'))
-        self.detrend_control = gui.lineEdit(box, self, 'detrend', 'Detrend:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('detrend'))
-        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'))
-        self.scaling_control = gui.lineEdit(box, self, 'scaling', 'Scaling:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('scaling'))
+        self.window_length_control = gui.lineEdit(box, self, 'window_length', 'Window length:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window_length'), tooltip="Sliding window length in seconds.")
+        self.segment_samples_control = gui.lineEdit(box, self, 'segment_samples', 'Segment samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('segment_samples'), tooltip="Segment length. In samples.")
+        self.overlap_samples_control = gui.lineEdit(box, self, 'overlap_samples', 'Overlap samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('overlap_samples'), tooltip="Number of overlapped samples. If None, defaults to half of segment_samples.")
+        self.window_control = gui.lineEdit(box, self, 'window', 'Window:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('window'), tooltip="Type of window function to use.")
+        self.detrend_control = gui.lineEdit(box, self, 'detrend', 'Detrend:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('detrend'), tooltip="Detrending method.")
+        self.onesided_control = gui.checkBox(box, self, 'onesided', 'Onesided', callback=lambda: self.property_changed('onesided'), tooltip="Return one-sided spectrum. For complex data, the spectrum is always two-sided.")
+        self.scaling_control = gui.lineEdit(box, self, 'scaling', 'Scaling:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('scaling'), tooltip="Scaling of the spectrum. Density is 1/f normalized.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

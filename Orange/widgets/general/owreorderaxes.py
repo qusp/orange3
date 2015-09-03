@@ -53,8 +53,8 @@ class OWReorderAxes(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.order_control = gui.lineEdit(box, self, 'order', 'Order:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('order'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.order_control = gui.lineEdit(box, self, 'order', 'Order:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('order'), tooltip="New axis order. Can be formatted as in [0,1,2,3], or [space, time, frequency]. For the latter, also ... and : are allowed as in [:,time, ...].")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

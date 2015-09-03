@@ -53,8 +53,8 @@ class OWPruneBadData(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
-        self.criteria_control = gui.lineEdit(box, self, 'criteria', 'Criteria:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('criteria'))
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis over which to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
+        self.criteria_control = gui.lineEdit(box, self, 'criteria', 'Criteria:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('criteria'), tooltip="Pruning criteria. Can be a set of multiple possible criteria.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

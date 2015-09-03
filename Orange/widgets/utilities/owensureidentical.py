@@ -53,8 +53,8 @@ class OWEnsureIdentical(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.check_metadata_control = gui.checkBox(box, self, 'check_metadata', 'Check metadata', callback=lambda: self.property_changed('check_metadata'))
-        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', 'Tolerance:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tolerance'))
+        self.check_metadata_control = gui.checkBox(box, self, 'check_metadata', 'Check metadata', callback=lambda: self.property_changed('check_metadata'), tooltip="Also check meta-data. If false, only the numeric contents are checked.")
+        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', 'Tolerance:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tolerance'), tooltip="Numerical tolerance. Relative to the norm of the values.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

@@ -62,11 +62,11 @@ class OWBatchPackets(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.batching_control = gui.lineEdit(box, self, 'batching', 'Batching:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('batching'))
-        self.batchsize_control = gui.lineEdit(box, self, 'batchsize', 'Batchsize:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('batchsize'))
-        self.max_input_lag_control = gui.lineEdit(box, self, 'max_input_lag', 'Max input lag:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_input_lag'))
-        self.max_output_lag_control = gui.lineEdit(box, self, 'max_output_lag', 'Max output lag:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_output_lag'))
-        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'))
+        self.batching_control = gui.lineEdit(box, self, 'batching', 'Batching:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('batching'), tooltip="Batching mode. If set to 'realtime', then as many packets are merged as necessary to maintain real-time updates. If set to 'fixed', then a fixed number of successive packets (batchsize) are merged.")
+        self.batchsize_control = gui.lineEdit(box, self, 'batchsize', 'Batchsize:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('batchsize'), tooltip="Number of successive packets to merge. Only used if batching is set to 'fixed'.")
+        self.max_input_lag_control = gui.lineEdit(box, self, 'max_input_lag', 'Max input lag:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_input_lag'), tooltip="Maximum input packet lag beyond which the system will stash the packet and batch it with the next one (in 'realtime' mode), in seconds.")
+        self.max_output_lag_control = gui.lineEdit(box, self, 'max_output_lag', 'Max output lag:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_output_lag'), tooltip="Maximum delay incurred by batching packets, in seconds.")
+        self.axis_control = gui.lineEdit(box, self, 'axis', 'Axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('axis'), tooltip="Axis to concatenate along. If set to 'auto', concatenation goes along the instance axis if present, or time axis otherwise.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

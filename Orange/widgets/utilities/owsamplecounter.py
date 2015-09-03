@@ -50,7 +50,7 @@ class OWSampleCounter(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.enabled_control = gui.checkBox(box, self, 'enabled', 'Enabled', callback=lambda: self.property_changed('enabled'))
+        self.enabled_control = gui.checkBox(box, self, 'enabled', 'Enabled', callback=lambda: self.property_changed('enabled'), tooltip="Whether this stage is enabled.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

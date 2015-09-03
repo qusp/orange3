@@ -53,8 +53,8 @@ class OWElementwiseExpression(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.expression_control = gui.lineEdit(box, self, 'expression', 'Expression:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('expression'))
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'))
+        self.expression_control = gui.lineEdit(box, self, 'expression', 'Expression:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('expression'), tooltip="Expression to apply. The data is referred to as x.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).

@@ -53,8 +53,8 @@ class OWConcentrationIndex(widget.OWWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.frequencies_num_control = gui.lineEdit(box, self, 'frequencies_num', 'Frequencies num:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies_num'))
-        self.frequencies_den_control = gui.lineEdit(box, self, 'frequencies_den', 'Frequencies den:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies_den'))
+        self.frequencies_num_control = gui.lineEdit(box, self, 'frequencies_num', 'Frequencies num:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies_num'), tooltip="Frequency bands to average over in the numerator. Default: Beta band.")
+        self.frequencies_den_control = gui.lineEdit(box, self, 'frequencies_den', 'Frequencies den:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('frequencies_den'), tooltip="Frequency bands to average over in the numerator. Default: Theta and Alpha bands.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
         # Set minimum width (in pixels).
