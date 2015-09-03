@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import builtins
-import sys
 
-from PyQt4 import QtGui
-
-from Orange.widgets import widget, gui
+from Orange.widgets import widget, gui, cpewidget
 from Orange.widgets.settings import Setting
 import neuropype.engine
 from neuropype.nodes.feature_extraction import KernelPrincipalComponentAnalysis
 
 
-class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
+class OWKernelPrincipalComponentAnalysis(cpewidget.CPEWidget):
+
+    # Node meta-data.
     name = "Kernel Principal Component Analysis"
     description = "Non-linear dimensionality reduction using Kernel Principal Component Analysis."
     author = "Christian Kothe"
@@ -19,6 +18,7 @@ class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
     priority = 5
     category = "Feature_Extraction"
 
+    # Input/output ports.
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_data', 'flags': 0},
@@ -30,8 +30,7 @@ class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'flags': 0},
     ]
 
-    want_main_area = False
-
+    # Configuration properties.
     num_components = Setting(None)
     kernel = Setting(None)
     poly_degree = Setting(None)
@@ -44,10 +43,10 @@ class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
     separate_axes = Setting(None)
 
     def __init__(self):
-        super().__init__()
+        # Initialize with a newly instantiated node.
+        super().__init__(KernelPrincipalComponentAnalysis())
 
-        # Construct node instance and set default properties.
-        self.node = KernelPrincipalComponentAnalysis()
+        # Set default properties.
         settings = self.settingsHandler.pack_data(self)
         if not [k for k, v in settings.items() if v != None]:
             super().__setattr__('num_components', self.node.num_components)
@@ -72,9 +71,6 @@ class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
             self.node.aggregate_axes = self.aggregate_axes
             self.node.separate_axes = self.separate_axes
 
-        # Name of the last node property to generate an error.
-        self.last_error_caused_by = ''
-
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
         self.num_components_control = gui.lineEdit(box, self, 'num_components', 'Num components:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('num_components'), tooltip="Number of components to keep. If left unset, all components are kept.")
@@ -89,84 +85,9 @@ class OWKernelPrincipalComponentAnalysis(widget.OWWidget):
         self.separate_axes_control = gui.lineEdit(box, self, 'separate_axes', 'Separate axes:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('separate_axes'), tooltip="Axes along which to learn separate models. This method can learn multiple separate and independent models (e.g., one per frequency, or one per time slice) in parallel. This is not a very common use case and thus argument is usually left empty (meaning: no axis). This is a comma-separated list of axis names, possibly empty, or the special string '(all others)'.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
-        # Set minimum width (in pixels).
-        self.setMinimumWidth(480)
-
-    def get_property_names(self):
-        return list(self.node.ports(editable=True).keys())
-
-    def get_property_control(self, name):
-        return getattr(self, '{}_control'.format(name))
-
-    def enable_property_control(self, name):
-        self.get_property_control(name).setDisabled(False)
-
-    def disable_property_control(self, name):
-        self.get_property_control(name).setDisabled(True)
-
-    def enable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.enable_property_control(name)
-
-    def disable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.disable_property_control(name)
-
-    def reset_default_properties(self, names=None):
-        node = KernelPrincipalComponentAnalysis()
-
-        for name in (names or self.get_property_names()):
-            setattr(self.node, name, getattr(node, name))
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-    def property_changed(self, name):
-        if self.last_error_caused_by and self.last_error_caused_by != name:
-            return
-
-        try:
-            if self.node.port(name).value_type in (bool, str):
-                value = getattr(self, name)
-            else:
-                # Evaluate string as pure Python code.
-                content = getattr(self, name)
-                try:
-                    value = eval(content)
-                except:
-                    # take it as a literal string
-                    print("Could not evaluate %s literally, "
-                          "interpreting it as string." % content)
-                    value = eval('"%s"' % content)
-
-            setattr(self.node, name, value)
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-            if self.last_error_caused_by:
-                self.last_error_caused_by = ''
-                self.error()
-
-            self.enable_property_controls()
-            self.reset_button.setDisabled(False)
-        except Exception as e:
-            self.disable_property_controls()
-            self.reset_button.setDisabled(True)
-            self.enable_property_control(name)
-
-            if not self.last_error_caused_by:
-                self.last_error_caused_by = name
-
-            self.error(text=str(e))
-
+    # Port setters.
     def set_update(self, update):
         self.node.update = update
 
     def set_data(self, data):
         self.node.data = data
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    ow = OWKernelPrincipalComponentAnalysis()
-    ow.show()
-    app.exec_()

@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import builtins
-import sys
 
-from PyQt4 import QtGui
-
-from Orange.widgets import widget, gui
+from Orange.widgets import widget, gui, cpewidget
 from Orange.widgets.settings import Setting
 import neuropype.engine
 from neuropype.nodes.general import Covariance
 
 
-class OWCovariance(widget.OWWidget):
+class OWCovariance(cpewidget.CPEWidget):
+
+    # Node meta-data.
     name = "Covariance"
     description = "Calculate the covariance between all elements of a given axis; replicates the given axis."
     author = "Christian Kothe"
@@ -19,6 +18,7 @@ class OWCovariance(widget.OWWidget):
     priority = 4
     category = "General"
 
+    # Input/output ports.
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_data', 'flags': 0},
@@ -30,17 +30,16 @@ class OWCovariance(widget.OWWidget):
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'flags': 0},
     ]
 
-    want_main_area = False
-
+    # Configuration properties.
     shrinkage = Setting(None)
     cov_axis = Setting(None)
     avg_axis = Setting(None)
 
     def __init__(self):
-        super().__init__()
+        # Initialize with a newly instantiated node.
+        super().__init__(Covariance())
 
-        # Construct node instance and set default properties.
-        self.node = Covariance()
+        # Set default properties.
         settings = self.settingsHandler.pack_data(self)
         if not [k for k, v in settings.items() if v != None]:
             super().__setattr__('shrinkage', self.node.shrinkage)
@@ -51,9 +50,6 @@ class OWCovariance(widget.OWWidget):
             self.node.cov_axis = self.cov_axis
             self.node.avg_axis = self.avg_axis
 
-        # Name of the last node property to generate an error.
-        self.last_error_caused_by = ''
-
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
         self.shrinkage_control = gui.lineEdit(box, self, 'shrinkage', 'Shrinkage:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('shrinkage'), tooltip="Amount of shrinkage to apply to covariance estimate.  This is a regularization method that protects against degenerate matrices.")
@@ -61,84 +57,9 @@ class OWCovariance(widget.OWWidget):
         self.avg_axis_control = gui.lineEdit(box, self, 'avg_axis', 'Avg axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('avg_axis'), tooltip="Axis to average over. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
-        # Set minimum width (in pixels).
-        self.setMinimumWidth(480)
-
-    def get_property_names(self):
-        return list(self.node.ports(editable=True).keys())
-
-    def get_property_control(self, name):
-        return getattr(self, '{}_control'.format(name))
-
-    def enable_property_control(self, name):
-        self.get_property_control(name).setDisabled(False)
-
-    def disable_property_control(self, name):
-        self.get_property_control(name).setDisabled(True)
-
-    def enable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.enable_property_control(name)
-
-    def disable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.disable_property_control(name)
-
-    def reset_default_properties(self, names=None):
-        node = Covariance()
-
-        for name in (names or self.get_property_names()):
-            setattr(self.node, name, getattr(node, name))
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-    def property_changed(self, name):
-        if self.last_error_caused_by and self.last_error_caused_by != name:
-            return
-
-        try:
-            if self.node.port(name).value_type in (bool, str):
-                value = getattr(self, name)
-            else:
-                # Evaluate string as pure Python code.
-                content = getattr(self, name)
-                try:
-                    value = eval(content)
-                except:
-                    # take it as a literal string
-                    print("Could not evaluate %s literally, "
-                          "interpreting it as string." % content)
-                    value = eval('"%s"' % content)
-
-            setattr(self.node, name, value)
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-            if self.last_error_caused_by:
-                self.last_error_caused_by = ''
-                self.error()
-
-            self.enable_property_controls()
-            self.reset_button.setDisabled(False)
-        except Exception as e:
-            self.disable_property_controls()
-            self.reset_button.setDisabled(True)
-            self.enable_property_control(name)
-
-            if not self.last_error_caused_by:
-                self.last_error_caused_by = name
-
-            self.error(text=str(e))
-
+    # Port setters.
     def set_update(self, update):
         self.node.update = update
 
     def set_data(self, data):
         self.node.data = data
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    ow = OWCovariance()
-    ow.show()
-    app.exec_()

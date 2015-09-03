@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import builtins
-import sys
 
-from PyQt4 import QtGui
-
-from Orange.widgets import widget, gui
+from Orange.widgets import widget, gui, cpewidget
 from Orange.widgets.settings import Setting
 import neuropype.engine
 from neuropype.nodes.network import LSLOutput
 
 
-class OWLSLOutput(widget.OWWidget):
+class OWLSLOutput(cpewidget.CPEWidget):
+
+    # Node meta-data.
     name = "LSL Output"
     description = "Send data to LSL"
     author = "Christian Kothe"
@@ -19,6 +18,7 @@ class OWLSLOutput(widget.OWWidget):
     priority = 2
     category = "Network"
 
+    # Input/output ports.
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
         {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_data', 'flags': 0},
@@ -29,8 +29,7 @@ class OWLSLOutput(widget.OWWidget):
         {'name': 'This', 'type': builtins.object, 'flags': 0},
     ]
 
-    want_main_area = False
-
+    # Configuration properties.
     stream_name = Setting(None)
     stream_type = Setting(None)
     source_id = Setting(None)
@@ -40,10 +39,10 @@ class OWLSLOutput(widget.OWWidget):
     only_signals = Setting(None)
 
     def __init__(self):
-        super().__init__()
+        # Initialize with a newly instantiated node.
+        super().__init__(LSLOutput())
 
-        # Construct node instance and set default properties.
-        self.node = LSLOutput()
+        # Set default properties.
         settings = self.settingsHandler.pack_data(self)
         if not [k for k, v in settings.items() if v != None]:
             super().__setattr__('stream_name', self.node.stream_name)
@@ -62,9 +61,6 @@ class OWLSLOutput(widget.OWWidget):
             self.node.max_buffered = self.max_buffered
             self.node.only_signals = self.only_signals
 
-        # Name of the last node property to generate an error.
-        self.last_error_caused_by = ''
-
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
         self.stream_name_control = gui.lineEdit(box, self, 'stream_name', 'Stream name:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('stream_name'), tooltip="Name of output data stream. Data will be published in LSL under this name.")
@@ -76,84 +72,9 @@ class OWLSLOutput(widget.OWWidget):
         self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be considered for sending; note, however, that there must only be one applicable chunk in the data.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
-        # Set minimum width (in pixels).
-        self.setMinimumWidth(480)
-
-    def get_property_names(self):
-        return list(self.node.ports(editable=True).keys())
-
-    def get_property_control(self, name):
-        return getattr(self, '{}_control'.format(name))
-
-    def enable_property_control(self, name):
-        self.get_property_control(name).setDisabled(False)
-
-    def disable_property_control(self, name):
-        self.get_property_control(name).setDisabled(True)
-
-    def enable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.enable_property_control(name)
-
-    def disable_property_controls(self, names=None):
-        for name in (names or self.get_property_names()):
-            self.disable_property_control(name)
-
-    def reset_default_properties(self, names=None):
-        node = LSLOutput()
-
-        for name in (names or self.get_property_names()):
-            setattr(self.node, name, getattr(node, name))
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-    def property_changed(self, name):
-        if self.last_error_caused_by and self.last_error_caused_by != name:
-            return
-
-        try:
-            if self.node.port(name).value_type in (bool, str):
-                value = getattr(self, name)
-            else:
-                # Evaluate string as pure Python code.
-                content = getattr(self, name)
-                try:
-                    value = eval(content)
-                except:
-                    # take it as a literal string
-                    print("Could not evaluate %s literally, "
-                          "interpreting it as string." % content)
-                    value = eval('"%s"' % content)
-
-            setattr(self.node, name, value)
-            # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
-
-            if self.last_error_caused_by:
-                self.last_error_caused_by = ''
-                self.error()
-
-            self.enable_property_controls()
-            self.reset_button.setDisabled(False)
-        except Exception as e:
-            self.disable_property_controls()
-            self.reset_button.setDisabled(True)
-            self.enable_property_control(name)
-
-            if not self.last_error_caused_by:
-                self.last_error_caused_by = name
-
-            self.error(text=str(e))
-
+    # Port setters.
     def set_update(self, update):
         self.node.update = update
 
     def set_data(self, data):
         self.node.data = data
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    ow = OWLSLOutput()
-    ow.show()
-    app.exec_()
