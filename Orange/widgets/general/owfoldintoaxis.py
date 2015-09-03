@@ -52,9 +52,9 @@ class OWFoldIntoAxis(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.src_axis_control = gui.lineEdit(box, self, 'src_axis', 'Src axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('src_axis'), tooltip="Axis to fold. This is the type of the axis that shall be folded into another axis.")
-        self.dst_axis_control = gui.lineEdit(box, self, 'dst_axis', 'Dst axis:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('dst_axis'), tooltip="Axis to fold into. This is the axis into which the other one shall be folded.")
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
+        self.src_axis_control = gui.comboBox(box, self, 'src_axis', label='Src axis:', items=('time', 'instance', 'space', 'feature', 'frequency', 'statistic', 'axis', 'lag'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('src_axis'), tooltip="Axis to fold. This is the type of the axis that shall be folded into another axis.")
+        self.dst_axis_control = gui.comboBox(box, self, 'dst_axis', label='Dst axis:', items=('time', 'instance', 'space', 'feature', 'frequency', 'statistic', 'axis', 'lag'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('dst_axis'), tooltip="Axis to fold into. This is the axis into which the other one shall be folded.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', label='Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

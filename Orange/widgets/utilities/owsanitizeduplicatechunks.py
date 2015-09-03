@@ -46,7 +46,7 @@ class OWSanitizeDuplicateChunks(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.show_warnings_control = gui.checkBox(box, self, 'show_warnings', 'Show warnings', callback=lambda: self.property_changed('show_warnings'), tooltip="Show warnings when dropping chunks.")
+        self.show_warnings_control = gui.checkBox(box, self, 'show_warnings', label='Show warnings', callback=lambda: self.property_changed('show_warnings'), tooltip="Show warnings when dropping chunks.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

@@ -46,7 +46,7 @@ class OWOverrideSamplingRate(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.sampling_rate_control = gui.lineEdit(box, self, 'sampling_rate', 'Sampling rate:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('sampling_rate'), tooltip="Sampling rate override. Sets the assumed sampling rate of the axis to filter (particularly useful when filtering non-time axes). Default: None.")
+        self.sampling_rate_control = gui.lineEdit(box, self, 'sampling_rate', label='Sampling rate:', orientation='horizontal', callback=lambda: self.property_changed('sampling_rate'), tooltip="Sampling rate override. Sets the assumed sampling rate of the axis to filter (particularly useful when filtering non-time axes). Default: None.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

@@ -49,8 +49,8 @@ class OWDejitterTimestamps(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.forget_halftime_control = gui.lineEdit(box, self, 'forget_halftime', 'Forget halftime:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('forget_halftime'), tooltip="Forget factor as information half-life. In estimating the effective sampling rate a sample which is this many seconds old will be weighted 1/2 as much as the current sample in an exponentially decaying window.")
-        self.warmup_samples_control = gui.lineEdit(box, self, 'warmup_samples', 'Warmup samples:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('warmup_samples'), tooltip="Warmup samples. The number of samples for which we warm up the timing statistics. The first few samples will be updated in a block manner, followed by regular samplewise updates.")
+        self.forget_halftime_control = gui.lineEdit(box, self, 'forget_halftime', label='Forget halftime:', orientation='horizontal', callback=lambda: self.property_changed('forget_halftime'), tooltip="Forget factor as information half-life. In estimating the effective sampling rate a sample which is this many seconds old will be weighted 1/2 as much as the current sample in an exponentially decaying window.")
+        self.warmup_samples_control = gui.lineEdit(box, self, 'warmup_samples', label='Warmup samples:', orientation='horizontal', callback=lambda: self.property_changed('warmup_samples'), tooltip="Warmup samples. The number of samples for which we warm up the timing statistics. The first few samples will be updated in a block manner, followed by regular samplewise updates.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

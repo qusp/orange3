@@ -46,7 +46,7 @@ class OWDropoutChecker(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', 'Tolerance:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('tolerance'), tooltip="Tolerated jitter. If the sampling interval differs by more than this jitter, you will see spurious dropout warnings.")
+        self.tolerance_control = gui.lineEdit(box, self, 'tolerance', label='Tolerance:', orientation='horizontal', callback=lambda: self.property_changed('tolerance'), tooltip="Tolerated jitter. If the sampling interval differs by more than this jitter, you will see spurious dropout warnings.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

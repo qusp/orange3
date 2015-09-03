@@ -45,7 +45,7 @@ class OWImportSET(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.filename_control = gui.lineEdit(box, self, 'filename', 'Filename:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('filename'), tooltip="File name to load (*.set).")
+        self.filename_control = gui.lineEdit(box, self, 'filename', label='Filename:', orientation='horizontal', callback=lambda: self.property_changed('filename'), tooltip="File name to load (*.set).")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

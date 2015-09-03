@@ -15,7 +15,7 @@ class CPEWidget(widget.OWWidget):
         self.last_error_caused_by = ''
 
         # Set minimum width (in pixels).
-        self.setMinimumWidth(480)
+        self.setMinimumWidth(360)
 
     def get_property_names(self):
         return list(self.node.ports(editable=True).keys())
@@ -56,11 +56,10 @@ class CPEWidget(widget.OWWidget):
                 # Evaluate string as pure Python code.
                 content = getattr(self, name)
                 try:
+                    # attempt to evaluate as expression
                     value = eval(content)
                 except Exception as e:
-                    # take it as a literal string
-                    print("Could not evaluate %s literally (%s), "
-                          "interpreting as string." % (content, e))
+                    # interpret as a string
                     value = eval('"%s"' % content)
 
             setattr(self.node, name, value)

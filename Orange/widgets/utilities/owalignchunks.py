@@ -46,7 +46,7 @@ class OWAlignChunks(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.max_marker_lag_control = gui.lineEdit(box, self, 'max_marker_lag', 'Max marker lag:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('max_marker_lag'), tooltip="Maximum marker delivery lag. This is the maximum delay (in seconds) with which markers may show up in the input packet. If marker streams are present, this will be the minimum wall-clock delay of the output stream.")
+        self.max_marker_lag_control = gui.lineEdit(box, self, 'max_marker_lag', label='Max marker lag:', orientation='horizontal', callback=lambda: self.property_changed('max_marker_lag'), tooltip="Maximum marker delivery lag. This is the maximum delay (in seconds) with which markers may show up in the input packet. If marker streams are present, this will be the minimum wall-clock delay of the output stream.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

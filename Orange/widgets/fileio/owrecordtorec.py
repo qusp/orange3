@@ -49,8 +49,8 @@ class OWRecordToREC(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.filename_control = gui.lineEdit(box, self, 'filename', 'Filename:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('filename'), tooltip="Name of the file where the packets will be saved.")
-        self.protocol_ver_control = gui.lineEdit(box, self, 'protocol_ver', 'Protocol ver:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('protocol_ver'), tooltip="Pickle protocol version.")
+        self.filename_control = gui.lineEdit(box, self, 'filename', label='Filename:', orientation='horizontal', callback=lambda: self.property_changed('filename'), tooltip="Name of the file where the packets will be saved.")
+        self.protocol_ver_control = gui.lineEdit(box, self, 'protocol_ver', label='Protocol ver:', orientation='horizontal', callback=lambda: self.property_changed('protocol_ver'), tooltip="Pickle protocol version.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

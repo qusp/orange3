@@ -58,11 +58,11 @@ class OWSigmoid(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.pre_shift_control = gui.lineEdit(box, self, 'pre_shift', 'Pre shift:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('pre_shift'), tooltip="Shift prior to sigmoid transform.")
-        self.pre_scale_control = gui.lineEdit(box, self, 'pre_scale', 'Pre scale:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('pre_scale'), tooltip="Scaling prior to sigmoid transform.")
-        self.post_scale_control = gui.lineEdit(box, self, 'post_scale', 'Post scale:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('post_scale'), tooltip="Scaling after sigmoid transform.")
-        self.post_shift_control = gui.lineEdit(box, self, 'post_shift', 'Post shift:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('post_shift'), tooltip="Shift after sigmoid transform.")
-        self.only_signals_control = gui.checkBox(box, self, 'only_signals', 'Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
+        self.pre_shift_control = gui.lineEdit(box, self, 'pre_shift', label='Pre shift:', orientation='horizontal', callback=lambda: self.property_changed('pre_shift'), tooltip="Shift prior to sigmoid transform.")
+        self.pre_scale_control = gui.lineEdit(box, self, 'pre_scale', label='Pre scale:', orientation='horizontal', callback=lambda: self.property_changed('pre_scale'), tooltip="Scaling prior to sigmoid transform.")
+        self.post_scale_control = gui.lineEdit(box, self, 'post_scale', label='Post scale:', orientation='horizontal', callback=lambda: self.property_changed('post_scale'), tooltip="Scaling after sigmoid transform.")
+        self.post_shift_control = gui.lineEdit(box, self, 'post_shift', label='Post shift:', orientation='horizontal', callback=lambda: self.property_changed('post_shift'), tooltip="Shift after sigmoid transform.")
+        self.only_signals_control = gui.checkBox(box, self, 'only_signals', label='Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

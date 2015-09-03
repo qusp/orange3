@@ -46,7 +46,7 @@ class OWMeasureLoss(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.loss_metric_control = gui.lineEdit(box, self, 'loss_metric', 'Loss metric:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('loss_metric'), tooltip="Loss metric. MCR stands for mis-classification rate (aka error rate).")
+        self.loss_metric_control = gui.comboBox(box, self, 'loss_metric', label='Loss metric:', items=('MCR',), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('loss_metric'), tooltip="Loss metric. MCR stands for mis-classification rate (aka error rate).")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

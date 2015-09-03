@@ -45,8 +45,9 @@ class OW{{ node.__name__ }}(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties'){% for name, port in node.ports(editable=True).items() %}
-        {% if port.value_type.__name__ == 'bool' %}self.{{ name }}_control = gui.checkBox(box, self, '{{ name }}', '{{ port.verbose_name|capitalize }}', callback=lambda: self.property_changed('{{ name }}'), tooltip="{{ port.help }}")
-        {%- else %}self.{{ name }}_control = gui.lineEdit(box, self, '{{ name }}', '{{ port.verbose_name|capitalize }}:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('{{ name }}'), tooltip="{{ port.help }}"){% endif %}{% endfor %}
+        {% if port.__class__.__name__ == 'BoolPort' %}self.{{ name }}_control = gui.checkBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}', callback=lambda: self.property_changed('{{ name }}'), tooltip="{{ port.help }}")
+        {%- elif port.__class__.__name__ == 'EnumPort'  %}self.{{ name }}_control = gui.comboBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', items={{ port.domain }}, sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip="{{ port.help }}")
+        {%- else %}self.{{ name }}_control = gui.lineEdit(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip="{{ port.help }}"){% endif %}{% endfor %}
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.{% for name, port in node.ports(direction='IN*', editable=False).items() %}

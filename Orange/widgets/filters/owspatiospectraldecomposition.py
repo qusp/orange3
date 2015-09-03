@@ -56,10 +56,10 @@ class OWSpatioSpectralDecomposition(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.nof_control = gui.lineEdit(box, self, 'nof', 'Nof:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('nof'), tooltip="Number of filters to learn.")
-        self.streaming_update_control = gui.checkBox(box, self, 'streaming_update', 'Streaming update', callback=lambda: self.property_changed('streaming_update'), tooltip="Perform streaming (online) updates.")
-        self.half_time_control = gui.lineEdit(box, self, 'half_time', 'Half time:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('half_time'), tooltip="Half time of exponentially weighted moving average filter. In seconds.")
-        self.shrinkage_control = gui.lineEdit(box, self, 'shrinkage', 'Shrinkage:', orientation='horizontal', enterPlaceholder=True, callback=lambda: self.property_changed('shrinkage'), tooltip="Regularization strength. This is primarily to prevent degenerate solutions.")
+        self.nof_control = gui.lineEdit(box, self, 'nof', label='Nof:', orientation='horizontal', callback=lambda: self.property_changed('nof'), tooltip="Number of filters to learn.")
+        self.streaming_update_control = gui.checkBox(box, self, 'streaming_update', label='Streaming update', callback=lambda: self.property_changed('streaming_update'), tooltip="Perform streaming (online) updates.")
+        self.half_time_control = gui.lineEdit(box, self, 'half_time', label='Half time:', orientation='horizontal', callback=lambda: self.property_changed('half_time'), tooltip="Half time of exponentially weighted moving average filter. In seconds.")
+        self.shrinkage_control = gui.lineEdit(box, self, 'shrinkage', label='Shrinkage:', orientation='horizontal', callback=lambda: self.property_changed('shrinkage'), tooltip="Regularization strength. This is primarily to prevent degenerate solutions.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.
