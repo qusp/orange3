@@ -12,7 +12,7 @@ class OWInjectCalibrationData(cpewidget.CPEWidget):
 
     # Node meta-data.
     name = "Inject Calibration Data"
-    description = "Inject Calibration Data into the stream.."
+    description = "Inject Calibration Data into the stream. This node allows to connect both a source of calibration data and a source of streaming data to the same processing pathway. The calibration data packet passes through on the first update, followed by successive packets of streaming data."
     author = "Christian Kothe"
     icon = "icons/InjectCalibrationData.svg"
     priority = 9

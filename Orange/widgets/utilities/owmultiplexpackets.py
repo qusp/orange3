@@ -12,7 +12,7 @@ class OWMultiplexPackets(cpewidget.CPEWidget):
 
     # Node meta-data.
     name = "Multiplex Packets"
-    description = "Multiplex multiple packets into a dict of packets."
+    description = "Multiplex multiple packets into a dict of packets. The Name X properties provide the dict keys under which the data on input ports 0-9 is stored. This node is not typically used in normal scripts or patches."
     author = "Christian Kothe"
     icon = "icons/MultiplexPackets.svg"
     priority = 10

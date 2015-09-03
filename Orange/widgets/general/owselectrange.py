@@ -11,7 +11,7 @@ from neuropype.nodes.general import SelectRange
 class OWSelectRange(cpewidget.CPEWidget):
 
     # Node meta-data.
-    name = "Prune Range"
+    name = "Select Range"
     description = "Prune data based on a given range."
     author = "Christian Kothe"
     icon = "icons/SelectRange.svg"
@@ -52,9 +52,9 @@ class OWSelectRange(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('time', 'instance', 'space', 'feature', 'frequency', 'statistic', 'axis', 'lag'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...). ")
-        self.selection_control = gui.lineEdit(box, self, 'selection', label='Selection:', orientation='horizontal', callback=lambda: self.property_changed('selection'), tooltip="Selection range. Can be a list of indices, a slice, or an expression string evaluating into indices.")
-        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('data', 'indices', 'samples', 'error_distrib', 'Hz', 'units', 'parameter_type', 'sampling_distrib', 'names', 'seconds', 'fraction', 'sec', 'property'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('statistic', 'time', 'instance', 'axis', 'lag', 'feature', 'space', 'frequency'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...). ")
+        self.selection_control = gui.lineEdit(box, self, 'selection', label='Selection:', orientation='horizontal', callback=lambda: self.property_changed('selection'), tooltip="Selection range. Can be a list of indices, e.g., [0,1,2], a slice like 0:3, or an expression string evaluating into indices. Using 'names' as unit, values like ['C3','C4','Cz'], or 'A1':'B5' are allowed.")
+        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('samples', 'fraction', 'property', 'parameter_type', 'sec', 'names', 'error_distrib', 'units', 'sampling_distrib', 'seconds', 'indices', 'data', 'Hz'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

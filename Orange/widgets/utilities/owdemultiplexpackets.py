@@ -12,7 +12,7 @@ class OWDemultiplexPackets(cpewidget.CPEWidget):
 
     # Node meta-data.
     name = "Demultiplex Packets"
-    description = "Demultiplex packets from a dict of packets into multiple output packets."
+    description = "Demultiplex packets from a dict of packets into multiple output packets. The Name X properties provide the dict keys from which the data on output ports 0-9 is extracted. This node is not typically used in normal scripts or patches."
     author = "Christian Kothe"
     icon = "icons/DemultiplexPackets.svg"
     priority = 6

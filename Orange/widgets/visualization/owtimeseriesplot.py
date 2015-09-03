@@ -76,7 +76,7 @@ class OWTimeSeriesPlot(cpewidget.CPEWidget):
         self.title_control = gui.lineEdit(box, self, 'title', label='Title:', orientation='horizontal', callback=lambda: self.property_changed('title'), tooltip="Title of the plot.")
         self.background_color_control = gui.lineEdit(box, self, 'background_color', label='Background color:', orientation='horizontal', callback=lambda: self.property_changed('background_color'), tooltip="Background color. In hexadecimal notation (#RRGGBB).")
         self.line_color_control = gui.lineEdit(box, self, 'line_color', label='Line color:', orientation='horizontal', callback=lambda: self.property_changed('line_color'), tooltip="Color of the graph lines. In hexadecimal notation (#RRGGBB).")
-        self.zero_color_control = gui.lineEdit(box, self, 'zero_color', label='Zero color:', orientation='horizontal', callback=lambda: self.property_changed('zero_color'), tooltip="Color of the zero line.")
+        self.zero_color_control = gui.lineEdit(box, self, 'zero_color', label='Zero color:', orientation='horizontal', callback=lambda: self.property_changed('zero_color'), tooltip="Color of the zero line. In hexadecimal notation (#RRGGBBAA).")
         self.antialiased_control = gui.checkBox(box, self, 'antialiased', label='Antialiased', callback=lambda: self.property_changed('antialiased'), tooltip="Draw graphics antialiased. Can slow down plotting.")
         self.downsampled_control = gui.checkBox(box, self, 'downsampled', label='Downsampled', callback=lambda: self.property_changed('downsampled'), tooltip="Draw downsampled graphics. Can speed up plotting for dense time series.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)

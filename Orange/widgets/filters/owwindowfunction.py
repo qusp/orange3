@@ -52,7 +52,7 @@ class OWWindowFunction(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('time', 'instance', 'space', 'feature', 'frequency', 'statistic', 'axis', 'lag'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to apply filter to. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency'). Default: 'time'.")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('statistic', 'time', 'instance', 'axis', 'lag', 'feature', 'space', 'frequency'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to apply filter to. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency'). Default: 'time'.")
         self.func_control = gui.comboBox(box, self, 'func', label='Func:', items=('boxcar', 'triang', 'blackman', 'hamming', 'hann', 'bartlett', 'flattop', 'parzen', 'bohman', 'blackmanharris', 'nuttall', 'barthann', 'kaiser', 'gaussian', 'slepian', 'chebwin'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('func'), tooltip="Type of window function to use. Default: 'hann'.")
         self.param_control = gui.lineEdit(box, self, 'param', label='Param:', orientation='horizontal', callback=lambda: self.property_changed('param'), tooltip="Window parameter. Needed for kaiser, gaussian, slepian, chebwin. Default: None.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
