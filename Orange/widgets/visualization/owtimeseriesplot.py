@@ -16,7 +16,7 @@ class OWTimeSeriesPlot(widget.OWWidget):
     description = "Plot a multi-channel time series in real time."
     author = "Christian Kothe"
     icon = "icons/TimeSeriesPlot.svg"
-    priority = 1
+    priority = 2
     category = "Visualization"
 
     inputs = [
@@ -125,7 +125,14 @@ class OWTimeSeriesPlot(widget.OWWidget):
                 value = getattr(self, name)
             else:
                 # Evaluate string as pure Python code.
-                value = eval(getattr(self, name))
+                content = getattr(self, name)
+                try:
+                    value = eval(content)
+                except:
+                    # take it as a literal string
+                    print("Could not evaluate %s literally, "
+                          "interpreting it as string." % content)
+                    value = eval('"%s"' % content)
 
             setattr(self.node, name, value)
             # Synchronize property changes back to the GUI.

@@ -93,7 +93,14 @@ class OW{{ node.__name__ }}(widget.OWWidget):
                 value = getattr(self, name)
             else:
                 # Evaluate string as pure Python code.
-                value = eval(getattr(self, name))
+                content = getattr(self, name)
+                try:
+                    value = eval(content)
+                except:
+                    # take it as a literal string
+                    print("Could not evaluate %s literally, "
+                          "interpreting it as string." % content)
+                    value = eval('"%s"' % content)
 
             setattr(self.node, name, value)
             # Synchronize property changes back to the GUI.
