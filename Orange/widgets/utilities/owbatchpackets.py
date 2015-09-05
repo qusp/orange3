@@ -21,13 +21,13 @@ class OWBatchPackets(cpewidget.CPEWidget):
     # Input/output ports.
     inputs = [
         {'name': 'Update', 'type': builtins.object, 'handler': 'set_update', 'flags': widget.Explicit},
-        {'name': 'Data', 'type': builtins.object, 'handler': 'set_data', 'flags': 0},
+        {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'handler': 'set_data', 'flags': 0},
     ]
 
     outputs = [
         {'name': 'Update', 'type': builtins.object, 'flags': 0},
         {'name': 'This', 'type': builtins.object, 'flags': 0},
-        {'name': 'Data', 'type': builtins.object, 'flags': 0},
+        {'name': 'Data', 'type': neuropype.engine.packet.Packet, 'flags': 0},
     ]
 
     # Configuration properties.
