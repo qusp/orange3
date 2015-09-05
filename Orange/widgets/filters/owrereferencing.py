@@ -55,10 +55,10 @@ class OWRereferencing(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('statistic', 'space', 'axis', 'instance', 'time', 'lag', 'feature', 'frequency'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis across which to re-reference. This is usually 'space'.")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('instance', 'statistic', 'time', 'lag', 'feature', 'space', 'frequency', 'axis'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis across which to re-reference. This is usually 'space'.")
         self.estimator_control = gui.comboBox(box, self, 'estimator', label='Estimator:', items=('mean', 'median'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('estimator'), tooltip="Estimator to use. Mean is the standard choice, median is a robust alternative (tolerates bad channels).")
         self.reference_range_control = gui.lineEdit(box, self, 'reference_range', label='Reference range:', orientation='horizontal', callback=lambda: self.property_changed('reference_range'), tooltip="Data range to use as reference. This is typically a channel range, e.g. ':' or ['TP8', 'TP9'] or ['Chn1':'Chn10'].")
-        self.reference_unit_control = gui.comboBox(box, self, 'reference_unit', label='Reference unit:', items=('names', 'indices', 'seconds', 'Hz', 'parameter_type', 'units', 'samples', 'fraction', 'data', 'property', 'error_distrib', 'sampling_distrib', 'sec'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('reference_unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
+        self.reference_unit_control = gui.comboBox(box, self, 'reference_unit', label='Reference unit:', items=('indices', 'sampling_distrib', 'names', 'samples', 'sec', 'parameter_type', 'units', 'property', 'error_distrib', 'data', 'seconds', 'fraction', 'Hz'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('reference_unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.
