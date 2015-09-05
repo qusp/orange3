@@ -21,3 +21,16 @@ __pycache__
 .pydevproject
 .settings/*
 
+# Auto-generated widgets
+Orange/widgets/custom/*
+Orange/widgets/elementwise/*
+Orange/widgets/feature_extraction/*
+Orange/widgets/fileio/*
+Orange/widgets/filters/*
+Orange/widgets/formatting/*
+Orange/widgets/general/*
+Orange/widgets/machine_learning/*
+Orange/widgets/network/*
+Orange/widgets/spectral/*
+Orange/widgets/utilities/*
+Orange/widgets/visualization/*
