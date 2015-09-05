@@ -18,6 +18,12 @@ import pkg_resources
 from PyQt4.QtGui import QFont, QColor
 from PyQt4.QtCore import Qt, QDir
 
+try:
+    import neuropype
+except:
+    cpe_path = os.path.join(os.path.dirname(__file__),'..','..','..','cpe')
+    sys.path.append(cpe_path)
+
 from Orange import canvas
 from Orange.canvas.application.application import CanvasApplication
 from Orange.canvas.application.canvasmain import CanvasMainWindow

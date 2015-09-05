@@ -64,7 +64,7 @@ class OWConcatInputs(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('frequency', 'instance', 'feature', 'space', 'axis', 'lag', 'statistic', 'time'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="New axis type to fold into.")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('statistic', 'space', 'axis', 'instance', 'time', 'lag', 'feature', 'frequency'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="New axis type to fold into.")
         self.create_new_control = gui.checkBox(box, self, 'create_new', label='Create new', callback=lambda: self.property_changed('create_new'), tooltip="Whether to create a new axis.")
         self.properties_control = gui.lineEdit(box, self, 'properties', label='Properties:', orientation='horizontal', callback=lambda: self.property_changed('properties'), tooltip="Values for the primary property of the axis, e.g., list of channel names if the axis is 'space'. Only applies when creating a new axis.")
         self.only_signals_control = gui.checkBox(box, self, 'only_signals', label='Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Concatenate only the signal chunks. If true, the non-signal chunks will be taken from the first input data port.")
