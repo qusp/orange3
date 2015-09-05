@@ -52,9 +52,9 @@ class OWAverages(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('instance', 'statistic', 'time', 'lag', 'feature', 'space', 'frequency', 'axis'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to average over. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('lag', 'time', 'feature', 'space', 'axis', 'statistic', 'frequency', 'instance'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to average over. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...).")
         self.windows_control = gui.lineEdit(box, self, 'windows', label='Windows:', orientation='horizontal', callback=lambda: self.property_changed('windows'), tooltip="List of window edges. Each window is given as a tuple of the start and end of the segment. None instead of a numeric value stands for the beginning/end of the whole data range as in Python slices. The last sample in the segment is excluded.")
-        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('indices', 'sampling_distrib', 'names', 'samples', 'sec', 'parameter_type', 'units', 'property', 'error_distrib', 'data', 'seconds', 'fraction', 'Hz'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
+        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('property', 'error_distrib', 'fraction', 'samples', 'units', 'seconds', 'sampling_distrib', 'sec', 'indices', 'Hz', 'names', 'parameter_type', 'data'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.

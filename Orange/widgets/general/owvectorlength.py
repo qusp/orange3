@@ -49,7 +49,7 @@ class OWVectorLength(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('instance', 'statistic', 'time', 'lag', 'feature', 'space', 'frequency', 'axis'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis across which to take the variance. This is a string that identifies the axis to use (e.g. 'instance', 'time', 'frequency').")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('lag', 'time', 'feature', 'space', 'axis', 'statistic', 'frequency', 'instance'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis across which to take the variance. This is a string that identifies the axis to use (e.g. 'instance', 'time', 'frequency').")
         self.only_signals_control = gui.checkBox(box, self, 'only_signals', label='Only signals', callback=lambda: self.property_changed('only_signals'), tooltip="Apply only to signal chunks. If unset, any numeric chunk data will be processed.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 

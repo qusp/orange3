@@ -52,9 +52,9 @@ class OWSelectRange(cpewidget.CPEWidget):
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties')
-        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('instance', 'statistic', 'time', 'lag', 'feature', 'space', 'frequency', 'axis'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...). ")
+        self.axis_control = gui.comboBox(box, self, 'axis', label='Axis:', items=('lag', 'time', 'feature', 'space', 'axis', 'statistic', 'frequency', 'instance'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('axis'), tooltip="Axis to prune. This is a string that identifies the axis to use (e.g. 'time', 'space', 'frequency', 'instance', 'feature', ...). ")
         self.selection_control = gui.lineEdit(box, self, 'selection', label='Selection:', orientation='horizontal', callback=lambda: self.property_changed('selection'), tooltip="Selection range. Can be a list of indices, e.g., [0,1,2], a slice like 0:3, or an expression string evaluating into indices. Using 'names' as unit, values like ['C3','C4','Cz'], or 'A1':'B5' are allowed.")
-        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('indices', 'sampling_distrib', 'names', 'samples', 'sec', 'parameter_type', 'units', 'property', 'error_distrib', 'data', 'seconds', 'fraction', 'Hz'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
+        self.unit_control = gui.comboBox(box, self, 'unit', label='Unit:', items=('property', 'error_distrib', 'fraction', 'samples', 'units', 'seconds', 'sampling_distrib', 'sec', 'indices', 'Hz', 'names', 'parameter_type', 'data'), sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('unit'), tooltip="Selection unit. Depending on the axis, different units are applicable.")
         self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
 
     # Port setters.
