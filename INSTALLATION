@@ -6,6 +6,7 @@ On Linux
   - build-essential
   - libblas-dev
   - liblapack-dev
+  - libgmp-dev
   - gfortran
   - python3
   - python3-dev
