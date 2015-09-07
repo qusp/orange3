@@ -39,7 +39,7 @@ def snake2camel(s, with_spaces=False):
 
 
 def sanitize_neuropype_path(neuropype_path):
-    """Resolve the path to neuropype if necessary and ensure that we can impor
+    """Resolve the path to neuropype if necessary and ensure that we can import
     from that path."""
     if not neuropype_path:
         import neuropype
