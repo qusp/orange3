@@ -12,8 +12,10 @@ from .. import config
 
 ABOUT_TEMPLATE = """\
 <center>
-<h4>Orange</h4>
-<p>Version: {version}</p>
+<h4>NeuroPyPE</h4>
+<p>CPE Version: 1.0</p>
+<p>VPE Version: 1.0</p>
+<p>Orange Version: {version}</p>
 <p>(git revision: {git_revision})</p>
 </center>
 

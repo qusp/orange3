@@ -285,27 +285,27 @@ def splash_screen():
     """
     pm = QPixmap(
         pkg_resources.resource_filename(
-            __name__, "icons/orange-splash-screen.png")
+            __name__, "icons/vpe-splash-screen.png")
     )
 
-    version = QCoreApplication.applicationVersion()
-    size = 21 if len(version) < 5 else 16
-    font = QFont("Helvetica")
-    font.setPixelSize(size)
-    font.setBold(True)
-    font.setItalic(True)
-    font.setLetterSpacing(QFont.AbsoluteSpacing, 2)
-    metrics = QFontMetrics(font)
-    br = metrics.boundingRect(version).adjusted(-5, 0, 5, 0)
-    br.moveCenter(QPoint(436, 224))
-
-    p = QPainter(pm)
-    p.setRenderHint(QPainter.Antialiasing)
-    p.setRenderHint(QPainter.TextAntialiasing)
-    p.setFont(font)
-    p.setPen(QColor("#231F20"))
-    p.drawText(br, Qt.AlignCenter, version)
-    p.end()
+    # version = QCoreApplication.applicationVersion()
+    # size = 21 if len(version) < 5 else 16
+    # font = QFont("Helvetica")
+    # font.setPixelSize(size)
+    # font.setBold(True)
+    # font.setItalic(True)
+    # font.setLetterSpacing(QFont.AbsoluteSpacing, 2)
+    # metrics = QFontMetrics(font)
+    # br = metrics.boundingRect(version).adjusted(-5, 0, 5, 0)
+    # br.moveCenter(QPoint(436, 224))
+    #
+    # p = QPainter(pm)
+    # p.setRenderHint(QPainter.Antialiasing)
+    # p.setRenderHint(QPainter.TextAntialiasing)
+    # p.setFont(font)
+    # p.setPen(QColor("#231F20"))
+    # p.drawText(br, Qt.AlignCenter, version)
+    # p.end()
     return pm, QRect(88, 193, 200, 20)
 
 
