@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme description="" title="" version="2.0">
+	<nodes>
+		<node id="0" name="LSL Input" position="(0, 100)" project_name="Orange" qualified_name="Orange.widgets.network.owlslinput.OWLSLInput" title="LSL Input" version="" />
+		<node id="1" name="LSL Output" position="(100, 0)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="Raw Outlet" version="" />
+		<node id="2" name="Select Range" position="(100, 200)" project_name="Orange" qualified_name="Orange.widgets.general.owselectrange.OWSelectRange" title="Select Range" version="" />
+		<node id="3" name="Re-referencing" position="(200, 200)" project_name="Orange" qualified_name="Orange.widgets.filters.owrereferencing.OWRereferencing" title="Re-referencing" version="" />
+		<node id="4" name="Moving Window Welch Spectrum" position="(300, 100)" project_name="Orange" qualified_name="Orange.widgets.spectral.owmovingwindowwelchspectrum.OWMovingWindowWelchSpectrum" title="Moving Window Welch Spectrum" version="" />
+		<node id="5" name="Frequency Normalization" position="(400, 100)" project_name="Orange" qualified_name="Orange.widgets.filters.owfrequencynormalization.OWFrequencyNormalization" title="Frequency Normalization" version="" />
+		<node id="6" name="LSL Output" position="(500, 100)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="Spectrum Outlet" version="" />
+		<node id="7" name="IIR Filter" position="(300, 300)" project_name="Orange" qualified_name="Orange.widgets.filters.owiirfilter.OWIIRFilter" title="IIR Bandpass" version="" />
+		<node id="8" name="Squaring" position="(400, 300)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owsquaring.OWSquaring" title="Squaring" version="" />
+		<node id="9" name="Moving Average" position="(500, 300)" project_name="Orange" qualified_name="Orange.widgets.filters.owmovingaverage.OWMovingAverage" title="Moving Average" version="" />
+		<node id="10" name="Shift" position="(600, 300)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owshift.OWShift" title="Logbias" version="" />
+		<node id="11" name="Logarithm" position="(700, 300)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owlogarithm.OWLogarithm" title="Logarithm" version="" />
+		<node id="12" name="LSL Output" position="(800, 300)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="Alpha Outlet" version="" />
+	</nodes>
+	<links>
+		<link enabled="true" id="0" sink_channel="Data" sink_node_id="1" source_channel="Data" source_node_id="0" />
+		<link enabled="true" id="1" sink_channel="Data" sink_node_id="2" source_channel="Data" source_node_id="0" />
+		<link enabled="true" id="2" sink_channel="Data" sink_node_id="3" source_channel="Data" source_node_id="2" />
+		<link enabled="true" id="3" sink_channel="Data" sink_node_id="4" source_channel="Data" source_node_id="3" />
+		<link enabled="true" id="4" sink_channel="Data" sink_node_id="5" source_channel="Data" source_node_id="4" />
+		<link enabled="true" id="5" sink_channel="Data" sink_node_id="6" source_channel="Data" source_node_id="5" />
+		<link enabled="true" id="6" sink_channel="Data" sink_node_id="7" source_channel="Data" source_node_id="3" />
+		<link enabled="true" id="7" sink_channel="Data" sink_node_id="8" source_channel="Data" source_node_id="7" />
+		<link enabled="true" id="8" sink_channel="Data" sink_node_id="9" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="9" sink_channel="Data" sink_node_id="10" source_channel="Data" source_node_id="9" />
+		<link enabled="true" id="10" sink_channel="Data" sink_node_id="11" source_channel="Data" source_node_id="10" />
+		<link enabled="true" id="11" sink_channel="Data" sink_node_id="12" source_channel="Data" source_node_id="11" />
+	</links>
+	<annotations />
+	<thumbnail />
+	<node_properties>
+		<properties format="pickle" node_id="0">gAN9cQAoWAoAAABtYXhfYnVmbGVucQFLHlgMAAAAbm9taW5hbF9yYXRlcQJOWBMAAABzYXZlZFdp
+ZGdldEdlb21ldHJ5cQNjc2lwCl91bnBpY2tsZV90eXBlCnEEWAwAAABQeVF0NC5RdENvcmVxBVgK
+AAAAUUJ5dGVBcnJheXEGQy4B2dDLAAEAAAAABEgAAAIbAAAFtwAAAz0AAARMAAACMgAABbMAAAM5
+AAAAAAAAcQeFcQiHcQlScQpYBQAAAHF1ZXJ5cQtYCgAAAHR5cGU9J0VFRydxDFgNAAAAY2hhbm5l
+bF9uYW1lc3ENXXEOWAcAAAByZWNvdmVycQ+IWAwAAABtYXhfY2h1bmtsZW5xEEsAWAwAAABtYXJr
+ZXJfcXVlcnlxEVgAAAAAcRJYDAAAAG1heF9ibG9ja2xlbnETTQAEdS4=
+</properties>
+		<properties format="pickle" node_id="1">gAN9cQAoWAUAAABzcmF0ZXEBTlgJAAAAc291cmNlX2lkcQJYBwAAAG9pdW9oaWhxA1gTAAAAc2F2
+ZWRXaWRnZXRHZW9tZXRyeXEEY3NpcApfdW5waWNrbGVfdHlwZQpxBVgMAAAAUHlRdDQuUXRDb3Jl
+cQZYCgAAAFFCeXRlQXJyYXlxB0MuAdnQywABAAAAAARIAAACJwAABbcAAAMxAAAETAAAAj4AAAWz
+AAADLQAAAAAAAHEIhXEJh3EKUnELWAwAAABvbmx5X3NpZ25hbHNxDIhYDAAAAG1heF9idWZmZXJl
+ZHENSzxYCQAAAGNodW5rX2xlbnEOSwBYCwAAAHN0cmVhbV90eXBlcQ9YBwAAAENvbnRyb2xxEFgL
+AAAAc3RyZWFtX25hbWVxEVgNAAAAbmV1cm9weXBlOlJhd3ESdS4=
+</properties>
+		<properties format="literal" node_id="2">{'axis': 'time', 'selection': ':', 'savedWidgetGeometry': None, 'unit': 'indices'}</properties>
+		<properties format="pickle" node_id="3">gAN9cQAoWAQAAABheGlzcQFYBQAAAHNwYWNlcQJYDgAAAHJlZmVyZW5jZV91bml0cQNYBQAAAG5h
+bWVzcQRYCQAAAGVzdGltYXRvcnEFWAQAAABtZWFucQZYDwAAAHJlZmVyZW5jZV9yYW5nZXEHWAEA
+AAA6cQhYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxCWNzaXAKX3VucGlja2xlX3R5cGUKcQpYDAAA
+AFB5UXQ0LlF0Q29yZXELWAoAAABRQnl0ZUFycmF5cQxDLgHZ0MsAAQAAAAAESAAAAkoAAAW3AAAD
+DgAABEwAAAJhAAAFswAAAwoAAAAAAABxDYVxDodxD1JxEHUu
+</properties>
+		<properties format="pickle" node_id="4">gAN9cQAoWA8AAABvdmVybGFwX3NhbXBsZXNxAU5YBwAAAGRldHJlbmRxAlgIAAAAY29uc3RhbnRx
+A1gGAAAAd2luZG93cQRYBAAAAGhhbm5xBVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEGY3NpcApf
+dW5waWNrbGVfdHlwZQpxB1gMAAAAUHlRdDQuUXRDb3JlcQhYCgAAAFFCeXRlQXJyYXlxCUMuAdnQ
+ywABAAAAAARIAAACJwAABbcAAAMxAAAETAAAAj4AAAWzAAADLQAAAAAAAHEKhXELh3EMUnENWAcA
+AABzY2FsaW5ncQ5YBwAAAGRlbnNpdHlxD1gNAAAAd2luZG93X2xlbmd0aHEQSwJYCAAAAG9uZXNp
+ZGVkcRGIWA8AAABzZWdtZW50X3NhbXBsZXNxEk0AAXUu
+</properties>
+		<properties format="literal" node_id="5">{'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="6">gAN9cQAoWAUAAABzcmF0ZXEBTlgJAAAAc291cmNlX2lkcQJYCQAAAGt0cmpmaHBva3EDWBMAAABz
+YXZlZFdpZGdldEdlb21ldHJ5cQRjc2lwCl91bnBpY2tsZV90eXBlCnEFWAwAAABQeVF0NC5RdENv
+cmVxBlgKAAAAUUJ5dGVBcnJheXEHQy4B2dDLAAEAAAAABEgAAAInAAAFtwAAAzEAAARMAAACPgAA
+BbMAAAMtAAAAAAAAcQiFcQmHcQpScQtYDAAAAG9ubHlfc2lnbmFsc3EMiFgMAAAAbWF4X2J1ZmZl
+cmVkcQ1LPFgJAAAAY2h1bmtfbGVucQ5LAFgLAAAAc3RyZWFtX3R5cGVxD1gHAAAAQ29udHJvbHEQ
+WAsAAABzdHJlYW1fbmFtZXERWBIAAABuZXVyb3B5cGU6U3BlY3RydW1xEnUu
+</properties>
+		<properties format="pickle" node_id="7">gAN9cQAoWAQAAABheGlzcQFYBAAAAHRpbWVxAlgKAAAAc3RvcF9hdHRlbnEDR0BEAAAAAAAAWAsA
+AABmcmVxdWVuY2llc3EEKEsGSwhLDEsPdHEFWAwAAABvbmx5X3NpZ25hbHNxBohYBgAAAGRlc2ln
+bnEHWAYAAABidXR0ZXJxCFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEJY3NpcApfdW5waWNrbGVf
+dHlwZQpxClgMAAAAUHlRdDQuUXRDb3JlcQtYCgAAAFFCeXRlQXJyYXlxDEMuAdnQywABAAAAAARI
+AAACJwAABbcAAAMxAAAETAAAAj4AAAWzAAADLQAAAAAAAHENhXEOh3EPUnEQWAQAAABtb2RlcRFY
+CAAAAGJhbmRwYXNzcRJYCQAAAHBhc3NfbG9zc3ETR0AIAAAAAAAAdS4=
+</properties>
+		<properties format="literal" node_id="8">{'only_signals': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="9">gAN9cQAoWAQAAABheGlzcQFYBAAAAHRpbWVxAlgMAAAAb25seV9zaWduYWxzcQOIWBMAAABzYXZl
+ZFdpZGdldEdlb21ldHJ5cQRjc2lwCl91bnBpY2tsZV90eXBlCnEFWAwAAABQeVF0NC5RdENvcmVx
+BlgKAAAAUUJ5dGVBcnJheXEHQy4B2dDLAAEAAAAABEgAAAJXAAAFtwAAAwEAAARMAAACbgAABbMA
+AAL9AAAAAAAAcQiFcQmHcQpScQtYBQAAAG9yZGVycQxN6AN1Lg==
+</properties>
+		<properties format="pickle" node_id="10">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYBgAAAG9mZnNldHECRz/wAAAAAAAAWBMAAABzYXZl
+ZFdpZGdldEdlb21ldHJ5cQNjc2lwCl91bnBpY2tsZV90eXBlCnEEWAwAAABQeVF0NC5RdENvcmVx
+BVgKAAAAUUJ5dGVBcnJheXEGQy4B2dDLAAEAAAAABEgAAAJjAAAFtwAAAvUAAARMAAACegAABbMA
+AALxAAAAAAAAcQeFcQiHcQlScQp1Lg==
+</properties>
+		<properties format="literal" node_id="11">{'only_signals': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="12">gAN9cQAoWAUAAABzcmF0ZXEBTlgJAAAAc291cmNlX2lkcQJYCQAAAGVqaWdvZWppb3EDWBMAAABz
+YXZlZFdpZGdldEdlb21ldHJ5cQRjc2lwCl91bnBpY2tsZV90eXBlCnEFWAwAAABQeVF0NC5RdENv
+cmVxBlgKAAAAUUJ5dGVBcnJheXEHQy4B2dDLAAEAAAAABEgAAAInAAAFtwAAAzEAAARMAAACPgAA
+BbMAAAMtAAAAAAAAcQiFcQmHcQpScQtYDAAAAG9ubHlfc2lnbmFsc3EMiVgMAAAAbWF4X2J1ZmZl
+cmVkcQ1LPFgJAAAAY2h1bmtfbGVucQ5LAFgLAAAAc3RyZWFtX3R5cGVxD1gHAAAAQ29udHJvbHEQ
+WAsAAABzdHJlYW1fbmFtZXERWA8AAABuZXVyb3B5cGU6QWxwaGFxEnUu
+</properties>
+	</node_properties>
+</scheme>
