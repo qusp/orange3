@@ -3,7 +3,7 @@ from PyQt4.QtGui import QFileDialog, QFormLayout, QLabel, QLineEdit, QPushButton
 from .quickstartwizarddialog import QuickstartWizardDialog
 
 
-class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
+class MotorImageryQuickstartWizardDialog(QuickstartWizardDialog):
     def get_custom_layout(self):
         custom_layout = QVBoxLayout()
         custom_layout.setContentsMargins(12, 12, 12, 12)
@@ -53,7 +53,7 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         step_3.setContentsMargins(0, 15, 0, 0)
 
         # Output stream.
-        output_stream = QLineEdit('neuropype:ErrorPredictions')
+        output_stream = QLineEdit('neuropype:MotorImagery')
 
         # Source ID.
         source_id = QLineEdit('(make sure to never use same string more than '
@@ -75,7 +75,7 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         step_4.setContentsMargins(0, 15, 0, 0)
 
         # Assign targets.
-        assign_targets = QLineEdit("{'correct': 0, 'incorrect': 1, 'button': 2}")
+        assign_targets = QLineEdit("{'left': 0, 'right': 1}")
 
         custom_layout.addWidget(step_4)
         custom_layout.addWidget(assign_targets)
@@ -87,10 +87,10 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         step_5.setContentsMargins(0, 15, 0, 0)
 
         # Time bounds start.
-        time_bounds_start = QLineEdit(str(-0.2))
+        time_bounds_start = QLineEdit("0.5")
 
         # Time bounds end.
-        time_bounds_end = QLineEdit(str(0.8))
+        time_bounds_end = QLineEdit("2.5")
 
         # Form layout.
         time_bounds_form = QFormLayout()
@@ -106,10 +106,10 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         step_6.setContentsMargins(0, 15, 0, 0)
 
         # Low frequency band.
-        low_frequency_band = QLineEdit(str(0.1))
+        low_frequency_band = QLineEdit("7")
 
         # High frequency band.
-        high_frequency_band = QLineEdit(str(15))
+        high_frequency_band = QLineEdit("30")
 
         # Form layout.
         frequency_bands_form = QFormLayout()
@@ -118,6 +118,18 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
 
         custom_layout.addWidget(step_6)
         custom_layout.addLayout(frequency_bands_form)
+
+        ######## Step 7
+
+        step_7 = self.step("How many brain sources shall be considered per "
+                           "type of imagery? (typically between 1 and 4)")
+        step_7.setContentsMargins(0, 15, 0, 0)
+
+        # Assign targets.
+        num_features = QLineEdit("3")
+
+        custom_layout.addWidget(step_7)
+        custom_layout.addWidget(num_features)
 
         ######## Attributes.
         self._training_set = training_set
@@ -130,10 +142,13 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         self._time_bounds_end = time_bounds_end
         self._low_frequency_band = low_frequency_band
         self._high_frequency_band = high_frequency_band
+        self._num_features = num_features
 
         return custom_layout
 
     def get_patch(self):
+        band_lo = float(self._low_frequency_band.text())
+        band_hi = float(self._high_frequency_band.text())
         return {
             'Import XDF': {
                 'filename': self._training_set.text()
@@ -153,9 +168,13 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
                 'time_bounds': '({0}, {1})'.format(self._time_bounds_start.text(),
                                                    self._time_bounds_end.text())
             },
-            'Spectral Selection': {
-                'frequencies': '[{0}, {1}]'.format(self._low_frequency_band.text(),
-                                                   self._high_frequency_band.text())
+            'IIR Filter': {
+                'frequencies': '[{0}, {1}, {2}, {3}]'.format(band_lo-1,
+                                                             band_lo, band_hi,
+                                                             band_hi+1)
+            },
+            'Common Spatial Patterns': {
+                'nof': self._num_features.text()
             }
         }
 

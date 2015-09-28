@@ -3,7 +3,7 @@ from PyQt4.QtGui import QFileDialog, QFormLayout, QLabel, QLineEdit, QPushButton
 from .quickstartwizarddialog import QuickstartWizardDialog
 
 
-class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
+class RelaxationQuickstartWizardDialog(QuickstartWizardDialog):
     def get_custom_layout(self):
         custom_layout = QVBoxLayout()
         custom_layout.setContentsMargins(12, 12, 12, 12)
