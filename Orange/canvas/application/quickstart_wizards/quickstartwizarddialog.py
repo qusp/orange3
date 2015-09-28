@@ -45,6 +45,10 @@ class QuickstartWizardDialog(QDialog):
     def heading(self):
         return self.__heading.text()
 
+    def step(self, content):
+        """Make a step label."""
+        return QLabel('<h4>%s</h4>' % self.tr(content))
+
     def get_custom_layout(self):
         return QVBoxLayout()
 

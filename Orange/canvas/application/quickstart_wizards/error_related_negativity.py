@@ -54,7 +54,7 @@ class ErrorRelatedNegativityQuickstartWizardDialog(QuickstartWizardDialog):
         step_3.setContentsMargins(0, 15, 0, 0)
 
         # Output stream.
-        output_stream = QLineEdit('FlankerPredictions')
+        output_stream = QLineEdit('neuropype:ErrorPredictions')
 
         # Source ID.
         source_id = QLineEdit('(make sure to never use same string more than once on network)')

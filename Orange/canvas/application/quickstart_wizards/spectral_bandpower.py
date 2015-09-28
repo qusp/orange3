@@ -57,13 +57,13 @@ class SpectralBandpowerQuickstartWizardDialog(QuickstartWizardDialog):
         step_5.setContentsMargins(0, 15, 0, 0)
 
         # Raw-data outlet.
-        raw_outlet = QLineEdit('pyBCILAB:Raw', self)
+        raw_outlet = QLineEdit('neuropype:RawData', self)
 
         # Spectrum outlet.
-        spectrum_outlet = QLineEdit('pyBCILAB:Spectrum', self)
+        spectrum_outlet = QLineEdit('neuropype:Spectrum', self)
 
         # Alpha outlet.
-        alpha_outlet = QLineEdit('pyBCILAB:Alpha', self)
+        alpha_outlet = QLineEdit('neuropype:AlphaPower', self)
 
         # Form layout.
         outlet_form = QFormLayout()
