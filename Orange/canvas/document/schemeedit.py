@@ -838,7 +838,7 @@ class SchemeEditWidget(QWidget):
         Align nodes to a grid.
         """
         # TODO: The the current layout implementation is BAD (fix is urgent).
-        tile_size = 150
+        tile_size = 100
         tiles = {}
 
         nodes = sorted(self.scheme().nodes, key=attrgetter("position"))
