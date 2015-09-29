@@ -10,6 +10,13 @@ This is an early development version of Orange 3. The current stable version
 2.7 is available on http://orange.biolab.si (binaries) and
 https://github.com/biolab/orange (sources).
 
+
+Note for VPE users
+------------------
+
+In order to use the neuropype-compatible branch of this repo, you will want to
+check out the branch "realtime" instead of "master".
+
 Installing
 ----------
 
