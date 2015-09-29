@@ -53,7 +53,7 @@ On Linux
   $ python setup.py develop
 
 * you can now launch the VPE using the command:
-  > python -m Orange.canvas
+  > python -m Orange.canvas --clear-widget-settings
 
 * for a good development experience, we recommend
   that you install and set up PyCharm:
@@ -74,6 +74,8 @@ On Linux
 * to launch from the command line, make sure that you have your venv activated
   like you did during the installation
 
+* you can also use the launch.sh script in the vpe folder  
+  
 On Windows
 ==========
 
@@ -112,7 +114,7 @@ On Windows
   > python setup.py develop
 
 * you can now launch the VPE using the command:
-  > python -m Orange.canvas
+  > python -m Orange.canvas --clear-widget-settings
 
 * for a good development experience, we recommend
   that you install and set up PyCharm:
@@ -132,3 +134,5 @@ On Windows
 
 * to launch from the command line, make sure that you have your venv activated
   like you did during the installation
+  
+* you can also use the launch.bat file in the vpe folder
