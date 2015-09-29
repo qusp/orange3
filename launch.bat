@@ -1,4 +1,4 @@
 @echo off
 echo Lauching the VPE...
 call venv\Scripts\activate
-python -m Orange.canvas
+python -m Orange.canvas --clear-widget-settings
