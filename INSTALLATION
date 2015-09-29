@@ -7,6 +7,8 @@ out the "realtime" branch. This can be accomplished as follows:
 $ git clone https://github.com/qusp/orange3 vpe
 $ git checkout realtime
 
+Note that, when you switch between git-related commands and Python-related commands (e.g., pip),
+you will likely have to switch between the git bash on Windows and a regular command line (cmd.exe).
 
 On Linux
 ========
