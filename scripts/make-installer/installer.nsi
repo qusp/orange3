@@ -57,7 +57,7 @@
 !define regkey "Software\${company}\${prodname}"
 !define uninstkey "Software\Microsoft\Windows\CurrentVersion\Uninstall\${prodname}"
  
-!define startmenu "$SMPROGRAMS\${company}\${prodname}"
+!define startmenu "$SMPROGRAMS\${company} ${prodname}"
 !define uninstaller "uninstall.exe"
  
 ;--------------------------------
@@ -229,9 +229,8 @@ Section "Uninstall"
   Delete "${startmenu}\*.*"
   Delete "${startmenu}"
   
-  RMDir "$SMPROGRAMS\${company}\${prodname}"
-  RMDir "$SMPROGRAMS\${company}"
- 
+  RMDir "$SMPROGRAMS\${company} ${prodname}"
+
 !ifdef licensefile
 Delete "$INSTDIR\${licensefile}"
 !endif

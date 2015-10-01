@@ -1,3 +1,5 @@
-@call python\Scripts\activate
-@cd vpe
-Python setup.py develop
+cd python\Scripts
+python patch_venv.py
+activate
+cd ..\..\vpe
+python setup.py develop

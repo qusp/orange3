@@ -17,7 +17,7 @@ with open("files.nsi", "w") as out:
                 print('SetOutPath "$INSTDIR\%s"' % outpath, file=out)
                 lastpath = outpath
             filename = line[2:]
-            if filename not in ['files.nsi','unfiles.nsi',
+            if filename not in ['files.nsi','unfiles.nsi','readme.txt',
                                 'installer.nsi','generate_file_list.py']:
                 print('File "${srcdir}\%s"' % line[2:], file=out)
 

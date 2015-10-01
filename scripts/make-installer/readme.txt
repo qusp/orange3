@@ -2,7 +2,7 @@
 - ensure that this folder does not already contain a previously-created installer (if you reuse the folder)
 - copy both cpe/vpe folders to sandbox
 - ensure that the cpe/vpe folders each do not contain a venv or .idea directory
-- copy the venv directory into your folder and rename it to python
+- copy the contents of your venv directory into the python folder
 - run generate_file_list.py (you should see a files.nsi and unfiles.nsi pop up); best to do that in the console
 - make sure you have NSIS 3.x installed
 - right-click installer.nsi and select "Compile NSIS Script"
