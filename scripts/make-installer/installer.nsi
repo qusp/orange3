@@ -174,6 +174,7 @@ File /a "${srcdir}\${icon}"
   WriteUninstaller "${uninstaller}"
   
 ; register python venv
+SetOutPath "$INSTDIR"
 ExpandEnvStrings $0 %COMSPEC%
 ExecWait "$INSTDIR\postinstall.cmd"
 Delete "$INSTDIR\postinstall.cmd"

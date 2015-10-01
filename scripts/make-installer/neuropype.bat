@@ -1,5 +1,6 @@
 @echo off
 echo Launching NeuroPyPE...
-call python\Scripts\activate
+set PYTHONHOME=
+set "PATH=%cd%\python\Scripts;%PATH%"
 cd vpe
-Python -m Orange.canvas --clear-widget-settings
+python -m Orange.canvas --clear-widget-settings

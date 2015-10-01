@@ -1,5 +1,5 @@
-- copy contents of this directory into a new folder (without this readme.txt)
-- ensure that this folder does not already contain a previously-created installer (if you reuse the folder)
+- copy contents of this directory into a new folder
+- ensure that that folder does not already contain a previously-created installer (if you reuse the folder)
 - copy both cpe/vpe folders to sandbox
 - ensure that the cpe/vpe folders each do not contain a venv or .idea directory
 - copy the contents of your venv directory into the python folder

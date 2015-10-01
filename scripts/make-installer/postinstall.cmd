@@ -1,5 +1,4 @@
-cd python\Scripts
-python patch_venv.py
-activate
-cd ..\..\vpe
-python setup.py develop
+set PYTHONHOME=
+set "PATH=%cd%\python\Scripts;%PATH%"
+cd vpe
+python.exe setup.py develop
