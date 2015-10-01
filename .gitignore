@@ -44,6 +44,6 @@ Orange/widgets/workflow/*
 [Bb]in/
 [Ii]nclude/
 [Ll]ib/
-[Ss]cripts/
+Scripts/
 pyvenv.cfg
 pip-selfcheck.json
