@@ -189,7 +189,8 @@ PACKAGES += [
     "Orange.widgets.network",
     "Orange.widgets.spectral",
     "Orange.widgets.utilities",
-    "Orange.widgets.visualization"
+    "Orange.widgets.visualization",
+    "Orange.widgets.workflow"
 ]
 
 PACKAGE_DATA = {
@@ -215,7 +216,8 @@ PACKAGE_DATA.update({
     "Orange.widgets.network": ["icons/*.svg"],
     "Orange.widgets.spectral": ["icons/*.svg"],
     "Orange.widgets.utilities": ["icons/*.svg"],
-    "Orange.widgets.visualization": ["icons/*.svg"]
+    "Orange.widgets.visualization": ["icons/*.svg"],
+    "Orange.widgets.workflow": ["icons/*.svg"]
 })
 
 

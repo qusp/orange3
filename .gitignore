@@ -34,6 +34,7 @@ Orange/widgets/network/*
 Orange/widgets/spectral/*
 Orange/widgets/utilities/*
 Orange/widgets/visualization/*
+Orange/widgets/workflow/*
 
 
 # === Virtualenv ===
