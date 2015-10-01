@@ -39,11 +39,4 @@ Orange/widgets/workflow/*
 
 # === Virtualenv ===
 
-# Virtualenv
-.Python
-[Bb]in/
-[Ii]nclude/
-[Ll]ib/
-Scripts/
-pyvenv.cfg
-pip-selfcheck.json
+venv/
