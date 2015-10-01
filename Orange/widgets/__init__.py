@@ -20,6 +20,7 @@ def widget_discovery(discovery):
          "Orange.widgets.network",
          "Orange.widgets.spectral",
          "Orange.widgets.utilities",
-         "Orange.widgets.visualization"]
+         "Orange.widgets.visualization",
+         "Orange.widgets.workflow"]
     for pkg in pkgs:
         discovery.process_category_package(pkg, distribution=dist)

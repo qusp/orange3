@@ -34,15 +34,9 @@ Orange/widgets/network/*
 Orange/widgets/spectral/*
 Orange/widgets/utilities/*
 Orange/widgets/visualization/*
+Orange/widgets/workflow/*
 
 
 # === Virtualenv ===
 
-# Virtualenv
-.Python
-[Bb]in/
-[Ii]nclude/
-[Ll]ib/
-[Ss]cripts/
-pyvenv.cfg
-pip-selfcheck.json
+venv/
