@@ -189,8 +189,10 @@ Section
   SetOutPath $INSTDIR ; for working directory
 !ifdef icon
   CreateShortCut "${startmenu}\${prodname}.lnk" "$INSTDIR\${exec}" "" "$INSTDIR\${icon}"
+  CreateShortCut "$DESKTOP\${prodname}.lnk" "$INSTDIR\${exec}" "" "$INSTDIR\${icon}"
 !else
   CreateShortCut "${startmenu}\${prodname}.lnk" "$INSTDIR\${exec}"
+  CreateShortCut "$DESKTOP\${prodname}.lnk" "$INSTDIR\${exec}"
 !endif
  
 !ifdef notefile
@@ -231,6 +233,9 @@ Section "Uninstall"
   Delete "${startmenu}"
   
   RMDir "$SMPROGRAMS\${company} ${prodname}"
+  
+  Delete "$DESKTOP\${prodname}.lnk"
+
 
 !ifdef licensefile
 Delete "$INSTDIR\${licensefile}"
