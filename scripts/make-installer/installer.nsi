@@ -224,16 +224,20 @@ UninstallIcon "${icon}"
 !endif
  
 Section "Uninstall"
-  SetShellVarContext all
   
   DeleteRegKey HKLM "${uninstkey}"
   DeleteRegKey HKLM "${regkey}"
  
   Delete "${startmenu}\*.*"
   Delete "${startmenu}"
-  
-  RMDir "$SMPROGRAMS\${company} ${prodname}"
-  
+  RMDir "$SMPROGRAMS\${company} ${prodname}"  
+  Delete "$DESKTOP\${prodname}.lnk"
+
+  ; also delete from all-users folder
+  SetShellVarContext all
+  Delete "${startmenu}\*.*"
+  Delete "${startmenu}"
+  RMDir "$SMPROGRAMS\${company} ${prodname}"  
   Delete "$DESKTOP\${prodname}.lnk"
 
 
@@ -254,6 +258,10 @@ Delete "$INSTDIR\${exec}"
 !ifdef unfiles
 !include "${unfiles}"
 !endif
+
+; delete files generated dynamically during installation
+Delete "$INSTDIR\python\qt.conf"
+
 
 Delete "$INSTDIR\uninstall.exe"
 
