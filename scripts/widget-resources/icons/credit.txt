@@ -1,4 +1,4 @@
-NeuroPype icons were creadted based on works by:
+﻿NeuroPype icons were creadted based on works by:
 Mario Verduzco
 Herbert Spencer
 Alex Auda Samora
@@ -28,3 +28,4 @@ Natalie Doud
 Frederick Allen
 Fabiano Coelho
 Candice McCollough
+Gregor Črešnar
