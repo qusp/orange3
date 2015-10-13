@@ -23,6 +23,7 @@ import logging
 from . import SchemeNode, SchemeLink
 from .annotations import SchemeTextAnnotation, SchemeArrowAnnotation
 from .errors import IncompatibleChannelTypeError
+from .neuropypesignalmanager import NeuropypeSignalManager
 
 from ..registry import global_registry
 
@@ -836,6 +837,10 @@ def scheme_to_etree(scheme, data_format="literal", pickle_fallback=False):
                 builder.end("properties")
 
     builder.end("node_properties")
+    if isinstance(scheme.signal_manager, NeuropypeSignalManager):
+        builder.start("patch", {})
+        builder.data(scheme.signal_manager.graph.save_json())
+        builder.end("patch")
     builder.end("scheme")
     root = builder.close()
     tree = ElementTree(root)
@@ -919,9 +924,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         except (ValueError, TypeError) as ex:
             if not pickle_fallback:
                 raise
-
-            log.warning("Could not serialize to a literal string",
-                        exc_info=True)
+            log.info("Could not serialize to a literal string")
 
     elif format == "json":
         try:
@@ -930,9 +933,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         except (ValueError, TypeError):
             if not pickle_fallback:
                 raise
-
-            log.warning("Could not serialize to a json string",
-                        exc_info=True)
+            log.info("Could not serialize to a json string")
 
     elif format == "pickle":
         return base64.encodebytes(pickle.dumps(obj)).decode('ascii'), "pickle"
