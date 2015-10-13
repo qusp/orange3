@@ -22,7 +22,7 @@ import numpy as np
 
 import sip
 from PyQt4.QtGui import (
-    QShortcut, QKeySequence, QWhatsThisClickedEvent, QWidget
+    QShortcut, QKeySequence, QWhatsThisClickedEvent, QWidget, QMessageBox
 )
 
 from PyQt4.QtCore import Qt, QObject, QCoreApplication, QEvent
@@ -196,15 +196,24 @@ class WidgetManager(QObject):
         """
         Create a new OWWidget instance for the corresponding scheme node.
         """
-        widget = self.create_widget_instance(node)
+        try:
+            widget = self.create_widget_instance(node)
 
-        self.__widgets.append(widget)
-        self.__widget_for_node[node] = widget
-        self.__node_for_widget[widget] = node
+            self.__widgets.append(widget)
+            self.__widget_for_node[node] = widget
+            self.__node_for_widget[widget] = node
 
-        self.__initialize_widget_state(node, widget)
+            self.__initialize_widget_state(node, widget)
 
-        self.widget_for_node_added.emit(node, widget)
+            self.widget_for_node_added.emit(node, widget)
+        except NameError:
+            QMessageBox.information(None, "Note", "The source code for this "
+                                    "node is not available in this edition of "
+                                    "NeuroPype. Please check the commercial "
+                                    "package. If you believe this is an error, "
+                                    "please contact us at "
+                                    "support@syntrogi.com.")
+            return
 
     def remove_widget_for_node(self, node):
         """

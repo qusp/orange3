@@ -5,8 +5,10 @@ import builtins
 from Orange.widgets import widget, gui, cpewidget
 from Orange.widgets.settings import Setting
 import neuropype.engine
-from {{ node.__module__ }} import {{ node.__name__ }}
-
+try:
+    from {{ node.__module__ }} import {{ node.__name__ }}
+except ImportError:
+    print("Not importing source code for node {{ node.__name__ }}.")
 
 class OW{{ node.__name__ }}(cpewidget.CPEWidget):
 
