@@ -45,10 +45,13 @@ from .schemeinfo import SchemeInfoDialog
 from .outputview import OutputView
 from .settings import UserSettingsDialog
 
+
 from ..document.schemeedit import SchemeEditWidget
 
 from ..scheme import widgetsscheme
 from ..scheme.readwrite import scheme_load, sniff_version
+from ..scheme.neuropypesignalmanager import NeuropypeSignalManager
+
 
 from . import welcomedialog
 from ..preview import previewdialog, previewmodel
@@ -423,6 +426,13 @@ class CanvasMainWindow(QMainWindow):
                     shortcut=QKeySequence.SaveAs,
                     )
 
+        self.export_action = \
+            QAction(self.tr("Export ..."), self,
+                    objectName="action-export",
+                    toolTip=self.tr("Export current workflow."),
+                    triggered=self.export_scheme
+                    )
+
         self.quit_action = \
             QAction(self.tr("Quit"), self,
                     objectName="quit-action",
@@ -609,6 +619,7 @@ class CanvasMainWindow(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction(self.save_action)
         file_menu.addAction(self.save_as_action)
+        file_menu.addAction(self.export_action)
         file_menu.addSeparator()
         file_menu.addAction(self.show_properties_action)
         file_menu.addAction(self.quit_action)
@@ -1157,6 +1168,43 @@ class CanvasMainWindow(QMainWindow):
 
         return QFileDialog.Rejected
 
+    def export_scheme(self):
+        """
+        Export the current scheme by asking the user for a filename. Return
+        `QFileDialog.Accepted` if the scheme was saved successfully and
+        `QFileDialog.Rejected` if not.
+
+        """
+        document = self.current_document()
+        curr_scheme = document.scheme()
+        title = curr_scheme.title or "untitled"
+
+        if document.path():
+            start_dir = document.path()
+        else:
+            if self.last_scheme_dir is not None:
+                start_dir = self.last_scheme_dir
+            else:
+                start_dir = QDesktopServices.storageLocation(
+                    QDesktopServices.DocumentsLocation
+                )
+
+            start_dir = os.path.join(str(start_dir), title + ".py")
+
+        filename = QFileDialog.getSaveFileName(
+            self, self.tr("Export Patch"),
+            start_dir, self.tr("Python Script (*.py); CPE Patch (*.pat)")
+        )
+
+        if filename:
+            if not self.check_can_save(document, filename):
+                return QDialog.Rejected
+            self.last_scheme_dir = os.path.dirname(filename)
+            if self.export_scheme_to(curr_scheme, filename):
+                return QFileDialog.Accepted
+
+        return QFileDialog.Rejected
+
     def save_scheme_to(self, scheme, filename):
         """
         Save a Scheme instance `scheme` to `filename`. On success return
@@ -1224,6 +1272,41 @@ class CanvasMainWindow(QMainWindow):
             log.error("Error saving %r to %r", scheme, filename, exc_info=True)
             message_critical(
                 self.tr('An error occurred while trying to save workflow '
+                        '"%s" to "%s"') % (title, basename),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+    def export_scheme_to(self, scheme, filename):
+        """
+        Export a Scheme instance `scheme` to `filename`. On success return
+        `True`, else show a message to the user explaining the error and
+        return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPyPE and '
+                        'cannot be exported.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            scheme.signal_manager.graph.save_script(filename)
+            return True
+        except Exception:
+            log.error("Error saving %r to %r", scheme, filename, exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to export workflow '
                         '"%s" to "%s"') % (title, basename),
                 title=self.tr("Error saving %s") % basename,
                 exc_info=True,
