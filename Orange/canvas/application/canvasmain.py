@@ -1188,12 +1188,13 @@ class CanvasMainWindow(QMainWindow):
                 start_dir = QDesktopServices.storageLocation(
                     QDesktopServices.DocumentsLocation
                 )
-
             start_dir = os.path.join(str(start_dir), title + ".py")
 
+        if start_dir.endswith('.ows'):
+            start_dir = start_dir[:-4]
         filename = QFileDialog.getSaveFileName(
             self, self.tr("Export Patch"),
-            start_dir, self.tr("Python Script (*.py); CPE Patch (*.pat)")
+            start_dir, self.tr("Python Script (*.py);;CPE Patch (*.pat)")
         )
 
         if filename:
@@ -1301,7 +1302,12 @@ class CanvasMainWindow(QMainWindow):
             return False
 
         try:
-            scheme.signal_manager.graph.save_script(filename)
+            if filename.endswith('.py'):
+                scheme.signal_manager.graph.save_script(filename)
+            elif filename.endswith('.pat'):
+                scheme.signal_manager.graph.save_json(filename)
+            else:
+                raise RuntimeError("Unsupported file type: %s" % filename)
             return True
         except Exception:
             log.error("Error saving %r to %r", scheme, filename, exc_info=True)
