@@ -17,10 +17,13 @@ VPE installed and working):
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/SDK/liblsl-ALL-languages-1.10.2.zip
   to lsl/; remove the contents of the folder lsl/LSL/liblsl/external/ to reduce
   installer size
+* make a folder named docs/ and copy versions of the NeuroPype Manual and
+  NeuroPype Release Notes there (not included in this repo)
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
   pop up); this requires Python 3.x (best to do that in the console)
 * make sure you have NSIS 3.x installed
 * right-click installer.nsi and select "Compile NSIS Script"
+
 
 
 Troubleshooting:

@@ -5,61 +5,77 @@
 		<node id="1" name="FIR Filter" position="(200, 100)" project_name="Orange" qualified_name="Orange.widgets.filters.owfirfilter.OWFIRFilter" title="Peak FIR" version="" />
 		<node id="2" name="FIR Filter" position="(200, 300)" project_name="Orange" qualified_name="Orange.widgets.filters.owfirfilter.OWFIRFilter" title="Noise FIR" version="" />
 		<node id="3" name="Spatio-Spectral Decomposition" position="(400, 200)" project_name="Orange" qualified_name="Orange.widgets.filters.owspatiospectraldecomposition.OWSpatioSpectralDecomposition" title="Spatio-Spectral Decomposition" version="" />
-		<node id="4" name="Logarithm" position="(700, 200)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owlogarithm.OWLogarithm" title="Logarithm" version="" />
-		<node id="5" name="LSL Output" position="(900, 200)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="LSL Output" version="" />
-		<node id="6" name="PrintToConsole" position="(900, 300)" project_name="Orange" qualified_name="Orange.widgets.utilities.owprinttoconsole.OWPrintToConsole" title="PrintToConsole" version="" />
-		<node id="7" name="Squaring" position="(500, 200)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owsquaring.OWSquaring" title="Squaring" version="" />
-		<node id="8" name="Moving Average" position="(600, 200)" project_name="Orange" qualified_name="Orange.widgets.filters.owmovingaverage.OWMovingAverage" title="Moving Average" version="" />
+		<node id="4" name="LSL Output" position="(900, 200)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="LSL Output" version="" />
+		<node id="5" name="Squaring" position="(500, 200)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owsquaring.OWSquaring" title="Squaring" version="" />
+		<node id="6" name="Moving Average" position="(600, 200)" project_name="Orange" qualified_name="Orange.widgets.filters.owmovingaverage.OWMovingAverage" title="Moving Average" version="" />
+		<node id="7" name="Time Series Plot" position="(1100, 100)" project_name="Orange" qualified_name="Orange.widgets.visualization.owtimeseriesplot.OWTimeSeriesPlot" title="Time Series Plot" version="" />
+		<node id="8" name="Override Timestamps" position="(900, 100)" project_name="Orange" qualified_name="Orange.widgets.utilities.owoverridetimestamps.OWOverrideTimestamps" title="Override Timestamps" version="" />
+		<node id="9" name="Dejitter Timestamps" position="(1000, 100)" project_name="Orange" qualified_name="Orange.widgets.utilities.owdejittertimestamps.OWDejitterTimestamps" title="Dejitter Timestamps" version="" />
+		<node id="10" name="Square Root" position="(700, 200)" project_name="Orange" qualified_name="Orange.widgets.elementwise.owsquareroot.OWSquareRoot" title="Square Root" version="" />
+		<node id="11" name="PrintToConsole" position="(900, 300)" project_name="Orange" qualified_name="Orange.widgets.utilities.owprinttoconsole.OWPrintToConsole" title="PrintToConsole" version="" />
 	</nodes>
 	<links>
 		<link enabled="true" id="0" sink_channel="Data" sink_node_id="1" source_channel="Data" source_node_id="0" />
 		<link enabled="true" id="1" sink_channel="Data" sink_node_id="2" source_channel="Data" source_node_id="0" />
 		<link enabled="true" id="2" sink_channel="Peak Data" sink_node_id="3" source_channel="Data" source_node_id="1" />
 		<link enabled="true" id="3" sink_channel="Noise Data" sink_node_id="3" source_channel="Data" source_node_id="2" />
-		<link enabled="true" id="4" sink_channel="Data" sink_node_id="5" source_channel="Data" source_node_id="4" />
-		<link enabled="true" id="5" sink_channel="Data" sink_node_id="6" source_channel="Data" source_node_id="4" />
-		<link enabled="true" id="6" sink_channel="Data" sink_node_id="7" source_channel="Out Data" source_node_id="3" />
-		<link enabled="true" id="7" sink_channel="Data" sink_node_id="8" source_channel="Data" source_node_id="7" />
-		<link enabled="true" id="8" sink_channel="Data" sink_node_id="4" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="4" sink_channel="Data" sink_node_id="5" source_channel="Out Data" source_node_id="3" />
+		<link enabled="true" id="5" sink_channel="Data" sink_node_id="6" source_channel="Data" source_node_id="5" />
+		<link enabled="true" id="6" sink_channel="Data" sink_node_id="9" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="7" sink_channel="Data" sink_node_id="7" source_channel="Data" source_node_id="9" />
+		<link enabled="true" id="8" sink_channel="Data" sink_node_id="10" source_channel="Data" source_node_id="6" />
+		<link enabled="true" id="9" sink_channel="Data" sink_node_id="8" source_channel="Data" source_node_id="10" />
+		<link enabled="true" id="10" sink_channel="Data" sink_node_id="4" source_channel="Data" source_node_id="10" />
+		<link enabled="true" id="11" sink_channel="Data" sink_node_id="11" source_channel="Data" source_node_id="10" />
 	</links>
 	<annotations />
 	<thumbnail />
 	<node_properties>
-		<properties format="literal" node_id="0">{'savedWidgetGeometry': None, 'marker_query': '', 'query': "type='EEG'", 'max_buflen': 30, 'nominal_rate': None, 'max_chunklen': 0, 'max_blocklen': 1024, 'channel_names': [], 'recover': True}</properties>
-		<properties format="pickle" node_id="1">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
-AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAABGIAAARlAAAF0QAA
-BYMAAARmAAAEfAAABc0AAAV/AAAAAQAAcQWFcQaHcQdScQhYBAAAAG1vZGVxCVgIAAAAYmFuZHBh
-c3NxClgEAAAAYXhpc3ELWAQAAAB0aW1lcQxYCwAAAGZyZXF1ZW5jaWVzcQ0oR0AgAAAAAAAAR0Ai
-AAAAAAAAR0AsAAAAAAAAR0AuAAAAAAAAdHEOWAoAAABzdG9wX2F0dGVucQ9HQEkAAAAAAABYDAAA
-AG9ubHlfc2lnbmFsc3EQiFgNAAAAYW50aXN5bW1ldHJpY3ERiVgFAAAAb3JkZXJxEk30AVgNAAAA
-bWluaW11bV9waGFzZXETiHUu
+		<properties format="literal" node_id="0">{'channel_names': [], 'max_buflen': 30, 'recover': True, 'savedWidgetGeometry': None, 'marker_query': '', 'query': "type='EEG'", 'max_blocklen': 1024, 'nominal_rate': None, 'max_chunklen': 0}</properties>
+		<properties format="pickle" node_id="1">gAN9cQAoWAQAAABtb2RlcQFYCAAAAGJhbmRwYXNzcQJYDAAAAG9ubHlfc2lnbmFsc3EDiFgNAAAA
+bWluaW11bV9waGFzZXEEiFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEFY3NpcApfdW5waWNrbGVf
+dHlwZQpxBlgMAAAAUHlRdDQuUXRDb3JlcQdYCgAAAFFCeXRlQXJyYXlxCEMuAdnQywABAAAAAARM
+AAACNAAABbsAAANSAAAEUAAAAksAAAW3AAADTgAAAAAAAHEJhXEKh3ELUnEMWAUAAABvcmRlcnEN
+TfQBWAoAAABzdG9wX2F0dGVucQ5HQEkAAAAAAABYBAAAAGF4aXNxD1gEAAAAdGltZXEQWAsAAABm
+cmVxdWVuY2llc3ERXXESKEdAHAAAAAAAAEdAIAAAAAAAAEdALAAAAAAAAEdALgAAAAAAAGVYDQAA
+AGFudGlzeW1tZXRyaWNxE4l1Lg==
 </properties>
-		<properties format="pickle" node_id="2">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
-AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAABGIAAARlAAAF0QAA
-BYMAAARmAAAEfAAABc0AAAV/AAAAAQAAcQWFcQaHcQdScQhYBAAAAG1vZGVxCVgIAAAAZnJlZWZv
-cm1xClgEAAAAYXhpc3ELWAQAAAB0aW1lcQxYCwAAAGZyZXF1ZW5jaWVzcQ1dcQ4oSwBLAIZxD0dA
-CAAAAAAAAEsAhnEQR0AQAAAAAAAASwGGcRFHQCAAAAAAAABLAYZxEkdAIgAAAAAAAEsAhnETR0As
-AAAAAAAASwCGcRRHQC4AAAAAAABLAYZxFUdAOQAAAAAAAEsBhnEWR0A6AAAAAAAASwCGcRdK////
-/0sAhnEYZVgKAAAAc3RvcF9hdHRlbnEZSzJYDAAAAG9ubHlfc2lnbmFsc3EaiFgNAAAAYW50aXN5
-bW1ldHJpY3EbiVgFAAAAb3JkZXJxHE30AVgNAAAAbWluaW11bV9waGFzZXEdiHUu
+		<properties format="pickle" node_id="2">gAN9cQAoWAQAAABtb2RlcQFYCAAAAGZyZWVmb3JtcQJYDAAAAG9ubHlfc2lnbmFsc3EDiFgNAAAA
+bWluaW11bV9waGFzZXEEiFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEFY3NpcApfdW5waWNrbGVf
+dHlwZQpxBlgMAAAAUHlRdDQuUXRDb3JlcQdYCgAAAFFCeXRlQXJyYXlxCEMuAdnQywABAAAAAARM
+AAACNAAABbsAAANSAAAEUAAAAksAAAW3AAADTgAAAAAAAHEJhXEKh3ELUnEMWAUAAABvcmRlcnEN
+TfQBWAoAAABzdG9wX2F0dGVucQ5LMlgEAAAAYXhpc3EPWAQAAAB0aW1lcRBYCwAAAGZyZXF1ZW5j
+aWVzcRFdcRIoSwBLAIZxE0dACAAAAAAAAEsAhnEUR0AQAAAAAAAASwGGcRVHQBwAAAAAAABLAYZx
+FkdAIAAAAAAAAEsAhnEXR0AsAAAAAAAASwCGcRhHQC4AAAAAAABLAYZxGUdAQYAAAAAAAEsBhnEa
+R0BCAAAAAAAASwCGcRtK/////0sAhnEcZVgNAAAAYW50aXN5bW1ldHJpY3EdiXUu
 </properties>
-		<properties format="literal" node_id="3">{'shrinkage': 0.001, 'savedWidgetGeometry': None, 'nof': 3, 'half_time': 120, 'streaming_update': True}</properties>
-		<properties format="literal" node_id="4">{'savedWidgetGeometry': None, 'only_signals': True}</properties>
-		<properties format="pickle" node_id="5">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
-AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAABEgAAAInAAAFtwAA
-AzEAAARMAAACPgAABbMAAAMtAAAAAAAAcQWFcQaHcQdScQhYDAAAAG1heF9idWZmZXJlZHEJSzxY
-CwAAAHN0cmVhbV90eXBlcQpYBwAAAENvbnRyb2xxC1gJAAAAY2h1bmtfbGVucQxLAFgLAAAAc3Ry
-ZWFtX25hbWVxDVgUAAAAbmV1cm9weXBlOlJlbGF4YXRpb25xDlgMAAAAb25seV9zaWduYWxzcQ+J
-WAUAAABzcmF0ZXEQTlgJAAAAc291cmNlX2lkcRFYPgAAAChtYWtlIHN1cmUgdG8gbmV2ZXIgdXNl
-IHNhbWUgc3RyaW5nIG1vcmUgdGhhbiBvbmNlIG9uIG5ldHdvcmspcRJ1Lg==
+		<properties format="literal" node_id="3">{'streaming_update': True, 'nof': 1, 'shrinkage': 0.001, 'half_time': 120, 'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="4">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYlYCQAAAGNodW5rX2xlbnECSwBYCwAAAHN0cmVhbV9u
+YW1lcQNYFAAAAG5ldXJvcHlwZTpSZWxheGF0aW9ucQRYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlx
+BWNzaXAKX3VucGlja2xlX3R5cGUKcQZYDAAAAFB5UXQ0LlF0Q29yZXEHWAoAAABRQnl0ZUFycmF5
+cQhDLgHZ0MsAAQAAAAAESAAAAicAAAW3AAADMQAABEwAAAI+AAAFswAAAy0AAAAAAABxCYVxCodx
+C1JxDFgJAAAAc291cmNlX2lkcQ1YPgAAAChtYWtlIHN1cmUgdG8gbmV2ZXIgdXNlIHNhbWUgc3Ry
+aW5nIG1vcmUgdGhhbiBvbmNlIG9uIG5ldHdvcmspcQ5YCwAAAHN0cmVhbV90eXBlcQ9YBwAAAENv
+bnRyb2xxEFgMAAAAbWF4X2J1ZmZlcmVkcRFLPFgFAAAAc3JhdGVxEk51Lg==
 </properties>
-		<properties format="literal" node_id="6">{'savedWidgetGeometry': None, 'only_nonempty': True}</properties>
-		<properties format="literal" node_id="7">{'savedWidgetGeometry': None, 'only_signals': True}</properties>
-		<properties format="pickle" node_id="8">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
-AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAABEgAAAJjAAAFtwAA
-Aw0AAARMAAACegAABbMAAAMJAAAAAQAAcQWFcQaHcQdScQhYDAAAAG9ubHlfc2lnbmFsc3EJiFgF
-AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
+		<properties format="literal" node_id="5">{'only_signals': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="6">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYBAAAAGF4aXNxAlgEAAAAdGltZXEDWBMAAABzYXZl
+ZFdpZGdldEdlb21ldHJ5cQRjc2lwCl91bnBpY2tsZV90eXBlCnEFWAwAAABQeVF0NC5RdENvcmVx
+BlgKAAAAUUJ5dGVBcnJheXEHQy4B2dDLAAEAAAAABEgAAAJjAAAFtwAAAw0AAARMAAACegAABbMA
+AAMJAAAAAAAAcQiFcQmHcQpScQtYBQAAAG9yZGVycQxN9AF1Lg==
 </properties>
+		<properties format="pickle" node_id="7">gAN9cQAoWAsAAABhbnRpYWxpYXNlZHEBiVgLAAAAc3RyZWFtX25hbWVxAlgAAAAAcQNYEAAAAGJh
+Y2tncm91bmRfY29sb3JxBFgHAAAAI0ZGRkZGRnEFWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQZj
+c2lwCl91bnBpY2tsZV90eXBlCnEHWAwAAABQeVF0NC5RdENvcmVxCFgKAAAAUUJ5dGVBcnJheXEJ
+Qy4B2dDLAAEAAAAABdsAAAIHAAAHSgAAAz8AAAXfAAACHgAAB0YAAAM7AAAAAAAAcQqFcQuHcQxS
+cQ1YBQAAAHRpdGxlcQ5YEAAAAFRpbWUgc2VyaWVzIHZpZXdxD1gFAAAAc2NhbGVxEEc/uZmZmZmZ
+mlgLAAAAZG93bnNhbXBsZWRxEYlYCgAAAHRpbWVfcmFuZ2VxEkdAFAAAAAAAAFgKAAAAemVyb19j
+b2xvcnETWAkAAAAjN0Y3RjdGN0ZxFFgKAAAAbGluZV9jb2xvcnEVWAcAAAAjMDAwMDAwcRZ1Lg==
+</properties>
+		<properties format="literal" node_id="8">{'timebase': 'wallclock', 'savedWidgetGeometry': None}</properties>
+		<properties format="literal" node_id="9">{'forget_halftime': 300, 'savedWidgetGeometry': None, 'max_updaterate': 500, 'precision_bits': 1024, 'force_monotonic': True, 'warmup_samples': -1}</properties>
+		<properties format="literal" node_id="10">{'only_signals': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="literal" node_id="11">{'only_nonempty': True, 'savedWidgetGeometry': None}</properties>
 	</node_properties>
 	<patch>{
     "nodes": {
@@ -98,14 +114,21 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                     "customized": false
                 },
                 "channel_names": {
-                    "value": [],
+                    "value": [
+                        "TP9",
+                        "FP1",
+                        "FP2",
+                        "TP10",
+                        "n/a",
+                        "n/a"
+                    ],
                     "type": "Port",
                     "customized": true
                 },
                 "nominal_rate": {
-                    "value": null,
+                    "value": 220.0,
                     "type": "Port",
-                    "customized": false
+                    "customized": true
                 }
             }
         },
@@ -125,8 +148,8 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                 },
                 "frequencies": {
                     "value": [
+                        7.0,
                         8.0,
-                        9.0,
                         14.0,
                         15.0
                     ],
@@ -189,11 +212,11 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                             1
                         ],
                         [
-                            8.0,
+                            7.0,
                             1
                         ],
                         [
-                            9.0,
+                            8.0,
                             0
                         ],
                         [
@@ -205,11 +228,11 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                             1
                         ],
                         [
-                            25.0,
+                            35.0,
                             1
                         ],
                         [
-                            26.0,
+                            36.0,
                             0
                         ],
                         [
@@ -252,9 +275,9 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
             "module": "neuropype.nodes.filters",
             "params": {
                 "nof": {
-                    "value": 3,
+                    "value": 1,
                     "type": "IntPort",
-                    "customized": false
+                    "customized": true
                 },
                 "streaming_update": {
                     "value": true,
@@ -274,17 +297,6 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
             }
         },
         "node5": {
-            "class": "Logarithm",
-            "module": "neuropype.nodes.elementwise",
-            "params": {
-                "only_signals": {
-                    "value": true,
-                    "type": "BoolPort",
-                    "customized": false
-                }
-            }
-        },
-        "node6": {
             "class": "LSLOutput",
             "module": "neuropype.nodes.network",
             "params": {
@@ -325,18 +337,7 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                 }
             }
         },
-        "node7": {
-            "class": "PrintToConsole",
-            "module": "neuropype.nodes.utilities",
-            "params": {
-                "only_nonempty": {
-                    "value": true,
-                    "type": "BoolPort",
-                    "customized": false
-                }
-            }
-        },
-        "node8": {
+        "node6": {
             "class": "Squaring",
             "module": "neuropype.nodes.elementwise",
             "params": {
@@ -347,7 +348,7 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                 }
             }
         },
-        "node9": {
+        "node7": {
             "class": "MovingAverage",
             "module": "neuropype.nodes.filters",
             "params": {
@@ -357,11 +358,126 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
                     "customized": false
                 },
                 "order": {
-                    "value": 200,
+                    "value": 500,
                     "type": "IntPort",
                     "customized": true
                 },
                 "only_signals": {
+                    "value": true,
+                    "type": "BoolPort",
+                    "customized": false
+                }
+            }
+        },
+        "node8": {
+            "class": "TimeSeriesPlot",
+            "module": "neuropype.nodes.visualization",
+            "params": {
+                "scale": {
+                    "value": 0.1,
+                    "type": "FloatPort",
+                    "customized": true
+                },
+                "time_range": {
+                    "value": 5.0,
+                    "type": "FloatPort",
+                    "customized": false
+                },
+                "stream_name": {
+                    "value": "",
+                    "type": "StringPort",
+                    "customized": false
+                },
+                "title": {
+                    "value": "Time series view",
+                    "type": "StringPort",
+                    "customized": false
+                },
+                "background_color": {
+                    "value": "#FFFFFF",
+                    "type": "StringPort",
+                    "customized": false
+                },
+                "line_color": {
+                    "value": "#000000",
+                    "type": "StringPort",
+                    "customized": false
+                },
+                "zero_color": {
+                    "value": "#7F7F7F7F",
+                    "type": "StringPort",
+                    "customized": false
+                },
+                "antialiased": {
+                    "value": false,
+                    "type": "BoolPort",
+                    "customized": false
+                },
+                "downsampled": {
+                    "value": false,
+                    "type": "BoolPort",
+                    "customized": false
+                }
+            }
+        },
+        "node9": {
+            "class": "OverrideTimestamps",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "timebase": {
+                    "value": "wallclock",
+                    "type": "EnumPort",
+                    "customized": false
+                }
+            }
+        },
+        "node10": {
+            "class": "DejitterTimestamps",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "forget_halftime": {
+                    "value": 300,
+                    "type": "FloatPort",
+                    "customized": false
+                },
+                "force_monotonic": {
+                    "value": true,
+                    "type": "BoolPort",
+                    "customized": false
+                },
+                "max_updaterate": {
+                    "value": 500,
+                    "type": "IntPort",
+                    "customized": false
+                },
+                "warmup_samples": {
+                    "value": -1,
+                    "type": "IntPort",
+                    "customized": false
+                },
+                "precision_bits": {
+                    "value": 1024,
+                    "type": "IntPort",
+                    "customized": false
+                }
+            }
+        },
+        "node11": {
+            "class": "SquareRoot",
+            "module": "neuropype.nodes.elementwise",
+            "params": {
+                "only_signals": {
+                    "value": true,
+                    "type": "BoolPort",
+                    "customized": false
+                }
+            }
+        },
+        "node12": {
+            "class": "PrintToConsole",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "only_nonempty": {
                     "value": true,
                     "type": "BoolPort",
                     "customized": false
@@ -397,31 +513,49 @@ AAAAb3JkZXJxCkvIWAQAAABheGlzcQtYBAAAAHRpbWVxDHUu
         [
             "node4",
             "out_data",
-            "node8",
-            "data"
-        ],
-        [
-            "node5",
-            "data",
             "node6",
             "data"
         ],
         [
-            "node5",
+            "node6",
             "data",
             "node7",
             "data"
         ],
         [
+            "node9",
+            "data",
+            "node10",
+            "data"
+        ],
+        [
+            "node10",
+            "data",
             "node8",
+            "data"
+        ],
+        [
+            "node7",
+            "data",
+            "node11",
+            "data"
+        ],
+        [
+            "node11",
             "data",
             "node9",
             "data"
         ],
         [
-            "node9",
+            "node11",
             "data",
             "node5",
+            "data"
+        ],
+        [
+            "node11",
+            "data",
+            "node12",
             "data"
         ]
     ]
