@@ -470,7 +470,7 @@ class CanvasMainWindow(QMainWindow):
             QAction(self.tr("Tutorials"), self,
                     objectName="tutorial-action",
                     toolTip=self.tr("Browse tutorials."),
-                    triggered=self.tutorial_scheme,
+                    triggered=self.tutorial,
                     icon=canvas_icons("Tutorials.svg")
                     )
 
@@ -1329,7 +1329,7 @@ class CanvasMainWindow(QMainWindow):
     def documentation(self, *args):
         """Show reference documentation.
         """
-        url = QUrl(LINKS["tutorial"])
+        url = QUrl(LINKS["start-using"])
         QDesktopServices.openUrl(url)
 
     def recent_scheme(self, *args):
@@ -1556,7 +1556,7 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Tutorials.svg")
                     )
 
-        bottom_row = [quickstart_action, tutorials_action,
+        bottom_row = [quickstart_action, self.tutorials_action,
                       self.documentation_action]
 
         self.new_action.triggered.connect(dialog.accept)
