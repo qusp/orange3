@@ -102,7 +102,7 @@ class RelaxationQuickstartWizardDialog(QuickstartWizardDialog):
                 'query': self._query_string.text(),
             },
             'Peak FIR': {
-                'frequencies': '(%s, %s, %s, %s)' % (peak_lo-trans, peak_lo,
+                'frequencies': '[%s, %s, %s, %s]' % (peak_lo-trans, peak_lo,
                                                      peak_hi, peak_hi+trans)
             },
             'Noise FIR': {
