@@ -19,7 +19,7 @@
  
 ;    3. This notice may not be removed or altered from any source distribution.
  
-!define setup "neuropype-setup.exe"
+!define setup "neuropype-setup-1.0.0.exe"
  
 ; change this to wherever the files to be packaged reside
 !define srcdir "."
@@ -194,7 +194,11 @@ Section
   CreateShortCut "${startmenu}\${prodname}.lnk" "$INSTDIR\${exec}"
   CreateShortCut "$DESKTOP\${prodname}.lnk" "$INSTDIR\${exec}"
 !endif
- 
+
+CreateShortCut "${startmenu}\Release Notes.lnk" "$INSTDIR\docs\NeuroPype Release Notes 1.0 Beta.pdf"
+CreateShortCut "${startmenu}\Documentation.lnk" "$INSTDIR\docs"
+CreateShortCut "${startmenu}\Installation.lnk" "$INSTDIR"
+
 !ifdef notefile
   CreateShortCut "${startmenu}\Release Notes.lnk "$INSTDIR\${notefile}"
 !endif
@@ -254,17 +258,19 @@ Delete "$INSTDIR\${icon}"
 !endif
  
 Delete "$INSTDIR\${exec}"
- 
+
+; delete files generated dynamically during installation
+Delete "$INSTDIR\python\qt.conf"
+Delete "$INSTDIR\python\Lib\site-packages\*.*"
+Delete "$INSTDIR\python\Scripts\*.*"
+
 !ifdef unfiles
 !include "${unfiles}"
 !endif
 
-; delete files generated dynamically during installation
-Delete "$INSTDIR\python\qt.conf"
-
-
 Delete "$INSTDIR\uninstall.exe"
 
 RMDir "$INSTDIR"
- 
+RMDir "$PROGRAMFILES\${company}"
+
 SectionEnd
