@@ -1,5 +1,5 @@
 @echo off
-echo Launching NeuroPyPE...
+echo Launching NeuroPype...
 set PYTHONHOME=
 set "PATH=%cd%\python;%PATH%"
 cd vpe

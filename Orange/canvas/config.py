@@ -40,7 +40,7 @@ def init():
     version = ".".join(version.split(".", 2)[:2])
 
     QCoreApplication.setOrganizationDomain("biolab.si")
-    QCoreApplication.setApplicationName("Orange Canvas")
+    QCoreApplication.setApplicationName("NeuroPype")
     QCoreApplication.setApplicationVersion(version)
     QSettings.setDefaultFormat(QSettings.IniFormat)
 
@@ -306,7 +306,7 @@ def splash_screen():
     # p.setPen(QColor("#231F20"))
     # p.drawText(br, Qt.AlignCenter, version)
     # p.end()
-    return pm, QRect(88, 193, 200, 20)
+    return pm, QRect(12, 270, 200, 20)
 
 
 def application_icon():
@@ -314,7 +314,7 @@ def application_icon():
     Return the main application icon.
     """
     path = pkg_resources.resource_filename(
-        __name__, "icons/orange-canvas.svg"
+        __name__, "icons/vpe.ico"
     )
     return QIcon(path)
 

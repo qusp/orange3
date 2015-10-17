@@ -12,7 +12,7 @@ from .. import config
 
 ABOUT_TEMPLATE = """\
 <center>
-<h4>NeuroPyPE</h4>
+<h4>NeuroPype</h4>
 <p>CPE Version: 1.0</p>
 <p>VPE Version: 1.0</p>
 <p>Orange Version: {version}</p>

@@ -31,8 +31,8 @@ def get_human_readable_state(state):
 
 class NeuropypeSignalManager(SignalManager):
     """
-    A SignalManager implementation that can hold and invoke NeuroPyPE nodes.
-    This class owns a NeuroPyPE Graph and Scheduler object, and updates both
+    A SignalManager implementation that can hold and invoke NeuroPype nodes.
+    This class owns a NeuroPype Graph and Scheduler object, and updates both
     in response to GUI actions (add/remove node/link, start/stop/resume).
     """
 

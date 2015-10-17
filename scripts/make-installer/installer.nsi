@@ -26,7 +26,7 @@
  
 !define company "Syntrogi"
  
-!define prodname "NeuroPyPE"
+!define prodname "NeuroPype"
 !define exec "neuropype.bat"
  
 ; optional stuff

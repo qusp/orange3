@@ -1,7 +1,7 @@
-NeuroPyPE VPE
+NeuroPype VPE
 =============
 
-This is the visual programming environment (VPE) for for the NeuroPyPE core 
+This is the visual programming environment (VPE) for for the NeuroPype core
 processing engine (CPE). 
 
 Installing

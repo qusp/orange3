@@ -1,4 +1,4 @@
-"""Regenerate the widget tree from a given NeuroPyPE installation.
+"""Regenerate the widget tree from a given NeuroPype installation.
 
 Note that this script must be run in a Python environment that can import the
 neuropype package and some of its sub-packages (from the given path, if
@@ -56,7 +56,7 @@ def sanitize_neuropype_path(neuropype_path):
         print("Error: path does not exist: %s" % neuropype_path)
         sys.exit(1)
     else:
-        print("Assuming NeuroPyPE path: %s" % neuropype_path)
+        print("Assuming NeuroPype path: %s" % neuropype_path)
 
     return neuropype_path
 
@@ -359,7 +359,7 @@ def regenerate_widgets(neuropype_path=None, orange_path=None,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto-generate VPE widgets for'
-                                                 ' a NeuroPyPE installation.')
+                                                 ' a NeuroPype installation.')
     parser.add_argument('-n', '--neuropype-path',
                         help='Path to neuropype package for whose nodes to '
                              'generate widgets (default: according to Python '

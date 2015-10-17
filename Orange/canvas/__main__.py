@@ -148,7 +148,7 @@ def main(argv=None):
     stream_hander.setLevel(level=levels[options.log_level])
     rootlogger.addHandler(stream_hander)
 
-    log.info("Starting 'Orange Canvas' application.")
+    log.info("Starting 'NeuroPype' application.")
 
     qt_argv = argv[:1]
 
@@ -272,7 +272,7 @@ def main(argv=None):
         pm, rect = config.splash_screen()
         splash_screen = SplashScreen(pixmap=pm, textRect=rect)
         splash_screen.setFont(QFont("Helvetica", 12))
-        color = QColor("#FFD39F")
+        color = QColor("#AAAAAA")
 
         def show_message(message):
             splash_screen.showMessage(message, color=color)

@@ -66,12 +66,12 @@ log = logging.getLogger(__name__)
 
 # TODO: Orange Version in the base link
 
-BASE_LINK = "http://orange.biolab.si/"
+BASE_LINK = "https://neuroscale.readme.io/"
 
 LINKS = \
-    {"start-using": BASE_LINK + "start-using/",
-     "tutorial": BASE_LINK + "tutorial/",
-     "reference": BASE_LINK + "doc/"
+    {"start-using": BASE_LINK + "docs/",
+     "tutorial": BASE_LINK + "docs/tutorials-overview",
+     "reference": BASE_LINK + "docs/getting-started"
      }
 
 
@@ -436,7 +436,7 @@ class CanvasMainWindow(QMainWindow):
         self.quit_action = \
             QAction(self.tr("Quit"), self,
                     objectName="quit-action",
-                    toolTip=self.tr("Quit Orange Canvas."),
+                    toolTip=self.tr("Quit NeuroPype."),
                     triggered=self.quit,
                     menuRole=QAction.QuitRole,
                     shortcut=QKeySequence.Quit,
@@ -552,11 +552,6 @@ class CanvasMainWindow(QMainWindow):
                     triggered=self.show_output_view,
                     )
 
-        self.show_report_action = \
-            QAction(self.tr("Show Report View"), self,
-                    triggered=self.show_report_view
-                    )
-
         if sys.platform == "darwin":
             # Actions for native Mac OSX look and feel.
             self.minimize_action = \
@@ -669,7 +664,6 @@ class CanvasMainWindow(QMainWindow):
         # Options menu
         self.options_menu = QMenu(self.tr("&Options"), self)
         self.options_menu.addAction(self.show_output_action)
-        self.options_menu.addAction(self.show_report_action)
 #        self.options_menu.addAction("Add-ons")
 #        self.options_menu.addAction("Developers")
 #        self.options_menu.addAction("Run Discovery")
@@ -910,8 +904,8 @@ class CanvasMainWindow(QMainWindow):
         # set one or more extra sidebar locations where Schemes are stored.
         # Also use setHistory
         filename = QFileDialog.getOpenFileName(
-            self, self.tr("Open Orange Workflow File"),
-            start_dir, self.tr("Orange Workflow (*.ows)"),
+            self, self.tr("Open NeuroPype Workflow File"),
+            start_dir, self.tr("NeuroPype Workflow (*.ows)"),
         )
 
         if filename:
@@ -1149,8 +1143,8 @@ class CanvasMainWindow(QMainWindow):
             start_dir = os.path.join(str(start_dir), title + ".ows")
 
         filename = QFileDialog.getSaveFileName(
-            self, self.tr("Save Orange Workflow File"),
-            start_dir, self.tr("Orange Workflow (*.ows)")
+            self, self.tr("Save NeuroPype Workflow File"),
+            start_dir, self.tr("NeuroPype Workflow (*.ows)")
         )
 
         if filename:
@@ -1293,7 +1287,7 @@ class CanvasMainWindow(QMainWindow):
 
         if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
             message_warning(
-                self.tr('The current workflow is not based on NeuroPyPE and '
+                self.tr('The current workflow is not based on NeuroPype and '
                         'cannot be exported.'),
                 title=self.tr("Error saving %s") % basename,
                 exc_info=True,
@@ -1497,7 +1491,7 @@ class CanvasMainWindow(QMainWindow):
         """
 
         dialog = welcomedialog.WelcomeDialog(self)
-        dialog.setWindowTitle(self.tr("Welcome to NeuroPyPE"))
+        dialog.setWindowTitle(self.tr("Welcome to NeuroPype"))
 
         def new_scheme():
             if self.new_scheme() == QDialog.Accepted:
