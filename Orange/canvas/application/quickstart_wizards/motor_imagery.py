@@ -26,24 +26,16 @@ class MotorImageryQuickstartWizardDialog(QuickstartWizardDialog):
 
         ######## Step 2
 
-        step_2 = self.step("What data and marker stream do you want to read "
+        step_2 = self.step("What data stream do you want to read "
                            "from? (e.g., name='Cognionics', or "
-                           "hostname='myhost' and name='SNAP-Markers')")
+                           "hostname='myhost' and type='EEG')")
         step_2.setContentsMargins(0, 15, 0, 0)
 
         # Query string.
         query_string = QLineEdit("type='EEG'")
 
-        # Marker string.
-        marker_string = QLineEdit("type='Markers'")
-
-        # Form layout.
-        input_form = QFormLayout()
-        input_form.addRow(self.tr('Data stream'), query_string)
-        input_form.addRow(self.tr('Marker stream'), marker_string)
-
         custom_layout.addWidget(step_2)
-        custom_layout.addLayout(input_form)
+        custom_layout.addWidget(query_string)
 
         ######## Step 3
 
@@ -134,7 +126,6 @@ class MotorImageryQuickstartWizardDialog(QuickstartWizardDialog):
         ######## Attributes.
         self._training_set = training_set
         self._query_string = query_string
-        self._marker_string = marker_string
         self._output_stream = output_stream
         self._source_id = source_id
         self._assign_targets = assign_targets
@@ -154,8 +145,7 @@ class MotorImageryQuickstartWizardDialog(QuickstartWizardDialog):
                 'filename': self._training_set.text()
             },
             'LSL Input': {
-                'query': self._query_string.text(),
-                'marker_query': self._marker_string.text()
+                'query': self._query_string.text()
             },
             'LSL Output': {
                 'stream_name': self._output_stream.text(),
