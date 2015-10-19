@@ -238,7 +238,7 @@ class SettingsHandler:
         try:
             settings_file = open(filename, "wb")
         except FileNotFoundError:
-            print("Could not write settings.")
+            # print("Could not write settings.")  # ck: disabled noisy logging
             return
         try:
             self.write_defaults_file(settings_file)
