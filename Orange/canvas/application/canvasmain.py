@@ -669,9 +669,7 @@ class CanvasMainWindow(QMainWindow):
 #        self.options_menu.addAction("Run Discovery")
 #        self.options_menu.addAction("Show Canvas Log")
 #        self.options_menu.addAction("Attach Python Console")
-        self.options_menu.addSeparator()
         self.options_menu.addAction(self.canvas_settings_action)
-        self.options_menu.addAction(self.canvas_addons_action)
 
         # Widget menu
         menu_bar.addMenu(self.widget_menu)
