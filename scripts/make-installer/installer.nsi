@@ -196,7 +196,7 @@ Section
 !endif
 
 CreateShortCut "${startmenu}\Lab Recorder.lnk" "$INSTDIR\labrecorder.bat"
-CreateShortCut "${startmenu}\Release Notes.lnk" "$INSTDIR\docs\NeuroPype Release Notes 1.0 Beta.pdf"
+CreateShortCut "${startmenu}\Release Notes.lnk" "$INSTDIR\docs\RELEASE NOTES 1.0 Beta.pdf"
 CreateShortCut "${startmenu}\Documentation.lnk" "$INSTDIR\docs"
 CreateShortCut "${startmenu}\Installation.lnk" "$INSTDIR"
 
