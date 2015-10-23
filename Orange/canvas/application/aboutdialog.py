@@ -17,6 +17,10 @@ ABOUT_TEMPLATE = """\
 <p>VPE Version: 1.0</p>
 <p>Orange Version: {version}</p>
 <p>(git revision: {git_revision})</p>
+<p>A Qusp project</p>
+<p>www.qusp.io</p>
+This software is not for commercial use.
+See license.rtf for license terms.
 </center>
 
 """
@@ -32,6 +36,7 @@ class AboutDialog(QDialog):
         self.__setupUi()
 
     def __setupUi(self):
+        self.setWindowTitle("About NeuroPype")
         layout = QVBoxLayout()
         label = QLabel(self)
 
