@@ -30,7 +30,8 @@ class OW{{ node.__name__ }}(cpewidget.CPEWidget):
     ]
 
     # Configuration properties.{% for name, port in node.ports(editable=True).items() %}
-    {{ name }} = Setting(None){% endfor %}
+    {% if port.__class__.__name__ == 'BoolPort' %}{{ name }} = Setting(False)
+    {%- else %}{{ name }} = Setting(None){% endif %}{% endfor %}
 
     def __init__(self):
         # Initialize with a newly instantiated node.
