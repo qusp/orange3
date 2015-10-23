@@ -64,14 +64,16 @@ from . import quickstart_wizards
 
 log = logging.getLogger(__name__)
 
-# TODO: Orange Version in the base link
 
-BASE_LINK = "https://neuroscale.readme.io/"
+basepath = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                         '../../../../'))
+basepath = basepath.replace('\\', '/')
+BASE_LINK = "file:///" + basepath + '/'
 
 LINKS = \
-    {"start-using": BASE_LINK + "docs/",
-     "tutorial": BASE_LINK + "docs/tutorials-overview",
-     "reference": BASE_LINK + "docs/getting-started"
+    {"start-using": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+     "tutorial": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+     "reference": BASE_LINK + "docs/Architecture Reference.pdf"
      }
 
 
@@ -467,7 +469,7 @@ class CanvasMainWindow(QMainWindow):
                     )
 
         self.tutorials_action = \
-            QAction(self.tr("Tutorials"), self,
+            QAction(self.tr("User Guide"), self,
                     objectName="tutorial-action",
                     toolTip=self.tr("Browse tutorials."),
                     triggered=self.tutorial,
@@ -475,7 +477,7 @@ class CanvasMainWindow(QMainWindow):
                     )
 
         self.documentation_action = \
-            QAction(self.tr("Documentation"), self,
+            QAction(self.tr("Reference"), self,
                     objectName="documentation-action",
                     toolTip=self.tr("View reference documentation."),
                     triggered=self.documentation,
@@ -1327,7 +1329,7 @@ class CanvasMainWindow(QMainWindow):
     def documentation(self, *args):
         """Show reference documentation.
         """
-        url = QUrl(LINKS["start-using"])
+        url = QUrl(LINKS["reference"])
         QDesktopServices.openUrl(url)
 
     def recent_scheme(self, *args):
@@ -1543,7 +1545,7 @@ class CanvasMainWindow(QMainWindow):
                     objectName="welcome-quickstart-action",
                     toolTip=self.tr("Browse quickstart wizards."),
                     triggered=quickstart,
-                    icon=canvas_icons("Get Started.svg")
+                    icon=canvas_icons("wizard.png")
                     )
 
         tutorials_action = \
