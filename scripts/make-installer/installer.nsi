@@ -24,7 +24,7 @@
 ; change this to wherever the files to be packaged reside
 !define srcdir "."
  
-!define company "Syntrogi"
+!define company "Qusp"
  
 !define prodname "NeuroPype"
 !define exec "neuropype.bat"

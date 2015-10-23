@@ -306,7 +306,7 @@ def splash_screen():
     # p.setPen(QColor("#231F20"))
     # p.drawText(br, Qt.AlignCenter, version)
     # p.end()
-    return pm, QRect(12, 270, 200, 20)
+    return pm, QRect(12, 285, 200, 20)
 
 
 def application_icon():

@@ -212,7 +212,7 @@ class WidgetManager(QObject):
                                     "NeuroPype. Please check the commercial "
                                     "package. If you believe this is an error, "
                                     "please contact us at "
-                                    "support@syntrogi.com.")
+                                    "support@qusp.io.")
             return
 
     def remove_widget_for_node(self, node):

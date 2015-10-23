@@ -43,7 +43,7 @@ Troubleshooting:
     created, and so if you are running additional setup scripts that create
     extra files, or if Python creates extra files during launch, the folders
     will not be empty and therefore not be deleted; warning: the correct fix
-    is not to delete *.* in the Syntrogi install folder, because a user may
+    is not to delete *.* in the Qusp install folder, because a user may
     (perhaps inadvertently) install NeuroPype to C:\ or the like. instead,
     make sure you delete only the sub-directories and their files that you
     created
