@@ -25,6 +25,11 @@ VPE installed and working):
 * right-click installer.nsi and select "Compile NSIS Script"
 
 
+Making a source code release:
+* pick all folders, except for python and the license.rtf file
+* compress them into a .zip archive
+* name the resulting file neuropype-community-src-x.y.z.zip
+  (x,y,z being version number parts).
 
 Troubleshooting:
 * Why are my svg images not loading after deployment?
@@ -38,7 +43,7 @@ Troubleshooting:
     created, and so if you are running additional setup scripts that create
     extra files, or if Python creates extra files during launch, the folders
     will not be empty and therefore not be deleted; warning: the correct fix
-    is not to delete *.* in the Syntrogi install folder, because a user may
+    is not to delete *.* in the Qusp install folder, because a user may
     (perhaps inadvertently) install NeuroPype to C:\ or the like. instead,
     make sure you delete only the sub-directories and their files that you
     created

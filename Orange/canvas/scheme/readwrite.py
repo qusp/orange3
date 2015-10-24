@@ -942,7 +942,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         raise ValueError("Unsupported format %r" % format)
 
     if pickle_fallback:
-        log.warning("Using pickle fallback")
+        # log.warning("Using pickle fallback")  # ck: disabled noisy logging
         return base64.encodebytes(pickle.dumps(obj)).decode('ascii'), "pickle"
     else:
         raise Exception("Something strange happened.")
