@@ -3,5 +3,10 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-<text transform="matrix(1 0 0 1 32.1201 67.6104)" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" font-family="'MyriadPro-Bold'" font-size="60">×</text>
+<text transform="matrix(1 0 0 1 32.1201 67.6104)" font-family="'MyriadPro-Bold'" font-size="60">×</text>
+<g enable-background="new    ">
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+		M38.42,36.052L50,47.871l11.58-11.819l3.899,4.02l-11.52,11.76l11.52,11.76l-3.959,4.02L50,55.851L38.48,67.61l-3.96-4.02
+		l11.52-11.76l-11.52-11.76L38.42,36.052z"/>
+</g>
 </svg>
