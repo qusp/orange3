@@ -100,6 +100,9 @@ def main(argv=None):
     parser.add_option("--clear-widget-settings",
                       action="store_true",
                       help="Remove stored widget setting")
+    parser.add_option("--autolaunch",
+                      action="store_true",
+                      help="Launch given scheme automatically, if any")
     parser.add_option("--no-welcome",
                       action="store_true",
                       help="Don't show welcome dialog.")
@@ -317,11 +320,16 @@ def main(argv=None):
     elif args:
         log.info("Loading a scheme from the command line argument %r",
                  args[0])
-        canvas_window.load_scheme(args[0])
+        if args[0] == 'latest':
+            canvas_window.reload_last()
+        else:
+            canvas_window.load_scheme(args[0])
     elif open_requests:
         log.info("Loading a scheme from an `QFileOpenEvent` for %r",
                  open_requests[-1])
         canvas_window.load_scheme(open_requests[-1].toLocalFile())
+    if options.autolaunch:
+        canvas_window.freeze_action.trigger()
 
     stdout_redirect = \
         settings.value("output/redirect-stdout", True, type=bool)
