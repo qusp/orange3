@@ -727,7 +727,7 @@ def checkBox(widget, master, value, label, box=None,
 
     if labelWidth:
         cbox.setFixedSize(labelWidth, cbox.sizeHint().height())
-    cbox.setChecked(getdeepattr(master, value))
+    cbox.setChecked(getdeepattr(master, value) or False)
 
     connectControl(cbox, master, value, None, "toggled(bool)",
                    CallFrontCheckBox(cbox),
