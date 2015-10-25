@@ -58,6 +58,9 @@ class CPEWidget(widget.OWWidget):
                 try:
                     # attempt to evaluate as expression
                     value = eval(content)
+                    if callable(value):
+                        # a function is almost certainly not what we wanted
+                        raise ValueError("not applicable")
                 except Exception as e:
                     # interpret as a string
                     value = eval('"%s"' % content)
