@@ -19,6 +19,9 @@ info = StreamInfo(name='MotorImag-Markers', type='Markers', channel_count=1,
                   source_id='t8u43t98u')
 outlet = StreamOutlet(info)
 
+print("Press enter to begin.")
+x = input()
+
 hFigure, ax = plt.subplots()
 ax.set_yticklabels([''])
 ax.set_xticklabels([''])
@@ -34,6 +37,8 @@ try:
             break
         choice = random.choice([0, 1])
         t.set_text(labels[choice])
+        if trial == warmup_trials:
+            outlet.push_sample(['calibration-begin'])
         if trial > warmup_trials:
             outlet.push_sample([markers[choice]])
         hFigure.canvas.draw()
@@ -53,3 +58,4 @@ try:
         hFigure.canvas.flush_events()
 except Exception as e:
     print(e)
+outlet.push_sample(['calibration-end'])
