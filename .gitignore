@@ -32,6 +32,7 @@ Orange/widgets/general/*
 Orange/widgets/machine_learning/*
 Orange/widgets/network/*
 Orange/widgets/spectral/*
+Orange/widgets/source_space/*
 Orange/widgets/utilities/*
 Orange/widgets/visualization/*
 Orange/widgets/workflow/*
