@@ -30,3 +30,4 @@ Fabiano Coelho
 Candice McCollough
 Gregor Črešnar
 Bob Holzer
+Dmitry Baranovskiy
