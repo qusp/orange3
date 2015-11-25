@@ -829,7 +829,7 @@ class SchemeEditWidget(QWidget):
         """
         view = self.view()
         if zoom:
-            view.scale(1.5, 1.5)
+            view.scale(1.0/1.5, 1.0/1.5)
         else:
             view.resetTransform()
 
