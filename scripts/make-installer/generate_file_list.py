@@ -13,13 +13,16 @@ with open("files.nsi", "w") as out:
         for f in files:
             line = os.path.join(root, f)
             outpath = root[2:]
+            if ('.idea' in outpath) or ('venv' in outpath):
+                continue
             if outpath != lastpath:
                 print('SetOutPath "$INSTDIR\%s"' % outpath, file=out)
                 lastpath = outpath
             filename = line[2:]
-            if filename not in ['files.nsi','unfiles.nsi','readme.txt',
-                                'installer.nsi','generate_file_list.py']:
-                print('File "${srcdir}\%s"' % line[2:], file=out)
+            if filename in ['files.nsi','unfiles.nsi','readme.txt',
+                            'installer.nsi','generate_file_list.py']:
+                continue
+            print('File "${srcdir}\%s"' % line[2:], file=out)
 
 with open("unfiles.nsi", "w") as out:
     for root, dirs, files in os.walk(".", topdown=False):

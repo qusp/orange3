@@ -16,7 +16,7 @@ VPE installed and working):
   to lsl/
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/SDK/liblsl-ALL-languages-1.10.2.zip
   to lsl/; remove the contents of the folder lsl/LSL/liblsl/external/ to reduce
-  installer size
+  installer size (ideally, put a file there which informs users of the omission)
 * make a folder named docs/ and copy versions of the NeuroPype Manual and
   NeuroPype Release Notes there (not included in this repo)
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
@@ -26,7 +26,7 @@ VPE installed and working):
 
 
 Making a source code release:
-* pick all folders, except for python and the license.rtf file
+* pick all folders (except for python), and the license.rtf file
 * compress them into a .zip archive
 * name the resulting file neuropype-community-src-x.y.z.zip
   (x,y,z being version number parts).
