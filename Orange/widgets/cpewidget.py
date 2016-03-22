@@ -1,3 +1,5 @@
+import numpy as np
+
 from Orange.widgets import widget
 
 
@@ -57,7 +59,7 @@ class CPEWidget(widget.OWWidget):
                 content = getattr(self, name)
                 try:
                     # attempt to evaluate as expression
-                    value = eval(content)
+                    value = eval(content, None, np.__dict__)
                     if callable(value):
                         # a function is almost certainly not what we wanted
                         raise ValueError("not applicable")
