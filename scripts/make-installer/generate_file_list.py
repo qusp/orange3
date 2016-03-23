@@ -20,7 +20,8 @@ with open("files.nsi", "w") as out:
                 lastpath = outpath
             filename = line[2:]
             if filename in ['files.nsi', 'unfiles.nsi', 'readme.txt',
-                            'installer.nsi', 'generate_file_list.py']:
+                            'installer.nsi', 'installer64.nsi',
+                            'generate_file_list.py']:
                 continue
             if filename.startswith('neuropype') and filename.endswith('.exe'):
                 continue
