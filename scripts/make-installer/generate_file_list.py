@@ -19,8 +19,10 @@ with open("files.nsi", "w") as out:
                 print('SetOutPath "$INSTDIR\%s"' % outpath, file=out)
                 lastpath = outpath
             filename = line[2:]
-            if filename in ['files.nsi','unfiles.nsi','readme.txt',
-                            'installer.nsi','generate_file_list.py']:
+            if filename in ['files.nsi', 'unfiles.nsi', 'readme.txt',
+                            'installer.nsi', 'generate_file_list.py']:
+                continue
+            if filename.startswith('neuropype') and filename.endswith('.exe'):
                 continue
             print('File "${srcdir}\%s"' % line[2:], file=out)
 

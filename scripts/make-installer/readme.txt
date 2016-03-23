@@ -4,14 +4,28 @@ VPE installed and working):
 * copy contents of this directory into a new sandbox folder
 * ensure that the sandbox does not already contain a previously-created
   installer (if you reuse the folder)
+* make sure that you're on the community branch of the cpe repo if you're
+  doing a community release, and on production (or develop) otherwise
+* if your customer needs customer-specific nodes, make sure that they're present
 * copy both cpe/vpe folders to the sandbox
 * ensure that the cpe/vpe folders each do not contain a venv, .git, or .idea
   directory
-* perform the installation procedure for the vpe directory *without* using a
-  virtual environment (i.e., against your C:\Python34\ install)
-* copy your C:\Python34 directory into the sandbox and rename it to python
-* copy the following 2 files from C:\Windows\SysWOW64 (or *only* if that doesn't
-  exist, from C:\Windows\system32) to the python folder: python34.dll, msvcr100.dll
+* if you're making a 32-bit installer:
+    * perform the installation procedure for the vpe directory *without* using a
+      virtual environment (i.e., against your C:\Python34\ install)
+    * copy your C:\Python34 directory into the sandbox and rename it to python
+    * copy the following 2 files from C:\Windows\SysWOW64 (or *only* if that doesn't
+      exist, from C:\Windows\System32) to the python folder: python34.dll,
+      msvcr100.dll
+* if you're making a 64-bit installer:
+    * ensure that you're on a 64-bit Windows installation
+    * perform the installation procedure for the vpe directory *without* using a
+      virtual environment using your 64-bit Python (i.e., against your
+      C:\Python34-x64\ install)
+    * copy your C:\Python34-x64 directory into the sandbox and rename it to
+      python
+    * copy the following 2 files from C:\Windows\System32 to the python folder:
+      python34.dll, msvcr100.dll
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/Apps/Apps-ALL-1.10.zip
   to lsl/
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/SDK/liblsl-ALL-languages-1.10.2.zip
@@ -22,7 +36,10 @@ VPE installed and working):
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
   pop up); this requires Python 3.x (best to do that in the console)
 * make sure you have NSIS 3.x installed
-* right-click installer.nsi and select "Compile NSIS Script"
+* if you're making a 32-bit installer, right-click installer.nsi and select
+  "Compile NSIS Script"
+* if you're making a 64-bit installer, right-click installer64.nsi and select
+  "Compile NSIS Script"
 
 
 Making a source code release:
