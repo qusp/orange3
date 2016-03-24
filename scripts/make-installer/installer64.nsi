@@ -80,7 +80,7 @@ SetDatablockOptimize on
 CRCCheck on
 SilentInstall normal
  
-InstallDir "$PROGRAMFILES\${company}\${prodname}"
+InstallDir "$PROGRAMFILES64\${company}\${prodname}"
 InstallDirRegKey HKLM "${regkey}" ""
  
 !ifdef licensefile
@@ -272,6 +272,6 @@ Delete "$INSTDIR\python\Scripts\*.*"
 Delete "$INSTDIR\uninstall.exe"
 
 RMDir "$INSTDIR"
-RMDir "$PROGRAMFILES\${company}"
+RMDir "$PROGRAMFILES64\${company}"
 
 SectionEnd
