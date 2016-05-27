@@ -93,7 +93,6 @@ On Windows
 * install binary dependencies
   > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win32.whl?raw=true
   > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win32.whl?raw=true
-  > pip install https://github.com/qusp/dependencies/blob/master/python/gmpy/gmpy-1.17-cp34-none-win32.whl?raw=true
   > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win32.whl?raw=true
 
 * install requirements
