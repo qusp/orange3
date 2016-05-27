@@ -320,7 +320,7 @@ def main(argv=None):
     elif args:
         log.info("Loading a scheme from the command line argument %r",
                  args[0])
-        if args[0] == 'latest':
+        if args[0] == 'latest' or args[0] == '<latest>':
             canvas_window.reload_last()
         else:
             canvas_window.load_scheme(args[0])
