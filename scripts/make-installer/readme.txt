@@ -8,24 +8,24 @@ VPE installed and working):
   doing a community release, and on production (or develop) otherwise
 * if your customer needs customer-specific nodes, make sure that they're present
 * copy both cpe/vpe folders to the sandbox
-* ensure that the cpe/vpe folders each do not contain a venv, .git, or .idea
-  directory
-* if you're making a 32-bit installer:
-    * perform the installation procedure for the vpe directory *without* using a
-      virtual environment (i.e., against your C:\Python34\ install)
-    * copy your C:\Python34 directory into the sandbox and rename it to python
-    * copy the following 2 files from C:\Windows\SysWOW64 (or *only* if that doesn't
-      exist, from C:\Windows\System32) to the python folder: python34.dll,
-      msvcr100.dll
-* if you're making a 64-bit installer:
+* if you're making a 64-bit installer (recommended):
     * ensure that you're on a 64-bit Windows installation
     * perform the installation procedure for the vpe directory *without* using a
       virtual environment using your 64-bit Python (i.e., against your
       C:\Python34-x64\ install)
+    * also install the matplotlib package (needed for the BCI examples)
     * copy your C:\Python34-x64 directory into the sandbox and rename it to
       python
     * copy the following 2 files from C:\Windows\System32 to the python folder:
       python34.dll, msvcr100.dll
+* if you're making a 32-bit installer:
+    * perform the installation procedure for the vpe directory *without* using a
+      virtual environment (i.e., against your C:\Python34\ install)
+    * also install the matplotlib package (needed for the BCI examples)
+    * copy your C:\Python34 directory into the sandbox and rename it to python
+    * copy the following 2 files from C:\Windows\SysWOW64 (or *only* if that doesn't
+      exist, from C:\Windows\System32) to the python folder: python34.dll,
+      msvcr100.dll
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/Apps/Apps-ALL-1.10.zip
   to lsl/
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/SDK/liblsl-ALL-languages-1.10.2.zip
@@ -33,6 +33,8 @@ VPE installed and working):
   installer size (ideally, put a file there which informs users of the omission)
 * make a folder named docs/ and copy versions of the NeuroPype Manual and
   NeuroPype Release Notes there (not included in this repo)
+* if you're making an official release, ontain the latest changelog.txt, add it
+  to this folder (and if needed, record any changes made in this version)
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
   pop up); this requires Python 3.x (best to do that in the console)
 * make sure you have NSIS 3.x installed
