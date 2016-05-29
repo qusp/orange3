@@ -79,8 +79,9 @@ On Linux
 On Windows
 ==========
 
-* Make sure that you have Python 3.4 installed
-  (we assume here you have it in C:\Python34)
+* Make sure that you have Python 3.4 installed (preferably the 64-bit version)
+  (we assume here that you have it in C:\Python34; otherwise adjust the path
+  in the below instructions)
 
 * create a virtual environment:
   > C:\Python34\Scripts\pip3 install virtualenv
@@ -91,15 +92,23 @@ On Windows
   > venv\Scripts\activate
 
 * install binary dependencies
-  > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win32.whl?raw=true
-  > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win32.whl?raw=true
-  > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win32.whl?raw=true
+  * if you are on a 64-bit Python:
+    > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win_amd64.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win_amd64.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win_amd64.whl?raw=true
+  * if you are on a 32-bit Python:
+    > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win32.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win32.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win32.whl?raw=true
 
 * install requirements
   > pip install -r requirements.txt
 
-* clone CPE & install its dependencies into vpe/venv:
+* go one step up
   > cd ..
+
+* clone CPE & install its dependencies into vpe/venv (unless you already have
+  the cpe and you're installing the vpe into the cpe's venv):
   > git clone https://github.com/qusp/cpe
   > git checkout your-branch (could be develop, master, or a tag/release)
   > pip install -r cpe/requirements.txt
