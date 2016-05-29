@@ -33,7 +33,7 @@ VPE installed and working):
   installer size (ideally, put a file there which informs users of the omission)
 * make a folder named docs/ and copy versions of the NeuroPype Manual and
   NeuroPype Release Notes there (not included in this repo)
-* if you're making an official release, ontain the latest changelog.txt, add it
+* if you're making an official release, obtain the latest changelog.txt, add it
   to this folder (and if needed, record any changes made in this version)
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
   pop up); this requires Python 3.x (best to do that in the console)
