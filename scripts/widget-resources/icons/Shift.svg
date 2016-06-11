@@ -3,6 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-<text transform="matrix(0.7071 0.7071 -0.7071 0.7071 24.9043 49.8096)" font-family="'MyriadPro-Bold'" font-size="60">×</text>
-<text transform="matrix(0.7071 0.7071 -0.7071 0.7071 24.9043 49.8096)" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" font-family="'MyriadPro-Bold'" font-size="60">×</text>
+<g>
+	<path stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M52.992,30.583
+		V47.08h15.842v5.693H52.992v16.645h-5.985V52.773H31.167V47.08h15.841V30.583H52.992z"/>
+</g>
 </svg>
