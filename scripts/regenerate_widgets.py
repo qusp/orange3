@@ -272,7 +272,7 @@ def generate_widget_code(resource_path, widget_path, modules):
             module = importlib.import_module('neuropype.nodes.%s' % modname)
             for key, value in inspect.getmembers(module):
                 if (isinstance(value, type) and issubclass(value, Node)
-                        and value != Node):
+                        and (not inspect.isabstract(value)) and value != Node):
                     nodes.append(value)
         except ImportError as e:
             print("  could not import module neuropype.nodes.%s; ignoring "
