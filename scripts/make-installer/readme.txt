@@ -6,6 +6,7 @@ VPE installed and working):
   installer (if you reuse the folder)
 * make sure that you're on the community branch of the cpe repo if you're
   doing a community release, and on production (or develop) otherwise
+* make sure that the widgets have been regenerated
 * if your customer needs customer-specific nodes, make sure that they're present
 * copy both cpe/vpe folders to the sandbox
 * if you're making a 64-bit installer (recommended):
@@ -45,7 +46,9 @@ VPE installed and working):
 
 
 Making a source code release:
-* pick all folders (except for python), and the license.rtf file
+* make sure that the venv, .git, and .idea folders have been removed from cpe/
+  and vpe/
+* pick all folders (except for python), and the license.rtf and changelog.txt file
 * compress them into a .zip archive
 * name the resulting file neuropype-community-src-x.y.z.zip
   (x,y,z being version number parts).
