@@ -64,17 +64,25 @@ from . import quickstart_wizards
 
 log = logging.getLogger(__name__)
 
+use_local_help = False
 
-basepath = os.path.normpath(os.path.join(os.path.dirname(__file__),
-                                         '../../../../'))
-basepath = basepath.replace('\\', '/')
-BASE_LINK = "file:///" + basepath + '/'
-
-LINKS = \
-    {"start-using": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
-     "tutorial": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
-     "reference": BASE_LINK + "docs/Architecture Reference.pdf"
-     }
+# these were the local links
+if use_local_help:
+    basepath = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                             '../../../../'))
+    basepath = basepath.replace('\\', '/')
+    BASE_LINK = "file:///" + basepath + '/'
+    LINKS = \
+        {"start-using": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+         "tutorial": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+         "reference": BASE_LINK + "docs/Architecture Reference.pdf"
+         }
+else:
+    LINKS = \
+        {"start-using": "http://doc.neuropype.io/getting_started/",
+         "tutorial": "http://doc.neuropype.io/user_guide/",
+         "reference": "http://doc.neuropype.io/architecture/"
+         }
 
 
 def style_icons(widget, standard_pixmap):
@@ -688,11 +696,12 @@ class CanvasMainWindow(QMainWindow):
 
         # Help menu.
         self.help_menu = QMenu(self.tr("&Help"), self)
-        self.help_menu.addAction(self.about_action)
         self.help_menu.addAction(self.welcome_action)
-        self.help_menu.addAction(self.quickstart_wizards_action)
+        self.help_menu.addAction(self.get_started_action)
         self.help_menu.addAction(self.tutorials_action)
         self.help_menu.addAction(self.documentation_action)
+        self.help_menu.addAction(self.quickstart_wizards_action)
+        self.help_menu.addAction(self.about_action)
         menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(menu_bar)
