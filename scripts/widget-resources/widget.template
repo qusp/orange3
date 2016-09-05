@@ -48,9 +48,7 @@ class OW{{ node.__name__ }}(cpewidget.CPEWidget):
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties'){% for name, port in node.ports(editable=True).items() %}
 
-        # Turn tooltip into Rich Text to enable automatic word wrap in Qt
         tooltip_text = "<span>{{ port.help }}</span>"
-
         {% if port.__class__.__name__ == 'BoolPort' %}self.{{ name }}_control = gui.checkBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text)
         {%- elif port.__class__.__name__ == 'EnumPort'  %}self.{{ name }}_control = gui.comboBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', items={{ port.domain }}, sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text)
         {%- else %}self.{{ name }}_control = gui.lineEdit(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text){% endif %}{% endfor %}

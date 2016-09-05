@@ -6,6 +6,8 @@ overridden).
 
 By default the script will use the neuropype installation on the Python path,
 and will modify the Orange installation that contains this script.
+
+Copyright (C) 2014-2016 Syntrogi Inc (dba Qusp). All rights reserved.
 """
 
 import argparse
