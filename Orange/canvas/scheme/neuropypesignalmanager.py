@@ -152,7 +152,6 @@ class NeuropypeSignalManager(SignalManager):
         self.lock()
         try:
             self._graph.remove_node(node)
-            node.on_release()
         finally:
             self.unlock()
 

@@ -331,7 +331,7 @@ class CanvasMainWindow(QMainWindow):
         dock_actions = [self.show_properties_action] + \
                        tool_actions + \
                        [self.freeze_action,
-                        self.dock_help_action]
+                        self.reset_action]
 
         # Tool bar in the collapsed dock state (has the same actions as
         # the tool bar in the CanvasToolDock
@@ -586,6 +586,15 @@ class CanvasMainWindow(QMainWindow):
                     triggered=self.set_signal_freeze,
                     shortcut=QKeySequence(Qt.Key_Space),
                     icon=canvas_icons("Pause.svg")
+                    )
+
+        self.reset_action = \
+            QAction(self.tr("Reset"), self,
+                    objectName="signal-reset-action",
+                    toolTip=self.tr("Reset signal propagation."),
+                    triggered=self.reset_signal_propagation,
+                    shortcut=QKeySequence(Qt.Key_Backspace),
+                    icon=canvas_icons("Reset.svg")
                     )
 
         self.toggle_tool_dock_expand = \
@@ -1663,6 +1672,10 @@ class CanvasMainWindow(QMainWindow):
             manager.pause()
         else:
             manager.resume()
+
+    def reset_signal_propagation(self, freeze):
+        scheme = self.current_document().scheme()
+        scheme.reload()
 
     def remove_selected(self):
         """Remove current scheme selection.
