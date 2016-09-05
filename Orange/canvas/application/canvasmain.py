@@ -365,6 +365,7 @@ class CanvasMainWindow(QMainWindow):
         # Set widget before calling addDockWidget, otherwise the dock
         # does not resize properly on first undock
         self.output_dock.setWidget(output_view)
+        self.output_dock.setFloating(False)
         self.output_dock.hide()
 
         self.help_dock = DockableWindow(self.tr("Help"), self,
@@ -1715,7 +1716,9 @@ class CanvasMainWindow(QMainWindow):
     def output_view(self):
         """Return the output text widget.
         """
-        return self.output_dock.widget()
+        res = self.output_dock.widget()
+        self.output_dock.setFloating(False)  # hack
+        return res
 
     def open_about(self):
         """Open the about dialog.

@@ -18,7 +18,7 @@ VPE installed and working):
     * copy your C:\Python34-x64 directory into the sandbox and rename it to
       python
     * copy the following 2 files from C:\Windows\System32 to the python folder:
-      python34.dll, msvcr100.dll
+      python34.dll, msvcr100.dll -- NOTE THIS STEP NOT NECESSARY ON PYTHON 3.5
 * if you're making a 32-bit installer:
     * perform the installation procedure for the vpe directory *without* using a
       virtual environment (i.e., against your C:\Python34\ install)
@@ -26,7 +26,7 @@ VPE installed and working):
     * copy your C:\Python34 directory into the sandbox and rename it to python
     * copy the following 2 files from C:\Windows\SysWOW64 (or *only* if that doesn't
       exist, from C:\Windows\System32) to the python folder: python34.dll,
-      msvcr100.dll
+      msvcr100.dll -- NOTE THIS STEP NOT NECESSARY ON PYTHON 3.5
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/Apps/Apps-ALL-1.10.zip
   to lsl/
 * extract the .zip file ftp://sccn.ucsd.edu/pub/software/LSL/SDK/liblsl-ALL-languages-1.10.2.zip
