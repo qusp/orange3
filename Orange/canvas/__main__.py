@@ -18,10 +18,11 @@ import pkg_resources
 from PyQt4.QtGui import QFont, QColor
 from PyQt4.QtCore import Qt, QDir
 
+# noinspection PyBroadException
 try:
     import neuropype
 except:
-    cpe_path = os.path.join(os.path.dirname(__file__),'..','..','..','cpe')
+    cpe_path = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'cpe')
     sys.path.append(cpe_path)
 
 from Orange import canvas
@@ -99,7 +100,8 @@ def main(argv=None):
                            "(invalidate cache)")
     parser.add_option("--clear-widget-settings",
                       action="store_true",
-                      help="Remove stored widget setting")
+                      help="Remove stored widget setting",
+                      default=True)
     parser.add_option("--autolaunch",
                       action="store_true",
                       help="Launch given scheme automatically, if any")
