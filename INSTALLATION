@@ -149,7 +149,7 @@ On Mac OS
   $ brew tap homebrew/science
   
 * To ensure that you get the right version of Python (currently 3.4.x), install pyenv:
-  $ curl -L <https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer> | bash
+  $ curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
 
 * also get the virtualenv plugin for pyenv so we can create a virtual environment:  
   $ git clone <https://github.com/yyuu/pyenv-virtualenv.git> ~/.pyenv/plugins/pyenv-virtualenv
