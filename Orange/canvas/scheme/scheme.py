@@ -629,6 +629,7 @@ class Scheme(QObject):
         """
         Load the scheme from xml formated stream.
         """
+        print("Loading patch...")
         if self.__nodes or self.__links or self.__annotations:
             # TODO: should we clear the scheme and load it.
             raise ValueError("Scheme is not empty.")
@@ -646,3 +647,7 @@ class Scheme(QObject):
         self.save_to(buffer, pickle_fallback=True)
         self.clear()
         self.load_from(BytesIO(buffer.getvalue()))
+
+    def release_resources(self):
+        """Release the graph's resources."""
+        pass  # may be overridden by sublasses

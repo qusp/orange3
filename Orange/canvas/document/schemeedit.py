@@ -592,6 +592,7 @@ class SchemeEditWidget(QWidget):
             if self.__scheme:
                 self.__scheme.title_changed.disconnect(self.titleChanged)
                 self.__scheme.removeEventFilter(self)
+                self.__scheme.release_resources()
                 sm = self.__scheme.findChild(signalmanager.SignalManager)
                 if sm:
                     sm.stateChanged.disconnect(

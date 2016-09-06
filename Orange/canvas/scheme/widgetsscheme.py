@@ -107,6 +107,10 @@ class WidgetsScheme(Scheme):
         inst.show()
         inst.raise_()
 
+    def release_resources(self):
+        """Release the graph's resources."""
+        self.signal_manager.graph.release_resources()
+
 
 class WidgetManager(QObject):
     """
