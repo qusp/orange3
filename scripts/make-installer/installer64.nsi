@@ -18,8 +18,11 @@
 ;       misrepresented as being the original software.
  
 ;    3. This notice may not be removed or altered from any source distribution.
+
+; add If/Endif macros
+!include LogicLib.nsh
  
-!define setup "neuropype-setup-1.0.0-x64.exe"
+!define setup "neuropype-setup-1.x.x-x64.exe"
  
 ; change this to wherever the files to be packaged reside
 !define srcdir "."
@@ -57,7 +60,7 @@
 !define regkey "Software\${company}\${prodname}"
 !define uninstkey "Software\Microsoft\Windows\CurrentVersion\Uninstall\${prodname}"
  
-!define startmenu "$SMPROGRAMS\${company} ${prodname}"
+!define startmenu "$SMPROGRAMS\${company}\${prodname}"
 !define uninstaller "uninstall.exe"
  
 ;--------------------------------
@@ -129,6 +132,25 @@ FunctionEnd
  
 !endif
  
+; uninstall previous section
+Section 
+
+    ; Check for uninstaller.
+    ReadRegStr $R0 HKLM "${regkey}" "Install_Dir"
+
+    ${If} $R0 == ""        
+        Goto Done
+    ${EndIf}
+
+    DetailPrint "Removing previous installation."    
+
+    ; Run the uninstaller silently.
+    ExecWait '"$R0\uninstall.exe" _?=$R0'
+
+    Done:
+    
+SectionEnd
+
 ; beginning (invisible) section
 Section
  
@@ -196,27 +218,8 @@ Section
 !endif
 
 CreateShortCut "${startmenu}\Lab Recorder.lnk" "$INSTDIR\labrecorder.bat"
-CreateShortCut "${startmenu}\Release Notes.lnk" "$INSTDIR\docs\RELEASE NOTES 1.0 Beta.pdf"
-CreateShortCut "${startmenu}\Documentation.lnk" "$INSTDIR\docs"
 CreateShortCut "${startmenu}\Installation.lnk" "$INSTDIR"
-
-!ifdef notefile
-  CreateShortCut "${startmenu}\Release Notes.lnk "$INSTDIR\${notefile}"
-!endif
- 
-!ifdef helpfile
-  CreateShortCut "${startmenu}\Documentation.lnk "$INSTDIR\${helpfile}"
-!endif
- 
-!ifdef website
-WriteINIStr "${startmenu}\web site.url" "InternetShortcut" "URL" ${website}
- ; CreateShortCut "${startmenu}\Web Site.lnk "${website}" "URL"
-!endif
- 
-!ifdef notefile
-ExecShell "open" "$INSTDIR\${notefile}"
-!endif
- 
+  
 SectionEnd
  
 ; Uninstaller
@@ -235,14 +238,16 @@ Section "Uninstall"
  
   Delete "${startmenu}\*.*"
   Delete "${startmenu}"
-  RMDir "$SMPROGRAMS\${company} ${prodname}"  
+  RMDir "$SMPROGRAMS\${company}\${prodname}"  
+  RMDir "$SMPROGRAMS\${company}"  
   Delete "$DESKTOP\${prodname}.lnk"
 
   ; also delete from all-users folder
   SetShellVarContext all
   Delete "${startmenu}\*.*"
   Delete "${startmenu}"
-  RMDir "$SMPROGRAMS\${company} ${prodname}"  
+  RMDir "$SMPROGRAMS\${company}\${prodname}"  
+  RMDir "$SMPROGRAMS\${company}"  
   Delete "$DESKTOP\${prodname}.lnk"
 
 
@@ -275,3 +280,4 @@ RMDir "$INSTDIR"
 RMDir "$PROGRAMFILES64\${company}"
 
 SectionEnd
+
