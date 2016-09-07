@@ -36,14 +36,8 @@ class OW{{ node.__name__ }}(cpewidget.CPEWidget):
         # Initialize with a newly instantiated node.
         super().__init__({{ node.__name__ }}())
 
-        # Set default properties.
-        settings = self.settingsHandler.pack_data(self)
-        if not [k for k, v in settings.items() if v != None]:{% for name, port in node.ports(editable=True).items() %}
-            super().__setattr__('{{ name }}', self.node.{{ name }}){% else %}
-            pass{% endfor %}
-        else:{% for name, port in node.ports(editable=True).items() %}
-            self.node.{{ name }} = self.{{ name }}{% else %}
-            pass{% endfor %}
+        # Sync properties between node and widget wrapper.
+        self.sync_properties()
 
         # Initialize GUI controls for editing node properties.
         box = gui.widgetBox(self.controlArea, 'Properties'){% for name, port in node.ports(editable=True).items() %}

@@ -19,6 +19,21 @@ class CPEWidget(widget.OWWidget):
         # Set minimum width (in pixels).
         self.setMinimumWidth(360)
 
+    def sync_properties(self):
+        """Synchronize our own properties with the defaults of the node at
+        creation time."""
+        # apply any loaded settings of this widget to the cpe node
+        settings = self.settingsHandler.pack_data(self)
+        for k, v in settings.items():
+            if v is not None:
+                setattr(self.node, k, getattr(self, k))
+
+        # apply all defaults from the cpe node that aren't in the settings
+        # to the widget
+        for n, p in self.node.ports(direction='IN*', editable=True).items():
+            if n not in settings or settings[n] is None:
+                super().__setattr__(n, getattr(self.node, n))
+
     def get_property_names(self):
         return list(self.node.ports(editable=True).keys())
 
