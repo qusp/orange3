@@ -445,7 +445,12 @@ class OWWidget(QDialog, metaclass=WidgetMetaClass):
         pass
 
     def saveSettings(self):
-        self.settingsHandler.update_defaults(self)
+        # cko: This function used to save the settings that had been applied to
+        #      it (e.g., when the widget gets deleted or the scheme closed), and
+        #      would cause later widgets of same type to be created with those
+        #      settings
+        # self.settingsHandler.update_defaults(self)
+        pass
 
     # this function is only intended for derived classes to send appropriate
     # signals when all settings are loaded
