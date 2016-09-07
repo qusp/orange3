@@ -64,10 +64,15 @@ from . import quickstart_wizards
 
 log = logging.getLogger(__name__)
 
-use_local_help = False
+use_online_help = True
 
-# these were the local links
-if use_local_help:
+if use_online_help:
+    LINKS = \
+        {"start-using": "http://doc.neuropype.io/getting_started/",
+         "tutorial": "http://doc.neuropype.io/user_guide/",
+         "reference": "http://doc.neuropype.io/architecture/"
+         }
+else:
     basepath = os.path.normpath(os.path.join(os.path.dirname(__file__),
                                              '../../../../'))
     basepath = basepath.replace('\\', '/')
@@ -76,12 +81,6 @@ if use_local_help:
         {"start-using": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
          "tutorial": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
          "reference": BASE_LINK + "docs/Architecture Reference.pdf"
-         }
-else:
-    LINKS = \
-        {"start-using": "http://doc.neuropype.io/getting_started/",
-         "tutorial": "http://doc.neuropype.io/user_guide/",
-         "reference": "http://doc.neuropype.io/architecture/"
          }
 
 
