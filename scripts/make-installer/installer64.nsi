@@ -219,7 +219,7 @@ Section
 
 CreateShortCut "${startmenu}\Lab Recorder.lnk" "$INSTDIR\labrecorder.bat"
 CreateShortCut "${startmenu}\Installation.lnk" "$INSTDIR"
-  
+
 SectionEnd
  
 ; Uninstaller
