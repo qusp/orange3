@@ -2,8 +2,6 @@ Steps for building a new Windows installer (assuming that you have the CPE and
 VPE installed and working):
 
 * copy contents of this directory into a new sandbox folder
-* ensure that the sandbox does not already contain a previously-created
-  installer (if you reuse the folder)
 * make sure that you're on the community branch of the cpe repo if you're
   doing a community release, and on production (or develop) otherwise
 * make sure that the widgets have been regenerated
@@ -33,7 +31,7 @@ VPE installed and working):
   to lsl/; remove the contents of the folder lsl/LSL/liblsl/external/ to reduce
   installer size (ideally, put a file there which informs users of the omission)
 * make a folder named docs/ and copy versions of the NeuroPype Manual and
-  NeuroPype Release Notes there (not included in this repo)
+  NeuroPype Release Notes there (not included in this repo) -- NO LONGER DONE AS OF 1.3.2
 * if you're making an official release, obtain the latest changelog.txt, add it
   to this folder (and if needed, record any changes made in this version)
 * run generate_file_list.py (you should see a files.nsi and unfiles.nsi
