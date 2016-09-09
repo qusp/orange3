@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import builtins
+import traceback
 
 from Orange.widgets import widget, gui, cpewidget
 from Orange.widgets.settings import Setting
@@ -9,6 +10,7 @@ try:
     from {{ node.__module__ }} import {{ node.__name__ }}
 except ImportError:
     print("Not importing source code for node {{ node.__name__ }}.")
+    traceback.print_exc()
 
 class OW{{ node.__name__ }}(cpewidget.CPEWidget):
 
