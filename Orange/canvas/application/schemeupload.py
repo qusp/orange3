@@ -66,6 +66,7 @@ class SchemeUploadSettingsEdit(QWidget):
         self.accesstoken_edit = QLineEdit(self)
         self.accesstoken_edit.setPlaceholderText(self.tr("01234567-89ab-cdef-"
                                                          "0123-456789abcdef"))
+
         self.accesstoken_edit.setSizePolicy(QSizePolicy.Expanding,
                                             QSizePolicy.Fixed)
 
@@ -124,6 +125,7 @@ class SchemeUploadSettingsEdit(QWidget):
                     modality = 'EEG'
                 srate = n.nominal_rate or 0.0
                 labels = n.channel_names or ['dummy']
+
                 signal_stream = {"name": "signal",
                                  "type": modality,
                                  "sampling_rate": srate,
@@ -132,8 +134,9 @@ class SchemeUploadSettingsEdit(QWidget):
                                  "type": "Markers",
                                  "sampling_rate": 0,
                                  "channels": [{"label": "dummy"}]}
-                node_decl = {"name": name, "streams": [signal_stream,
-                                                       marker_stream]}
+                upstreams = ([signal_stream, marker_stream]
+                             if n.marker_query else [signal_stream])
+                node_decl = {"name": name, "streams": upstreams}
                 if name in input_nodes:
                     raise RuntimeError("There is more than one inlet with "
                                        "query name '%s' in the graph; if there "
