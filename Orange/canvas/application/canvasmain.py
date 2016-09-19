@@ -42,6 +42,7 @@ from .canvastooldock import CanvasToolDock, QuickCategoryToolbar, \
                             CategoryPopupMenu, popup_position_from_source
 from .aboutdialog import AboutDialog
 from .schemeinfo import SchemeInfoDialog
+from .schemeupload import SchemeUploadDialog
 from .outputview import OutputView
 from .settings import UserSettingsDialog
 
@@ -540,6 +541,15 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Document Info.svg")
                     )
 
+        self.upload_scheme_action = \
+            QAction(self.tr("Upload Patch"), self,
+                    objectName="upload-scheme-action",
+                    toolTip=self.tr("Upload the current patch."),
+                    triggered=self.upload_scheme,
+                    shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_U),
+                    icon=canvas_icons("Document Info.svg")
+                    )
+
         self.canvas_settings_action = \
             QAction(self.tr("Settings"), self,
                     objectName="canvas-settings-action",
@@ -636,6 +646,7 @@ class CanvasMainWindow(QMainWindow):
         file_menu.addAction(self.export_action)
         file_menu.addSeparator()
         file_menu.addAction(self.show_properties_action)
+        file_menu.addAction(self.upload_scheme_action)
         file_menu.addAction(self.quit_action)
 
         self.recent_menu.addAction(self.recent_action)
@@ -1662,6 +1673,24 @@ class CanvasMainWindow(QMainWindow):
 
         dialog.deleteLater()
 
+        return status
+
+    def scheme_upload_dialog(self):
+        """Return an empty `SchemeUpload` dialog instance."""
+        dialog = SchemeUploadDialog(self)
+        dialog.setWindowTitle(self.tr("Upload Patch"))
+        dialog.setFixedSize(725, 700)
+        return dialog
+
+    def upload_scheme(self):
+        """Open Scheme upload dialog."""
+        current_doc = self.current_document()
+        scheme = current_doc.scheme()
+        dlg = self.scheme_upload_dialog()
+        dlg.setScheme(scheme)
+        status = dlg.exec_()
+        if status == QDialog.Accepted:
+            dlg.upload()
         return status
 
     def set_signal_freeze(self, freeze):
