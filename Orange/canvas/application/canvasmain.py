@@ -1679,7 +1679,7 @@ class CanvasMainWindow(QMainWindow):
         """Return an empty `SchemeUpload` dialog instance."""
         dialog = SchemeUploadDialog(self)
         dialog.setWindowTitle(self.tr("Upload Patch"))
-        dialog.setFixedSize(725, 700)
+        dialog.setFixedSize(725, 800)
         return dialog
 
     def upload_scheme(self):

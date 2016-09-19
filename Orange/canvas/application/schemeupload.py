@@ -7,7 +7,7 @@ import copy
 
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QDialog, QFormLayout, QSizePolicy, QLineEdit, \
-    QComboBox, QTextEdit, QVBoxLayout, QLabel, QDialogButtonBox
+    QComboBox, QTextEdit, QVBoxLayout, QLabel, QDialogButtonBox, QHBoxLayout
 
 from neuropype.engine import Graph
 from neuropype.utilities.cloud.graph_ops import rewrite_lsl2zmq, \
@@ -26,6 +26,7 @@ class SchemeUploadSettingsEdit(QWidget):
         self.graph = None
         self.inlet_map = {}   # map from input name to inlet (e.g., 'default')
         self.outlet_map = {}  # map from output name to outlet (e.g., 'default')
+        self.had_warnings = False  # whether there were warnings during patch processing
         self.__setupUi()
 
     def __setupUi(self):
@@ -52,15 +53,18 @@ class SchemeUploadSettingsEdit(QWidget):
         self.parameters_edit.setText(self.tr("{}"))
         self.parameters_edit.setTabChangesFocus(True)
 
+        sub_layout = QHBoxLayout()
         # meta-data
         self.metadata_edit = QTextEdit(self)
         self.metadata_edit.setText(self.tr("{}"))
         self.metadata_edit.setTabChangesFocus(True)
+        sub_layout.addWidget(self.metadata_edit)
 
         # user properties
         self.userproperties_edit = QTextEdit(self)
         self.userproperties_edit.setText(self.tr("{}"))
         self.userproperties_edit.setTabChangesFocus(True)
+        sub_layout.addWidget(self.userproperties_edit)
 
         # access token
         self.accesstoken_edit = QLineEdit(self)
@@ -79,8 +83,7 @@ class SchemeUploadSettingsEdit(QWidget):
         layout.addRow(self.tr("Class"), self.class_edit)
         layout.addRow(self.tr("Description"), self.desc_edit)
         layout.addRow(self.tr("Parameters"), self.parameters_edit)
-        layout.addRow(self.tr("Metadata"), self.metadata_edit)
-        layout.addRow(self.tr("User Properties"), self.userproperties_edit)
+        layout.addRow(self.tr("Metadata / User Properties"), sub_layout)
         layout.addRow(self.tr("Access Token"), self.accesstoken_edit)
         layout.addRow(self.tr("API URL"), self.apiurl_edit)
 
@@ -153,7 +156,13 @@ class SchemeUploadSettingsEdit(QWidget):
                                  "type": "Control",
                                  "sampling_rate": srate,
                                  "channels": [{"label": "dummy"}]}
-                node_decl = {"name": name, "streams": [output_stream]}
+                marker_stream = {"name": "markers",
+                                 "type": "Markers",
+                                 "sampling_rate": 0,
+                                 "channels": [{"label": "dummy"}]}
+                downstreams = ([output_stream, marker_stream]
+                               if n.send_markers else [output_stream])
+                node_decl = {"name": name, "streams": downstreams}
                 if name in output_nodes:
                     raise RuntimeError("There is more than one outlet with "
                                        "name '%s' in the graph; if there is "
@@ -167,18 +176,22 @@ class SchemeUploadSettingsEdit(QWidget):
                 print("WARNING: A pipeline should have exactly one input "
                       "node with name 'default', unless none of the nodes "
                       "can be considered the default.")
+                self.had_warnings = True
             if len(output_nodes) > 1 and 'default' not in output_nodes:
                 print("WARNING: A pipeline should have exactly one output "
                       "node with name 'default', unless none of the nodes "
                       "can be considered the default.")
+                self.had_warnings = True
             if len(input_nodes) == 1 and 'default' not in input_nodes:
                 warnings.warn("WARNING: A pipeline should have exactly one "
                               "input node with name 'default' (query set to "
                               "name='default' for LSLInput node).")
+                self.had_warnings = True
             if len(output_nodes) == 1 and 'default' not in output_nodes:
                 warnings.warn("WARNING: A pipeline should have exactly one "
                               "output node with name 'default' (stream name "
                               "for LSLOutput node).")
+                self.had_warnings = True
             # construct node meta-data
             metadata = {"nodes": {"in": list(input_nodes.values()),
                                   "out": list(output_nodes.values())}}
@@ -274,9 +287,42 @@ class SchemeUploadDialog(QDialog):
             "patch": json.loads(patch_encoded),
             "properties": json.loads(self.editor.userproperties_edit.toPlainText()),
         }
-        r = requests.post(api_url + '/v1/pipelines',
-                          headers=auth_header, json=params)
-        if r.status_code == 201:  # 201: created
-            print("patch successfully uploaded.")
+        # get the id of any previous pipeline with that same name, if any
+        prev_id = self.pipeline_id(self.editor.name_edit.text(), api_url,
+                                   auth_header)
+        # post or patch the pipeline
+        if not prev_id:
+            r = requests.post(api_url + '/v1/pipelines',
+                              headers=auth_header, json=params)
         else:
-            raise RuntimeError('Could not upload patch (HTTP %i)' % r.status_code)
+            headers = {'Authorization': auth_header['Authorization'],
+                       'Content-Type': 'application/json'}
+            r = requests.patch(api_url + '/v1/pipelines/' + prev_id,
+                               headers=headers, data=json.dumps(params))
+        # handle outcome
+        if r.status_code == 201 or r.status_code == 200:
+            if not self.editor.had_warnings:
+                print("patch successfully uploaded.")
+            else:
+                print("patch uploaded WITH SOME WARNINGS. Your patch may not "
+                      "run as expected.")
+        else:
+            raise RuntimeError('Could not upload patch (HTTP %i)' %
+                               r.status_code)
+
+    # noinspection PyMethodMayBeStatic
+    def pipeline_id(self, name, api_url, auth_header):
+        """Retrieve the id of a pipeline with a given name."""
+        r = requests.get(api_url + '/v1/pipelines', headers=auth_header)
+        if r.status_code == 200:  # 200: ok
+            body = r.json()
+            pipelines = body['data']
+            for p in pipelines:
+                if p['name'] == name:
+                    return p['id']
+            else:
+                return None
+        else:
+            raise RuntimeError("Could not query available pipelines "
+                               "(HTTP %s); check your API URL and "
+                               "credentials." % r.status_code)
