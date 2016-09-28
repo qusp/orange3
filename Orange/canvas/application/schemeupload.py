@@ -70,6 +70,7 @@ class SchemeUploadSettingsEdit(QWidget):
         self.accesstoken_edit = QLineEdit(self)
         self.accesstoken_edit.setPlaceholderText(self.tr("01234567-89ab-cdef-"
                                                          "0123-456789abcdef"))
+        self.accesstoken_edit.setText(self.tr("0db986d2-8de8-47bd-9a86-276fbccf447d"))
 
         self.accesstoken_edit.setSizePolicy(QSizePolicy.Expanding,
                                             QSizePolicy.Fixed)
@@ -77,6 +78,7 @@ class SchemeUploadSettingsEdit(QWidget):
         # API URL
         self.apiurl_edit = QComboBox(self)
         self.apiurl_edit.addItem(self.tr("https://api.neuroscale.io"))
+        self.apiurl_edit.addItem(self.tr("http://testingpl-platform-nheffw2rqyof-675729029.us-west-1.elb.amazonaws.com"))
         self.apiurl_edit.setCurrentIndex(0)
 
         layout.addRow(self.tr("Pipeline Name"), self.name_edit)

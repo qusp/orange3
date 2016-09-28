@@ -839,7 +839,7 @@ def scheme_to_etree(scheme, data_format="literal", pickle_fallback=False):
     builder.end("node_properties")
     if isinstance(scheme.signal_manager, NeuropypeSignalManager):
         builder.start("patch", {})
-        builder.data(scheme.signal_manager.graph.save_json())
+        builder.data(scheme.signal_manager.graph.save_graph())
         builder.end("patch")
     builder.end("scheme")
     root = builder.close()

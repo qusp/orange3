@@ -444,6 +444,20 @@ class CanvasMainWindow(QMainWindow):
                     triggered=self.export_scheme
                     )
 
+        self.savemodel_action = \
+            QAction(self.tr("Save Model ..."), self,
+                    objectName="action-savemodel",
+                    toolTip=self.tr("Save current model."),
+                    triggered=self.save_model
+                    )
+
+        self.loadmodel_action = \
+            QAction(self.tr("Load Model ..."), self,
+                    objectName="action-loadmodel",
+                    toolTip=self.tr("Load model into current workflow."),
+                    triggered=self.open_model
+                    )
+
         self.quit_action = \
             QAction(self.tr("Quit"), self,
                     objectName="quit-action",
@@ -644,6 +658,9 @@ class CanvasMainWindow(QMainWindow):
         file_menu.addAction(self.save_action)
         file_menu.addAction(self.save_as_action)
         file_menu.addAction(self.export_action)
+        file_menu.addSeparator()
+        file_menu.addAction(self.savemodel_action)
+        file_menu.addAction(self.loadmodel_action)
         file_menu.addSeparator()
         file_menu.addAction(self.show_properties_action)
         file_menu.addAction(self.upload_scheme_action)
@@ -1229,6 +1246,40 @@ class CanvasMainWindow(QMainWindow):
 
         return QFileDialog.Rejected
 
+    def save_model(self):
+        """
+        Save the trainable parameters of the current graph as a model,
+        by asking the user for a filename. Return `QFileDialog.Accepted` if
+        the scheme was saved successfully and `QFileDialog.Rejected` if not.
+
+        """
+        document = self.current_document()
+        curr_scheme = document.scheme()
+        title = curr_scheme.title or "untitled"
+
+        if document.path():
+            start_dir = document.path().replace('.ows', '.model')
+        else:
+            if self.last_scheme_dir is not None:
+                start_dir = self.last_scheme_dir
+            else:
+                start_dir = QDesktopServices.storageLocation(
+                    QDesktopServices.DocumentsLocation
+                )
+            start_dir = os.path.join(str(start_dir), title + ".model")
+
+        filename = QFileDialog.getSaveFileName(
+            self, self.tr("Save Model"),
+            start_dir, self.tr("NeuroPype Model (*.model)")
+        )
+
+        if filename:
+            if not self.check_can_save(document, filename):
+                return QDialog.Rejected
+            self.last_scheme_dir = os.path.dirname(filename)
+            if self.save_model_to(curr_scheme, filename):
+                return QFileDialog.Accepted
+
     def save_scheme_to(self, scheme, filename):
         """
         Save a Scheme instance `scheme` to `filename`. On success return
@@ -1328,7 +1379,7 @@ class CanvasMainWindow(QMainWindow):
             if filename.endswith('.py'):
                 scheme.signal_manager.graph.save_script(filename)
             elif filename.endswith('.pat'):
-                scheme.signal_manager.graph.save_json(filename)
+                scheme.signal_manager.graph.save_graph(filename)
             else:
                 raise RuntimeError("Unsupported file type: %s" % filename)
             return True
@@ -1338,6 +1389,114 @@ class CanvasMainWindow(QMainWindow):
                 self.tr('An error occurred while trying to export workflow '
                         '"%s" to "%s"') % (title, basename),
                 title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+    def save_model_to(self, scheme, filename):
+        """
+        Save trainable parameters of the given `scheme` to a model named
+        `filename`. On success return `True`, else show a message to the user
+        explaining the error and return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPype and '
+                        'a model cannot be saved.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            with open(filename, 'wb') as fp:
+                scheme.signal_manager.graph.save_model(fp)
+            return True
+        except Exception:
+            log.error("Error saving %r to %r", scheme, filename, exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to save model '
+                        '"%s" to "%s"') % (title, basename),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+    def open_model(self):
+        """Open a model file. Return QDialog.Rejected if the user canceled
+        the operation and QDialog.Accepted otherwise.
+
+        """
+        document = self.current_document()
+        if document.isModifiedStrict():
+            if self.ask_save_changes() == QDialog.Rejected:
+                return QDialog.Rejected
+
+        if self.last_scheme_dir is None:
+            # Get user 'Documents' folder
+            start_dir = QDesktopServices.storageLocation(
+                            QDesktopServices.DocumentsLocation)
+        else:
+            start_dir = self.last_scheme_dir
+
+        # TODO: Use a dialog instance and use 'addSidebarUrls' to
+        # set one or more extra sidebar locations where Schemes are stored.
+        # Also use setHistory
+        filename = QFileDialog.getOpenFileName(
+            self, self.tr("Open NeuroPype Model"),
+            start_dir, self.tr("NeuroPype Model (*.model)"),
+        )
+
+        if filename:
+            self.load_model(filename)
+            return QDialog.Accepted
+        else:
+            return QDialog.Rejected
+
+    def load_model(self, filename):
+        """
+        Load trainable parameters of the given `scheme` from a model file named
+        `filename`. On success return `True`, else show a message to the user
+        explaining the error and return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        document = self.current_document()
+        scheme = document.scheme()
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPype and '
+                        'a model cannot be loaded for it.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            with open(filename, 'rb') as fp:
+                scheme.signal_manager.graph.load_model(fp,
+                                                       override_params=False,
+                                                       override_graph=False)
+            return True
+        except Exception:
+            log.error("Error loading %r from %r", scheme, filename,
+                      exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to load model '
+                        '"%s" from "%s"') % (title, basename),
+                title=self.tr("Error loading %s") % basename,
                 exc_info=True,
                 parent=self
             )
@@ -1679,7 +1838,7 @@ class CanvasMainWindow(QMainWindow):
         """Return an empty `SchemeUpload` dialog instance."""
         dialog = SchemeUploadDialog(self)
         dialog.setWindowTitle(self.tr("Upload Patch"))
-        dialog.setFixedSize(725, 800)
+        dialog.setFixedSize(725, 720)
         return dialog
 
     def upload_scheme(self):
