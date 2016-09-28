@@ -1379,7 +1379,8 @@ class CanvasMainWindow(QMainWindow):
             if filename.endswith('.py'):
                 scheme.signal_manager.graph.save_script(filename)
             elif filename.endswith('.pat'):
-                scheme.signal_manager.graph.save_graph(filename)
+                with open(filename,'r') as fp:
+                    scheme.signal_manager.graph.save_graph(fp)
             else:
                 raise RuntimeError("Unsupported file type: %s" % filename)
             return True

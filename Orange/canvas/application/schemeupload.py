@@ -275,7 +275,7 @@ class SchemeUploadDialog(QDialog):
         auth_header = {'Authorization': 'Bearer ' + access_token}
 
         new_graph = Graph()
-        new_graph.load_graph(data=self.editor.graph.save_graph())
+        new_graph.load_graph(self.editor.graph.save_graph())
         new_graph = rewrite_lsl2zmq(new_graph)
         patch_encoded = new_graph.save_graph()
 
