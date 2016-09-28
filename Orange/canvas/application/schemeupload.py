@@ -49,9 +49,9 @@ class SchemeUploadSettingsEdit(QWidget):
         self.desc_edit.setTabChangesFocus(True)
 
         # parameters (TODO: replace by some sort of property grid/table)
-        self.parameters_edit = QTextEdit(self)
-        self.parameters_edit.setText(self.tr("{}"))
-        self.parameters_edit.setTabChangesFocus(True)
+        #self.parameters_edit = QTextEdit(self)
+        #self.parameters_edit.setText(self.tr("{}"))
+        #self.parameters_edit.setTabChangesFocus(True)
 
         sub_layout = QHBoxLayout()
         # meta-data
@@ -79,13 +79,13 @@ class SchemeUploadSettingsEdit(QWidget):
         self.apiurl_edit.addItem(self.tr("https://api.neuroscale.io"))
         self.apiurl_edit.setCurrentIndex(0)
 
-        layout.addRow(self.tr("Name"), self.name_edit)
-        layout.addRow(self.tr("Class"), self.class_edit)
+        layout.addRow(self.tr("Pipeline Name"), self.name_edit)
+        layout.addRow(self.tr("Pipeline Class"), self.class_edit)
         layout.addRow(self.tr("Description"), self.desc_edit)
-        layout.addRow(self.tr("Parameters"), self.parameters_edit)
+        #layout.addRow(self.tr("Parameters"), self.parameters_edit)
         layout.addRow(self.tr("Metadata / User Properties"), sub_layout)
-        layout.addRow(self.tr("Access Token"), self.accesstoken_edit)
-        layout.addRow(self.tr("API URL"), self.apiurl_edit)
+        layout.addRow(self.tr("NeuroScale Access Token"), self.accesstoken_edit)
+        layout.addRow(self.tr("NeuroScale API URL"), self.apiurl_edit)
 
         self.__schemeIsUntitled = True
 
@@ -215,7 +215,7 @@ class SchemeUploadSettingsEdit(QWidget):
                                    "value": default,
                                    "node": "TODO"}  # TODO!!!
         params_encoded = json.dumps(param_entries, indent=2)
-        self.parameters_edit.setText(params_encoded)
+        # self.parameters_edit.setText(params_encoded)
 
     def paintEvent(self, event):
         return StyledWidget_paintEvent(self, event)
@@ -244,7 +244,7 @@ class SchemeUploadDialog(QDialog):
         self.editor.setSizePolicy(QSizePolicy.MinimumExpanding,
                                   QSizePolicy.MinimumExpanding)
 
-        heading = self.tr("Upload Patch")
+        heading = self.tr("Upload Pipeline to NeuroScale")
         heading = "<h3>{0}</h3>".format(heading)
         self.heading = QLabel(heading, self, objectName="heading")
 
@@ -273,9 +273,9 @@ class SchemeUploadDialog(QDialog):
         auth_header = {'Authorization': 'Bearer ' + access_token}
 
         new_graph = Graph()
-        new_graph.load_json(data=self.editor.graph.save_json())
+        new_graph.load_graph(data=self.editor.graph.save_graph())
         new_graph = rewrite_lsl2zmq(new_graph)
-        patch_encoded = new_graph.save_json()
+        patch_encoded = new_graph.save_graph()
 
         params = {
             "name": self.editor.name_edit.text(),
