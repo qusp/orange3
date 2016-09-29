@@ -2275,19 +2275,22 @@ class LSLPanel(QtGui.QDialog):
 
 
 def extract_channel_names(info):
-    channel_labels = []
-    ch = info.desc().child("channels").child("channel")
-    for k in range(info.channel_count()):
-        if ch.child_value("label"):
-            channel_labels.append(ch.child_value("label"))
-        else:
-            channel_labels.append(str(k+1))
-        ch = ch.next_sibling()
+    try:
+        channel_labels = []
+        ch = info.desc().child("channels").child("channel")
+        for k in range(info.channel_count()):
+            if ch.child_value("label"):
+                channel_labels.append(ch.child_value("label"))
+            else:
+                channel_labels.append(str(k+1))
+            ch = ch.next_sibling()
 
-    tmp = np.array(channel_labels)
-    for c in set(channel_labels):
-        loc = np.where(tmp == c)[0]
-        if len(loc) > 0:
-            for k, l in enumerate(loc[1:]):
-                channel_labels[l] = channel_labels[l]+'.'+str(k+1)
+        tmp = np.array(channel_labels)
+        for c in set(channel_labels):
+            loc = np.where(tmp == c)[0]
+            if len(loc) > 0:
+                for k, l in enumerate(loc[1:]):
+                    channel_labels[l] = channel_labels[l]+'.'+str(k+1)
+    except:
+        channel_labels = [str(ch) for ch in range(info.channel_count())]
     return channel_labels
