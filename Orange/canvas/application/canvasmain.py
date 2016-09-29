@@ -641,6 +641,21 @@ class CanvasMainWindow(QMainWindow):
                     toggled=self.set_scheme_margins_enabled
                     )
 
+        self.lsl_panel_action = \
+            QAction(self.tr("LSL Streams"), self,
+                    objectName="lsl-panel-action",
+                    toolTip=self.tr("Show LSL streams."),
+                    triggered=self.open_lsl_panel,
+                    menuRole=QAction.PreferencesRole,
+                    shortcut=QKeySequence.Preferences
+                    )
+
+    def open_lsl_panel(self):
+        """
+        Open a panel showing LSL streams
+        """
+        self.lsl_panel = LSLPanel()
+
     def setup_menu(self):
         menu_bar = QMenuBar()
 
@@ -737,6 +752,7 @@ class CanvasMainWindow(QMainWindow):
         self.help_menu.addAction(self.tutorials_action)
         self.help_menu.addAction(self.documentation_action)
         self.help_menu.addAction(self.quickstart_wizards_action)
+        self.help_menu.addAction(self.lsl_panel_action)
         self.help_menu.addAction(self.about_action)
         menu_bar.addMenu(self.help_menu)
 
@@ -2336,3 +2352,105 @@ def index(sequence, *what, **kwargs):
         if predicate(what, item_key):
             return i
     raise ValueError("%r not in sequence" % what)
+
+
+
+from pylsl import resolve_streams, StreamInlet
+import numpy as np
+
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class LSLPanel(QtGui.QDialog):
+    """
+    Open a panel showing LSL streams
+    """
+    def __init__(self):
+        super(LSLPanel, self).__init__()
+        self.setup_ui()
+        self.refresh()
+        self.show()
+
+    def setup_ui(self):
+        self.setObjectName(_fromUtf8("Dialog"))
+        self.resize(600, 450)
+        self.gridLayout_2 = QtGui.QGridLayout(self)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+
+        self.tableWidget = QtGui.QTableWidget(self)
+        self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setRowCount(1)
+        self.gridLayout_2.addWidget(self.tableWidget, 0, 0, 1, 1)
+
+        self.buttonBox = QtGui.QDialogButtonBox(self)
+        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close|QtGui.QDialogButtonBox.Retry)
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.gridLayout_2.addWidget(self.buttonBox, 1, 0, 1, 1)
+
+        self.retranslateUi()
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.refresh)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), self.reject)
+        QtCore.QMetaObject.connectSlotsByName(self)
+
+    def retranslateUi(self):
+        self.setWindowTitle(_translate("LSL Streams", "LSL Streams", None))
+
+    def refresh(self):
+        self.tableWidget.clear()
+        self.tableWidget.setHorizontalHeaderLabels(['Name', 'Type', 'Channels', 'Hostname', 'Stream_id'])
+        streams = resolve_streams()
+        self.tableWidget.setRowCount(len(streams))
+        for i, stream_i in enumerate(streams):
+            stream = StreamInlet(stream_i)
+            try:
+                info = stream.info(timeout=1)
+            except:
+                continue
+            channels = extract_channel_names(info)
+            channels_str = ''
+            for ch in channels:
+                channels_str += ' '+str(ch)
+            if not str(stream_i.name()) or not str(stream_i.type()) or not channels_str:
+                continue
+            self.tableWidget.setItem(i, 0, QtGui.QTableWidgetItem(str(stream_i.name())))
+            self.tableWidget.setItem(i, 1, QtGui.QTableWidgetItem(str(stream_i.type())))
+            self.tableWidget.setItem(i, 2, QtGui.QTableWidgetItem(channels_str))
+            self.tableWidget.setItem(i, 3, QtGui.QTableWidgetItem(str(stream_i.hostname())))
+            self.tableWidget.setItem(i, 4, QtGui.QTableWidgetItem(str(stream_i.source_id())))
+
+
+def extract_channel_names(info):
+    try:
+        channel_labels = []
+        ch = info.desc().child("channels").child("channel")
+        for k in range(info.channel_count()):
+            if ch.child_value("label"):
+                channel_labels.append(ch.child_value("label"))
+            else:
+                channel_labels.append(str(k+1))
+            ch = ch.next_sibling()
+
+        tmp = np.array(channel_labels)
+        for c in set(channel_labels):
+            loc = np.where(tmp == c)[0]
+            if len(loc) > 0:
+                for k, l in enumerate(loc[1:]):
+                    channel_labels[l] = channel_labels[l]+'.'+str(k+1)
+    except:
+        channel_labels = [str(ch) for ch in range(info.channel_count())]
+    return channel_labels
