@@ -2452,5 +2452,5 @@ def extract_channel_names(info):
                 for k, l in enumerate(loc[1:]):
                     channel_labels[l] = channel_labels[l]+'.'+str(k+1)
     except:
-        channel_labels = [str(ch) for ch in range(info.channel_count())]
+        channel_labels = ['Ch_'+str(ch) for ch in range(info.channel_count())]
     return channel_labels
