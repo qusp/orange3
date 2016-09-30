@@ -8,6 +8,7 @@ import threading
 from PyQt4.QtCore import QTimer
 
 from neuropype.engine.graph import Graph
+from neuropype.engine.helpers import is_calibrating
 from neuropype.engine.scheduler import Scheduler
 
 from .signalmanager import SignalManager
@@ -50,6 +51,9 @@ class NeuropypeSignalManager(SignalManager):
 
         # a timer that allows the scheduler to be updated in the background
         self._timer = None
+
+        # the calibrating state on the last tick (used to emit change events)
+        self._was_calibrating = False
 
         # hook up signal handlers
         def on_state_changed(state):
@@ -233,6 +237,16 @@ class NeuropypeSignalManager(SignalManager):
         self.lock()
         try:
             self._scheduler.advance()
+            self._emit_calibrating_events()
         finally:
             self.unlock()
 
+    def _emit_calibrating_events(self):
+        """Track and emit change events for the "calibrating" state."""
+        calibrating = is_calibrating(self._graph)
+        if calibrating != self._was_calibrating:
+            if calibrating:
+                self.calibratingStarted.emit()
+            else:
+                self.calibratingStopped.emit()
+            self._was_calibrating = calibrating
