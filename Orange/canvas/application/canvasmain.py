@@ -689,9 +689,8 @@ class CanvasMainWindow(QMainWindow):
 
         # Add recent items.
         for title, filename in self.recent_schemes:
-            action = QAction(title or self.tr("untitled"), self,
-                             toolTip=filename)
-
+            action = QAction("%s (%s)" % (filename, title or self.tr("untitled")),
+                             self, toolTip=filename)
             action.setData(filename)
             self.recent_menu.addAction(action)
             self.recent_scheme_action_group.addAction(action)
