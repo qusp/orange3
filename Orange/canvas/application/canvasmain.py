@@ -52,6 +52,7 @@ from ..document.schemeedit import SchemeEditWidget
 from ..scheme import widgetsscheme
 from ..scheme.readwrite import scheme_load, sniff_version
 from ..scheme.neuropypesignalmanager import NeuropypeSignalManager
+from ..utils.bug_report import BugReport
 
 
 from . import welcomedialog
@@ -650,11 +651,23 @@ class CanvasMainWindow(QMainWindow):
                     shortcut=QKeySequence.Preferences
                     )
 
+        self.bug_report_action = \
+            QAction(self.tr("Bug Report"), self,
+                    objectName="bug-report-action",
+                    toolTip=self.tr("File a bug report."),
+                    triggered=self.file_bug_report,
+                    menuRole=QAction.PreferencesRole,
+                    shortcut=QKeySequence.Preferences
+                    )
+
     def open_lsl_panel(self):
         """
         Open a panel showing LSL streams
         """
         self.lsl_panel = LSLPanel()
+
+    def file_bug_report(self):
+        self.bug_report = BugReport(self)
 
     def setup_menu(self):
         menu_bar = QMenuBar()
@@ -752,6 +765,7 @@ class CanvasMainWindow(QMainWindow):
         self.help_menu.addAction(self.documentation_action)
         self.help_menu.addAction(self.quickstart_wizards_action)
         self.help_menu.addAction(self.lsl_panel_action)
+        self.help_menu.addAction(self.bug_report_action)
         self.help_menu.addAction(self.about_action)
         menu_bar.addMenu(self.help_menu)
 
@@ -2386,6 +2400,7 @@ class LSLPanel(QtGui.QDialog):
     def setup_ui(self):
         self.setObjectName(_fromUtf8("Dialog"))
         self.resize(600, 450)
+        self.setWindowFlags(QtCore.Qt.WindowSystemMenuHint)
         self.gridLayout_2 = QtGui.QGridLayout(self)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
 
