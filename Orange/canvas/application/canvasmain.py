@@ -42,7 +42,6 @@ from .canvastooldock import CanvasToolDock, QuickCategoryToolbar, \
                             CategoryPopupMenu, popup_position_from_source
 from .aboutdialog import AboutDialog
 from .schemeinfo import SchemeInfoDialog
-from .schemeupload import SchemeUploadDialog
 from .outputview import OutputView
 from .settings import UserSettingsDialog
 
@@ -1852,6 +1851,7 @@ class CanvasMainWindow(QMainWindow):
 
     def scheme_upload_dialog(self):
         """Return an empty `SchemeUpload` dialog instance."""
+        from .schemeupload import SchemeUploadDialog
         dialog = SchemeUploadDialog(self)
         dialog.setWindowTitle(self.tr("Upload Patch"))
         dialog.setFixedSize(725, 720)
