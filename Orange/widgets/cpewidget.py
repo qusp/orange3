@@ -2,7 +2,7 @@ import numpy as np
 
 from Orange.widgets import widget
 from neuropype.engine.common import warn_once
-from neuropype.engine.ports import ListPort
+from neuropype.engine.ports import ListPort, IntPort
 
 NoneUIValue = ['(use default)', '(default)']
 
@@ -37,7 +37,7 @@ class CPEWidget(widget.OWWidget):
         for n, p in self.node.ports(direction='IN*', editable=True).items():
             if n not in settings or settings[n] is None:
                 value = getattr(self.node, n)
-                if isinstance(p, ListPort) and value is None:
+                if (isinstance(p, ListPort) or isinstance(p, IntPort)) and value is None:
                     super().__setattr__(n, NoneUIValue[0])
                 else:
                     super().__setattr__(n, value)
@@ -69,7 +69,9 @@ class CPEWidget(widget.OWWidget):
             setattr(self.node, name, getattr(node, name))
             value = getattr(self.node, name)
             # Synchronize property changes back to the GUI.
-            if isinstance(self.node.port(name), ListPort) and value is None:
+            if (isinstance(self.node.port(name), ListPort)
+                or isinstance(self.node.port(name), IntPort))\
+                    and value is None:
                 value = NoneUIValue[0]
             super().__setattr__(name, value)
 
@@ -93,7 +95,8 @@ class CPEWidget(widget.OWWidget):
                 content = getattr(self, name)
                 # parse list default value and return
                 if content in NoneUIValue:
-                    content = None
+                    content = 'None'
+                    setNoneUIValue = True
                 else:
                     # handle empty entry
                     if not content:
@@ -125,16 +128,14 @@ class CPEWidget(widget.OWWidget):
                     # attempt to evaluate as expression
                     value = eval(content, None, np.__dict__)
                 except Exception:
-                    if content is None:
-                        value = None
-                        setNoneUIValue = True
-                    else:
-                        raise RuntimeError("Incorrectly formatted list: use "
-                                           "[value, value, ...] as format.")
+                    raise RuntimeError("Incorrectly formatted list: use [value, value, ...] as format.")
             else:
                 # Evaluate string as pure Python code.
                 content = getattr(self, name)
                 try:
+                    if content in NoneUIValue:
+                        content = 'None'
+                        setNoneUIValue = True
                     # attempt to evaluate as expression
                     value = eval(content, None, np.__dict__)
                     if callable(value):
