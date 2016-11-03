@@ -4,7 +4,8 @@ from Orange.widgets import widget
 from neuropype.engine.common import warn_once
 from neuropype.engine.ports import ListPort
 
-NoneUIValue = ['(use default)', 'default', 'defaults', '(use defaults)']
+NoneUIValue = ['(use default)', '(default)']
+
 
 class CPEWidget(widget.OWWidget):
 
@@ -77,6 +78,7 @@ class CPEWidget(widget.OWWidget):
             return
 
         try:
+            setNoneUIValue = False
             value_type = self.node.port(name).value_type
             if value_type in (bool, str):
                 value = getattr(self, name)
@@ -91,45 +93,44 @@ class CPEWidget(widget.OWWidget):
                 content = getattr(self, name)
                 # parse list default value and return
                 if content in NoneUIValue:
-                    setattr(self.node, name, None)
-                    if self.last_error_caused_by:
-                        self.last_error_caused_by = ''
-                        self.error()
-                    self.enable_property_controls()
-                    self.reset_button.setDisabled(False)
-                    return
-                # handle empty entry
-                if not content:
-                    content = "[]"
-                # handle missing brackets
-                if content[0] not in openchars:
-                    content = "[" + content
-                if content[-1] not in closechars:
-                    content = content + "]"
-                # strip whitespace between brackets and list
-                content = content[0] + content[1:-1].strip() + content[-1]
-                # replace semicolons by commas and warn
-                if ";" in content:
-                    content.replace(";", ",")
-                    warn_once("Semicolons are not a valid character in "
-                              "NeuroPype lists (replacing by commas).")
-                # handle missing commas in MATLAB-style list literals
-                if " " in content:
-                    if "'" in content:
-                        pass  # assume that these are quoted strings, ignore
-                    elif "," not in content:
-                        content = ", ".join(content.split())
-                # fix up specific bracket type
-                if content[0] in openchars and (content[0] != openchar):
-                    content = openchar + content[1:]
-                if content[-1] in closechars and (content[-1] != closechar):
-                    content = content[:-1] + closechar
+                    content = None
+                else:
+                    # handle empty entry
+                    if not content:
+                        content = "[]"
+                    # handle missing brackets
+                    if content[0] not in openchars:
+                        content = "[" + content
+                    if content[-1] not in closechars:
+                        content = content + "]"
+                    # strip whitespace between brackets and list
+                    content = content[0] + content[1:-1].strip() + content[-1]
+                    # replace semicolons by commas and warn
+                    if ";" in content:
+                        content.replace(";", ",")
+                        warn_once("Semicolons are not a valid character in "
+                                  "NeuroPype lists (replacing by commas).")
+                    # handle missing commas in MATLAB-style list literals
+                    if " " in content:
+                        if "'" in content:
+                            pass  # assume that these are quoted strings, ignore
+                        elif "," not in content:
+                            content = ", ".join(content.split())
+                    # fix up specific bracket type
+                    if content[0] in openchars and (content[0] != openchar):
+                        content = openchar + content[1:]
+                    if content[-1] in closechars and (content[-1] != closechar):
+                        content = content[:-1] + closechar
                 try:
                     # attempt to evaluate as expression
                     value = eval(content, None, np.__dict__)
                 except Exception:
-                    raise RuntimeError("Incorrectly formatted list: use "
-                                       "[value, value, ...] as format.")
+                    if content is None:
+                        value = None
+                        setNoneUIValue = True
+                    else:
+                        raise RuntimeError("Incorrectly formatted list: use "
+                                           "[value, value, ...] as format.")
             else:
                 # Evaluate string as pure Python code.
                 content = getattr(self, name)
@@ -145,7 +146,10 @@ class CPEWidget(widget.OWWidget):
 
             setattr(self.node, name, value)
             # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
+            if setNoneUIValue:
+                super().__setattr__(name, NoneUIValue[0])
+            else:
+                super().__setattr__(name, getattr(self.node, name))
 
             if self.last_error_caused_by:
                 self.last_error_caused_by = ''
