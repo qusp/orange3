@@ -2,6 +2,9 @@ import numpy as np
 
 from Orange.widgets import widget
 from neuropype.engine.common import warn_once
+from neuropype.engine.ports import ListPort
+
+NoneUIValue = ['(use default)', 'default', 'defaults', '(use defaults)']
 
 class CPEWidget(widget.OWWidget):
 
@@ -32,7 +35,11 @@ class CPEWidget(widget.OWWidget):
         # to the widget
         for n, p in self.node.ports(direction='IN*', editable=True).items():
             if n not in settings or settings[n] is None:
-                super().__setattr__(n, getattr(self.node, n))
+                value = getattr(self.node, n)
+                if isinstance(p, ListPort) and value is None:
+                    super().__setattr__(n, NoneUIValue[0])
+                else:
+                    super().__setattr__(n, value)
 
     def get_property_names(self):
         return list(self.node.ports(editable=True).keys())
@@ -59,8 +66,11 @@ class CPEWidget(widget.OWWidget):
 
         for name in (names or self.get_property_names()):
             setattr(self.node, name, getattr(node, name))
+            value = getattr(self.node, name)
             # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
+            if isinstance(self.node.port(name), ListPort) and value is None:
+                value = NoneUIValue[0]
+            super().__setattr__(name, value)
 
     def property_changed(self, name):
         if self.last_error_caused_by and self.last_error_caused_by != name:
@@ -79,6 +89,15 @@ class CPEWidget(widget.OWWidget):
                 else:
                     openchar, closechar = "{", "}"
                 content = getattr(self, name)
+                # parse list default value and return
+                if content in NoneUIValue:
+                    setattr(self.node, name, None)
+                    if self.last_error_caused_by:
+                        self.last_error_caused_by = ''
+                        self.error()
+                    self.enable_property_controls()
+                    self.reset_button.setDisabled(False)
+                    return
                 # handle empty entry
                 if not content:
                     content = "[]"
