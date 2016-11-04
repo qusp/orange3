@@ -227,6 +227,15 @@ def recreate_widget_directories(widget_path, modules):
     print("done.")
 
 
+def parse_doc(doc_str):
+    lines = doc_str.split('\n')
+    lines[0] = "<h3>"+lines[0]+"</h3><p>"
+    desc = ""
+    for line in lines[:-2]:
+        desc += line
+    return desc+'</p>'
+
+
 def create_widget_init_files(widget_path, modules):
     """Create __init__.py files for the widget packages."""
 
@@ -239,7 +248,8 @@ def create_widget_init_files(widget_path, modules):
             print("ID = 'orange.widgets.%s'" % m, file=f)
             try:
                 node = importlib.import_module('neuropype.nodes.%s' % m)
-                desc = node.__doc__.split('\n')[0]
+                desc = parse_doc(node.__doc__)
+                # desc = node.__doc__.split('\n')[0]
             except ImportError as e:
                 print("  could not import neuropype.nodes.%s; leaving package "
                       "description unassigned (%s)." % (m, e))
