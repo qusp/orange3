@@ -584,6 +584,3 @@ def find(iterable, *what, **kwargs):
     else:
         raise ValueError(what)
 
-
-def myprint(a,b,c):
-    print('kk')
