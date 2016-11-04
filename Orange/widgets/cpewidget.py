@@ -3,6 +3,9 @@ import numpy as np
 from Orange.widgets import widget
 from neuropype.engine.common import warn_once
 
+NoneUIValue = ['(use default)', '(default)']
+
+
 class CPEWidget(widget.OWWidget):
 
     want_main_area = False
@@ -26,13 +29,24 @@ class CPEWidget(widget.OWWidget):
         settings = self.settingsHandler.pack_data(self)
         for k, v in settings.items():
             if v is not None:
-                setattr(self.node, k, getattr(self, k))
+                setattr(self.node, k, self.read_value_from_widget(k))
 
         # apply all defaults from the cpe node that aren't in the settings
         # to the widget
         for n, p in self.node.ports(direction='IN*', editable=True).items():
             if n not in settings or settings[n] is None:
-                super().__setattr__(n, getattr(self.node, n))
+                self.assign_value_to_widget(n, getattr(self.node, n))
+
+    def assign_value_to_widget(self, name, value):
+        if value is None:
+            value = NoneUIValue[0]
+        setattr(self, name, value)
+
+    def read_value_from_widget(self, name):
+        content = getattr(self, name)
+        if content in NoneUIValue:
+            content = None
+        return content
 
     def get_property_names(self):
         return list(self.node.ports(editable=True).keys())
@@ -59,8 +73,9 @@ class CPEWidget(widget.OWWidget):
 
         for name in (names or self.get_property_names()):
             setattr(self.node, name, getattr(node, name))
+            value = getattr(self.node, name)
             # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
+            self.assign_value_to_widget(name, value)
 
     def property_changed(self, name):
         if self.last_error_caused_by and self.last_error_caused_by != name:
@@ -68,65 +83,64 @@ class CPEWidget(widget.OWWidget):
 
         try:
             value_type = self.node.port(name).value_type
+            content = self.read_value_from_widget(name)
             if value_type in (bool, str):
-                value = getattr(self, name)
-            elif value_type in (list, tuple, set):
-                openchars, closechars = "[{(", "])}"
-                if value_type == list:
-                    openchar, closechar = "[", "]"
-                elif value_type == tuple:
-                    openchar, closechar = "(", ")"
-                else:
-                    openchar, closechar = "{", "}"
-                content = getattr(self, name)
-                # handle empty entry
-                if not content:
-                    content = "[]"
-                # handle missing brackets
-                if content[0] not in openchars:
-                    content = "[" + content
-                if content[-1] not in closechars:
-                    content = content + "]"
-                # strip whitespace between brackets and list
-                content = content[0] + content[1:-1].strip() + content[-1]
-                # replace semicolons by commas and warn
-                if ";" in content:
-                    content.replace(";", ",")
-                    warn_once("Semicolons are not a valid character in "
-                              "NeuroPype lists (replacing by commas).")
-                # handle missing commas in MATLAB-style list literals
-                if " " in content:
-                    if "'" in content:
-                        pass  # assume that these are quoted strings, ignore
-                    elif "," not in content:
-                        content = ", ".join(content.split())
-                # fix up specific bracket type
-                if content[0] in openchars and (content[0] != openchar):
-                    content = openchar + content[1:]
-                if content[-1] in closechars and (content[-1] != closechar):
-                    content = content[:-1] + closechar
-                try:
-                    # attempt to evaluate as expression
-                    value = eval(content, None, np.__dict__)
-                except Exception:
-                    raise RuntimeError("Incorrectly formatted list: use "
-                                       "[value, value, ...] as format.")
+                value = content
             else:
-                # Evaluate string as pure Python code.
-                content = getattr(self, name)
+                # need to eval (at botton)
+                if value_type in (list, tuple, set) and content is not None:
+                    # special parsing for lists...
+                    openchars, closechars = "[{(", "])}"
+                    if value_type == list:
+                        openchar, closechar = "[", "]"
+                    elif value_type == tuple:
+                        openchar, closechar = "(", ")"
+                    else:
+                        openchar, closechar = "{", "}"
+                    # handle empty entry
+                    if not content:
+                        content = "[]"
+                    # handle missing brackets
+                    if content[0] not in openchars:
+                        content = "[" + content
+                    if content[-1] not in closechars:
+                        content = content + "]"
+                    # strip whitespace between brackets and list
+                    content = content[0] + content[1:-1].strip() + content[-1]
+                    # replace semicolons by commas and warn
+                    if ";" in content:
+                        content.replace(";", ",")
+                        warn_once("Semicolons are not a valid character in "
+                                  "NeuroPype lists (replacing by commas).")
+                    # handle missing commas in MATLAB-style list literals
+                    if " " in content:
+                        if "'" in content:
+                            pass  # assume that these are quoted strings, ignore
+                        elif "," not in content:
+                            content = ", ".join(content.split())
+                    # fix up specific bracket type
+                    if content[0] in openchars and (content[0] != openchar):
+                        content = openchar + content[1:]
+                    if content[-1] in closechars and (content[-1] != closechar):
+                        content = content[:-1] + closechar
                 try:
                     # attempt to evaluate as expression
+                    if content is None:
+                        content = 'None'
                     value = eval(content, None, np.__dict__)
                     if callable(value):
                         # a function is almost certainly not what we wanted
                         raise ValueError("not applicable")
-                except Exception as e:
-                    # interpret as a string
-                    value = eval('"%s"' % content)
+                except Exception:
+                    if value_type in (list, tuple, set):
+                        raise RuntimeError("Incorrectly formatted list: use [value, value, ...] as format.")
+                    else:
+                        # interpret as a string
+                        value = eval('"%s"' % content)
 
             setattr(self.node, name, value)
             # Synchronize property changes back to the GUI.
-            super().__setattr__(name, getattr(self.node, name))
+            self.assign_value_to_widget(name, getattr(self.node, name))
 
             if self.last_error_caused_by:
                 self.last_error_caused_by = ''
