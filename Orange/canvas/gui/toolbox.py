@@ -18,12 +18,13 @@ from PyQt4.QtGui import (
 )
 
 from PyQt4.QtCore import (
-    Qt, QObject, QSize, QRect, QPoint, QSignalMapper, QEvent
+    Qt, QObject, QSize, QRect, QPoint, QSignalMapper, QEvent, QCoreApplication
 )
 
 from PyQt4.QtCore import pyqtSignal as Signal, pyqtProperty as Property
 
 from .utils import brush_darker
+from .quickhelp import QuickHelpTipEvent
 
 _ToolBoxPage = namedtuple(
     "_ToolBoxPage",
@@ -440,6 +441,7 @@ class ToolBox(QFrame):
 
         if toolTip:
             action.setToolTip(toolTip)
+            action.hovered.connect(lambda tip=toolTip, short_tip=text: self.handleTabButtonHovered(tip, short_tip))
         self.__tabActionGroup.addAction(action)
         self.__actionMapper.setMapping(action, action)
         action.toggled.connect(self.__actionMapper.map)
@@ -457,6 +459,12 @@ class ToolBox(QFrame):
             button.setFixedHeight(self.__tabButtonHeight)
 
         return button
+
+    def handleTabButtonHovered(self, tip, short_tip):
+        short_tip = short_tip if short_tip else ''
+        tip = tip if tip else ''
+        ev = QuickHelpTipEvent(short_tip, tip)
+        return QCoreApplication.sendEvent(self, ev)
 
     def ensureWidgetVisible(self, child, xmargin=50, ymargin=50):
         """
@@ -575,3 +583,7 @@ def find(iterable, *what, **kwargs):
             return item
     else:
         raise ValueError(what)
+
+
+def myprint(a,b,c):
+    print('kk')
