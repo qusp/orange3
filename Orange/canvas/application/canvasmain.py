@@ -8,6 +8,7 @@ import logging
 import operator
 from functools import partial
 from io import BytesIO
+import warnings
 
 import pkg_resources
 
@@ -62,9 +63,13 @@ from . import tutorials
 
 from . import quickstart_wizards
 
+from .settings import FrequencyUIDefaultValue
+
 log = logging.getLogger(__name__)
 
 use_online_help = True
+
+
 
 if use_online_help:
     LINKS = \
@@ -2221,6 +2226,17 @@ class CanvasMainWindow(QMainWindow):
 
     def __update_from_settings(self):
         settings = QSettings()
+
+        settings.beginGroup("tick_rate")
+        tick_rate = settings.value('tick_rate_value', defaultValue=FrequencyUIDefaultValue).value
+        settings.endGroup()
+        try:
+            value = int(float(tick_rate))
+        except:
+            warnings.warn('Tick rate value '+tick_rate+' is not allowed. Using default instead.')
+            value = int(FrequencyUIDefaultValue)
+        self.scheme_widget.scheme().signal_manager.frequency = value
+
         settings.beginGroup("mainwindow")
         toolbox_floatable = settings.value("toolbox-dock-floatable",
                                            defaultValue=False,
