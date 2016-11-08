@@ -16,7 +16,7 @@ from ..utils.propertybindings import (
 from PyQt4.QtGui import (
     QWidget, QMainWindow, QComboBox, QCheckBox, QListView, QTabWidget,
     QToolBar, QAction, QStackedWidget, QVBoxLayout, QHBoxLayout,
-    QFormLayout, QStandardItemModel, QSizePolicy
+    QFormLayout, QStandardItemModel, QSizePolicy, QLineEdit
 )
 
 from PyQt4.QtCore import (
@@ -24,6 +24,8 @@ from PyQt4.QtCore import (
 )
 
 log = logging.getLogger(__name__)
+
+FrequencyUIDefaultValue = '25'
 
 
 class UserDefaultsPropertyBinding(AbstractBoundProperty):
@@ -230,6 +232,16 @@ class UserSettingsDialog(QMainWindow):
 
         form = QFormLayout()
         tab.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+        tick_rate = QWidget(self, objectName="tick_rate")
+        tick_rate.setLayout(QVBoxLayout())
+        tick_rate.layout().setContentsMargins(0, 0, 0, 0)
+
+        le = QLineEdit(FrequencyUIDefaultValue, self)
+        le.setObjectName('tick_rate_value')
+        tick_rate.layout().addWidget(le)
+        form.addRow(self.tr("Tick rate"), tick_rate)
+        self.bind(le, "text", "tick_rate/tick_rate_value")
 
         nodes = QWidget(self, objectName="nodes")
         nodes.setLayout(QVBoxLayout())

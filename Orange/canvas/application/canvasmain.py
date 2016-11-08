@@ -8,6 +8,7 @@ import logging
 import operator
 from functools import partial
 from io import BytesIO
+import warnings
 
 import pkg_resources
 
@@ -62,9 +63,13 @@ from . import tutorials
 
 from . import quickstart_wizards
 
+from .settings import FrequencyUIDefaultValue
+
 log = logging.getLogger(__name__)
 
 use_online_help = True
+
+
 
 if use_online_help:
     LINKS = \
@@ -247,6 +252,7 @@ class CanvasMainWindow(QMainWindow):
 
         self.scheme_widget = SchemeEditWidget()
         self.scheme_widget.setScheme(widgetsscheme.WidgetsScheme(parent=self))
+        self.scheme_widget.scheme().signal_manager.frequency = self.get_tick_rate(QSettings())
 
         w.layout().addWidget(self.scheme_widget)
 
@@ -1012,13 +1018,12 @@ class CanvasMainWindow(QMainWindow):
         """Load a scheme from a file (`filename`) into the current
         document updates the recent scheme list and the loaded scheme path
         property.
-
         """
         dirname = os.path.dirname(filename)
-
         self.last_scheme_dir = dirname
-
         new_scheme = self.new_scheme_from(filename)
+        new_scheme.signal_manager.frequency = self.get_tick_rate(QSettings())
+
         if new_scheme is not None:
             self.set_new_scheme(new_scheme)
 
@@ -2219,8 +2224,23 @@ class CanvasMainWindow(QMainWindow):
         """
         return str(QMainWindow.tr(self, sourceText, disambiguation, n))
 
+    @staticmethod
+    def get_tick_rate(settings):
+        settings.beginGroup("tick_rate")
+        tick_rate = settings.value('tick_rate_value', defaultValue=FrequencyUIDefaultValue).value
+        settings.endGroup()
+        try:
+            value = int(float(tick_rate))
+        except:
+            warnings.warn('Tick rate value '+tick_rate+' is not allowed. Using default instead.')
+            value = int(FrequencyUIDefaultValue)
+        return value
+
     def __update_from_settings(self):
         settings = QSettings()
+
+        self.scheme_widget.scheme().signal_manager.frequency = self.get_tick_rate(settings)
+
         settings.beginGroup("mainwindow")
         toolbox_floatable = settings.value("toolbox-dock-floatable",
                                            defaultValue=False,
