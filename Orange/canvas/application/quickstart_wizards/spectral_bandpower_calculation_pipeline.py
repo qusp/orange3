@@ -12,8 +12,9 @@ class SpectralBandpowerQuickstartWizardDialog(QuickstartWizardDialog):
 
         ######## Step 1
 
-        step_1 = self.step("What data stream do you want to read from? (e.g., "
-                           "name='Cognionics'):")
+        step_1 = self.step("Enter the corresponding query for the input data "
+                           "stream (e.g., name='InStreamTest', "
+                           "or hostname='myhost' and type='EEG')")
         step_1.setContentsMargins(0, 5, 0, 0)
 
         # Query.
@@ -25,8 +26,8 @@ class SpectralBandpowerQuickstartWizardDialog(QuickstartWizardDialog):
 
         ######## Step 2
 
-        step_2 = self.step('Next you can define the EEG frequency range of '
-                           'interest:')
+        step_2 = self.step('Enter the EEG frequency range of '
+                           'interest, in Hz.')
         step_2.setContentsMargins(0, 15, 0, 0)
 
         # Low transition start.
@@ -53,17 +54,17 @@ class SpectralBandpowerQuickstartWizardDialog(QuickstartWizardDialog):
 
         ######## Step 5
 
-        step_3 = self.step("Please choose the names of the output streams:")
+        step_3 = self.step("Enter the names of the output streams:")
         step_3.setContentsMargins(0, 15, 0, 0)
 
         # Raw-data outlet.
-        raw_outlet = QLineEdit('neuropype:RawData', self)
+        raw_outlet = QLineEdit('RawData', self)
 
         # Spectrum outlet.
-        spectrum_outlet = QLineEdit('neuropype:Spectrum', self)
+        spectrum_outlet = QLineEdit('Spectrum', self)
 
         # Alpha outlet.
-        alpha_outlet = QLineEdit('neuropype:AlphaPower', self)
+        alpha_outlet = QLineEdit('AlphaPower', self)
 
         # Form layout.
         outlet_form = QFormLayout()
