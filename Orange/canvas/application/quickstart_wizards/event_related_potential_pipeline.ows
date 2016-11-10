@@ -1,0 +1,640 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme description="The event related potential (ERP) is the change in the brain activity in response to a stimulus or an event. The Event-related potential pipeline provides the signal processing and machine learning tools required to detect and classify the ERP responses in the EEG signal. This information can then be used to evaluate the brain functionality in response to an event.  For example, it can be used to predict whether a user has committed an error in performing certain task at a given point in time.&#10;&#10;In general, the pipeline can process the data both offline (batch mode) or on the fly (streaming data). The pipeline needs to be trained/calibrated before making predictions, where the training can be done on a portion of data where target values are known or can be performed on  a separate data set. The training can be skipped if a pretrained model exists and can be loaded into the pipeline.&#10;&#10;In this implementation, the input data stream is read from network in Lab Streaming layer (LSL) format, this can be EEG signal of any number of channels and any sampling rate. The outcome is also transmitted as LSL stream where the output stream contains one channel per target class which indicates the probability of that class at the given moment.&#10;&#10;As mentioned this pipeline requires calibration data, i.e., EEG data during which different target conditions occur multiple times, ideally in a randomly alternating manner. The beginning of each condition must be indicated by a marker in a separate marker stream. For example, for an oddball this can indicate correct and incorrect decisions, as marked by event labels ”correct&quot; and &quot;incorrect&quot;. Also, the entire calibration section must be preceded by a begin marker (default: &quot;calib-begin&quot;) and followed by an end marker (default: &quot;calib-end&quot;). The number of repetitions for each class should be at least 20 and ideally as much as 80. &#10;&#10;The quickstart wizard window can be used to perform following actions:&#10;&#10;- Enter the stream query for the input data stream&#10;&#10;- Enter the name and source ID for output stream&#10;&#10;- Enter the marker labels and their corresponding target values&#10;&#10;- Enter the list of channels to be retained for process in the pipeline. If the data stream includes known flat-line channels, &#10;trigger channels, accelerometer channels,  etc, this parameter can be used to exclude them from being included in the pipeline processing.&#10;&#10;- Enter the time segment to be used to extract the data for the pipeline analysis, in seconds. This segmentation can be either relative to event markers or as a single window at the end of current data chunk.&#10;&#10;- Enter the cut-off frequency for anti-aliasing lowpass filter. &#10;&#10;- Enter the decimation ratio used to downsample the input signal. Make sure that when your signal is resampled by this factor,  the lowpass filter cuts out below the ½ of the new sampling rate, e.g., if you have a 500Hz device, downsample by 5x, then your filter needs to cut out below 50Hz.&#10;&#10;- Enter the spectral window to be used on the EEG signal to search for the ERP components, in Hz." title="Event related potential (ERP) process" version="2.0">
+	<nodes>
+		<node id="0" name="Segmentation" position="(440.0, 341.0)" project_name="Orange" qualified_name="Orange.widgets.formatting.owsegmentation.OWSegmentation" title="Segmentation" version="" />
+		<node id="1" name="Assign Targets" position="(628.0, 112.0)" project_name="Orange" qualified_name="Orange.widgets.utilities.owassigntargets.OWAssignTargets" title="Assign Targets" version="" />
+		<node id="2" name="Measure Loss" position="(841.0, 380.0)" project_name="Orange" qualified_name="Orange.widgets.machine_learning.owmeasureloss.OWMeasureLoss" title="Measure Loss" version="" />
+		<node id="3" name="Dejitter Timestamps" position="(329.0, 112.0)" project_name="Orange" qualified_name="Orange.widgets.utilities.owdejittertimestamps.OWDejitterTimestamps" title="Dejitter Timestamps" version="" />
+		<node id="4" name="Select Range" position="(833.0, 114.0)" project_name="Orange" qualified_name="Orange.widgets.general.owselectrange.OWSelectRange" title="Select Range" version="" />
+		<node id="5" name="FIR Filter" position="(196.0, 343.0)" project_name="Orange" qualified_name="Orange.widgets.filters.owfirfilter.OWFIRFilter" title="FIR Filter" version="" />
+		<node id="6" name="Decimate" position="(314.0, 342.0)" project_name="Orange" qualified_name="Orange.widgets.filters.owdecimate.OWDecimate" title="Decimate" version="" />
+		<node id="7" name="Spectral Selection" position="(559.0, 341.0)" project_name="Orange" qualified_name="Orange.widgets.spectral.owspectralselection.OWSpectralSelection" title="Spectral Selection" version="" />
+		<node id="8" name="Hierarchical Discriminant Component Analysis" position="(670.0, 340.0)" project_name="Orange" qualified_name="Orange.widgets.machine_learning.owhierarchicaldiscriminantcomponentanalysis.OWHierarchicalDiscriminantComponentAnalysis" title="Hierarchical Discriminant Component Analysis" version="" />
+		<node id="9" name="LSL Output" position="(844.0, 273.0)" project_name="Orange" qualified_name="Orange.widgets.network.owlsloutput.OWLSLOutput" title="LSL Output" version="" />
+		<node id="10" name="Accumulate Calibration Data" position="(468.0, 113.0)" project_name="Orange" qualified_name="Orange.widgets.utilities.owaccumulatecalibrationdata.OWAccumulateCalibrationData" title="Accumulate Calibration Data" version="" />
+		<node id="11" name="PrintToConsole" position="(846.0, 492.0)" project_name="Orange" qualified_name="Orange.widgets.utilities.owprinttoconsole.OWPrintToConsole" title="PrintToConsole" version="" />
+		<node id="12" name="LSL Input" position="(150.0, 111.0)" project_name="Orange" qualified_name="Orange.widgets.network.owlslinput.OWLSLInput" title="LSL Input" version="" />
+	</nodes>
+	<links>
+		<link enabled="true" id="0" sink_channel="Data" sink_node_id="4" source_channel="Data" source_node_id="1" />
+		<link enabled="true" id="1" sink_channel="Data" sink_node_id="6" source_channel="Data" source_node_id="5" />
+		<link enabled="true" id="2" sink_channel="Data" sink_node_id="7" source_channel="Data" source_node_id="0" />
+		<link enabled="true" id="3" sink_channel="Data" sink_node_id="8" source_channel="Data" source_node_id="7" />
+		<link enabled="true" id="4" sink_channel="Data" sink_node_id="2" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="5" sink_channel="Data" sink_node_id="0" source_channel="Data" source_node_id="6" />
+		<link enabled="true" id="6" sink_channel="Data" sink_node_id="5" source_channel="Data" source_node_id="4" />
+		<link enabled="true" id="7" sink_channel="Data" sink_node_id="9" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="8" sink_channel="Data" sink_node_id="10" source_channel="Data" source_node_id="3" />
+		<link enabled="true" id="9" sink_channel="Data" sink_node_id="1" source_channel="Data" source_node_id="10" />
+		<link enabled="true" id="10" sink_channel="Data" sink_node_id="11" source_channel="Data" source_node_id="8" />
+		<link enabled="true" id="11" sink_channel="Data" sink_node_id="3" source_channel="Data" source_node_id="12" />
+	</links>
+	<annotations />
+	<thumbnail />
+	<node_properties>
+		<properties format="pickle" node_id="0">gAN9cQAoWA8AAABvbmxpbmVfZXBvY2hpbmdxAVgNAAAAbWFya2VyLWxvY2tlZHECWBMAAABzYXZl
+ZFdpZGdldEdlb21ldHJ5cQNjc2lwCl91bnBpY2tsZV90eXBlCnEEWAwAAABQeVF0NC5RdENvcmVx
+BVgKAAAAUUJ5dGVBcnJheXEGQy4B2dDLAAEAAAAAAXYAAAChAAADiQAAAngAAAF2AAAAtwAAA4kA
+AAJ4AAAAAAAAcQeFcQiHcQlScQpYDQAAAHNhbXBsZV9vZmZzZXRxC0sAWAwAAABvbmx5X3NpZ25h
+bHNxDIlYCwAAAHRpbWVfYm91bmRzcQ1Hv8mZmZmZmZpHP+mZmZmZmZqGcQ51Lg==
+</properties>
+		<properties format="pickle" node_id="1">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAAAAAAAXAAAE/wAA
+AxsAAAAAAAAALQAABP8AAAMbAAAAAAAAcQWFcQaHcQdScQhYBwAAAG1hcHBpbmdxCX1xCihYCQAA
+AGluY29ycmVjdHELSwBYBwAAAGNvcnJlY3RxDEsBdXUu
+</properties>
+		<properties format="pickle" node_id="2">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAHKAAAEaQAA
+AlUAAAMCAAAB4AAABGkAAAJVAAAAAAAAcQWFcQaHcQdScQhYEgAAAGFjY3VtdWxhdGVfb2ZmbGlu
+ZXEJiVgLAAAAbG9zc19tZXRyaWNxClgDAAAAQVVDcQt1Lg==
+</properties>
+		<properties format="pickle" node_id="3">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAGsAAAEaQAA
+AmQAAAMCAAABwgAABGkAAAJkAAAAAAAAcQWFcQaHcQdScQhYDwAAAGZvcmdldF9oYWxmdGltZXEJ
+TSwBWA8AAABmb3JjZV9tb25vdG9uaWNxCohYDgAAAG1heF91cGRhdGVyYXRlcQtN9AFYDgAAAHdh
+cm11cF9zYW1wbGVzcQxK/////3Uu
+</properties>
+		<properties format="pickle" node_id="4">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAGuAAAEaQAA
+AmEAAAMCAAABxAAABGkAAAJhAAAAAAAAcQWFcQaHcQdScQhYBAAAAGF4aXNxCVgFAAAAc3BhY2Vx
+ClgEAAAAdW5pdHELWAcAAABpbmRpY2VzcQxYCQAAAHNlbGVjdGlvbnENSwBLQIZxDnUu
+</properties>
+		<properties format="pickle" node_id="5">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAuQAAAGPAAAESwAA
+AqgAAALkAAABpQAABEsAAAKoAAAAAAAAcQWFcQaHcQdScQhYDQAAAGFudGlzeW1tZXRyaWNxCYlY
+BAAAAGF4aXNxClgEAAAAdGltZXELWAoAAABzdG9wX2F0dGVucQxHQEkAAAAAAABYBAAAAG1vZGVx
+DVgHAAAAbG93cGFzc3EOWAwAAABvbmx5X3NpZ25hbHNxD4hYBQAAAG9yZGVycRBOWA0AAABtaW5p
+bXVtX3BoYXNlcRGIWAsAAABmcmVxdWVuY2llc3ESXXETKEstSzJldS4=
+</properties>
+		<properties format="pickle" node_id="6">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAG2AAAEaQAA
+AloAAAMCAAABzAAABGkAAAJaAAAAAAAAcQWFcQaHcQdScQhYBgAAAGZhY3RvcnEJSwFYDAAAAG9u
+bHlfc2lnbmFsc3EKiFgEAAAAYXhpc3ELWAQAAAB0aW1lcQx1Lg==
+</properties>
+		<properties format="pickle" node_id="7">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAHAAAAEaQAA
+AlAAAAMCAAAB1gAABGkAAAJQAAAAAAAAcQWFcQaHcQdScQhYCQAAAGJsb2Nrc2l6ZXEJS2RYCwAA
+AGZyZXF1ZW5jaWVzcQpHP7mZmZmZmZpLD4ZxC3Uu
+</properties>
+		<properties format="pickle" node_id="8">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAGYAAAEaQAA
+AngAAAMCAAABrgAABGkAAAJ4AAAAAAAAcQWFcQaHcQdScQhYEAAAAHNocmlua2FnZV93aXRoaW5x
+CUc/qZmZmZmZmlgNAAAAY2xhc3Nfd2VpZ2h0c3EKfXELKEsARz/gAAAAAAAASwFHP+AAAAAAAAB1
+WA0AAABwcm9iYWJpbGlzdGljcQyIWBAAAABzaHJpbmthZ2VfYWNyb3NzcQ1HP7HrhR64UexYDwAA
+AGluaXRpYWxpemVfb25jZXEOiFgJAAAAdG9sZXJhbmNlcQ9HPxo24uscQy11Lg==
+</properties>
+		<properties format="pickle" node_id="9">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAFyAAAEaQAA
+Ap0AAAMCAAABiAAABGkAAAKdAAAAAAAAcQWFcQaHcQdScQhYCwAAAHN0cmVhbV90eXBlcQlYBwAA
+AENvbnRyb2xxClgJAAAAY2h1bmtfbGVucQtLAFgLAAAAbWFya2VyX25hbWVxDFgRAAAAT3V0U3Ry
+ZWFtLW1hcmtlcnNxDVgMAAAAc2VuZF9tYXJrZXJzcQ6JWAwAAABtYXhfYnVmZmVyZWRxD0s8WAUA
+AABzcmF0ZXEQTlgLAAAAc3RyZWFtX25hbWVxEVgNAAAAT3V0U3RyZWFtVGVzdHESWAwAAABvbmx5
+X3NpZ25hbHNxE4lYCQAAAHNvdXJjZV9pZHEUWA0AAAB1bmlxdWVzcmNpZDU2cRV1Lg==
+</properties>
+		<properties format="pickle" node_id="10">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAcIAAAEHAAADKQAA
+AfEAAAHCAAABHQAAAykAAAHxAAAAAAAAcQWFcQaHcQdScQhYDAAAAGJlZ2luX21hcmtlcnEJWAsA
+AABjYWxpYi1iZWdpbnEKWA0AAABwcmludF9tYXJrZXJzcQuIWA8AAABlbWl0X2NhbGliX2RhdGFx
+DIhYBwAAAHZlcmJvc2VxDYhYEQAAAGNhbGlicmF0aW9uX2ZpcnN0cQ6IWA8AAABjYW5fcmVjYWxp
+YnJhdGVxD4lYEQAAAGVtaXRfcHJlZGljdF9kYXRhcRCIWAoAAABlbmRfbWFya2VycRFYCQAAAGNh
+bGliLWVuZHESdS4=
+</properties>
+		<properties format="literal" node_id="11">{'print_streams': '', 'savedWidgetGeometry': None, 'print_markers': False, 'print_time': False, 'only_nonempty': True, 'print_compact': True, 'print_data': False, 'print_channel': False, 'print_trial': False}</properties>
+		<properties format="pickle" node_id="12">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
+AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAFmAAAEaQAA
+AqoAAAMCAAABfAAABGkAAAKqAAAAAAAAcQWFcQaHcQdScQhYFAAAAHJlc29sdmVfbWluaW11bV90
+aW1lcQlHP+AAAAAAAABYDAAAAG5vbWluYWxfcmF0ZXEKTlgMAAAAbWF4X2Jsb2NrbGVucQtNAARY
+BQAAAHF1ZXJ5cQxYEwAAAG5hbWU9J0luU3RyZWFtVGVzdCdxDVgMAAAAbWF4X2NodW5rbGVucQ5L
+AFgLAAAAZGlhZ25vc3RpY3NxD4lYBwAAAHJlY292ZXJxEIhYCgAAAG1heF9idWZsZW5xEUseWA0A
+AABjaGFubmVsX25hbWVzcRJdcRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
+</properties>
+	</node_properties>
+	<patch>{
+    "edges": [
+        [
+            "node2",
+            "data",
+            "node5",
+            "data"
+        ],
+        [
+            "node6",
+            "data",
+            "node7",
+            "data"
+        ],
+        [
+            "node1",
+            "data",
+            "node8",
+            "data"
+        ],
+        [
+            "node8",
+            "data",
+            "node9",
+            "data"
+        ],
+        [
+            "node9",
+            "data",
+            "node3",
+            "data"
+        ],
+        [
+            "node9",
+            "data",
+            "node10",
+            "data"
+        ],
+        [
+            "node9",
+            "data",
+            "node12",
+            "data"
+        ],
+        [
+            "node7",
+            "data",
+            "node1",
+            "data"
+        ],
+        [
+            "node5",
+            "data",
+            "node6",
+            "data"
+        ],
+        [
+            "node4",
+            "data",
+            "node11",
+            "data"
+        ],
+        [
+            "node11",
+            "data",
+            "node2",
+            "data"
+        ],
+        [
+            "node13",
+            "data",
+            "node4",
+            "data"
+        ]
+    ],
+    "nodes": {
+        "node1": {
+            "class": "Segmentation",
+            "module": "neuropype.nodes.formatting",
+            "params": {
+                "online_epoching": {
+                    "customized": false,
+                    "type": "EnumPort",
+                    "value": "marker-locked"
+                },
+                "only_signals": {
+                    "customized": true,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "sample_offset": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 0
+                },
+                "time_bounds": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": [
+                        -0.2,
+                        0.8
+                    ]
+                }
+            },
+            "uuid": "764baf10-fd85-4431-8830-6da790c1af22"
+        },
+        "node10": {
+            "class": "LSLOutput",
+            "module": "neuropype.nodes.network",
+            "params": {
+                "chunk_len": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 0
+                },
+                "marker_name": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": "OutStream-markers"
+                },
+                "max_buffered": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 60
+                },
+                "only_signals": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "send_markers": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "source_id": {
+                    "customized": true,
+                    "type": "StringPort",
+                    "value": "uniquesrcid56"
+                },
+                "srate": {
+                    "customized": false,
+                    "type": "Port",
+                    "value": null
+                },
+                "stream_name": {
+                    "customized": true,
+                    "type": "StringPort",
+                    "value": "OutStreamTest"
+                },
+                "stream_type": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": "Control"
+                }
+            },
+            "uuid": "4ee5c8f7-8266-4ba6-91e1-b1e40d55437a"
+        },
+        "node11": {
+            "class": "AccumulateCalibrationData",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "begin_marker": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": "calib-begin"
+                },
+                "calibration_first": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "can_recalibrate": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "emit_calib_data": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "emit_predict_data": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "end_marker": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": "calib-end"
+                },
+                "print_markers": {
+                    "customized": true,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "verbose": {
+                    "customized": true,
+                    "type": "BoolPort",
+                    "value": true
+                }
+            },
+            "uuid": "9483418f-1516-43b6-8fe4-a75ad6b1e3f7"
+        },
+        "node12": {
+            "class": "PrintToConsole",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "only_nonempty": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "print_channel": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "print_compact": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "print_data": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "print_markers": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "print_streams": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": ""
+                },
+                "print_time": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "print_trial": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                }
+            },
+            "uuid": "9bf3e46d-2d2b-4b91-8308-eb2a84c562cb"
+        },
+        "node13": {
+            "class": "LSLInput",
+            "module": "neuropype.nodes.network",
+            "params": {
+                "channel_names": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": []
+                },
+                "diagnostics": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "marker_query": {
+                    "customized": false,
+                    "type": "StringPort",
+                    "value": ""
+                },
+                "max_blocklen": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 1024
+                },
+                "max_buflen": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 30
+                },
+                "max_chunklen": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 0
+                },
+                "nominal_rate": {
+                    "customized": false,
+                    "type": "Port",
+                    "value": null
+                },
+                "query": {
+                    "customized": true,
+                    "type": "StringPort",
+                    "value": "name='InStreamTest'"
+                },
+                "recover": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "resolve_minimum_time": {
+                    "customized": false,
+                    "type": "FloatPort",
+                    "value": 0.5
+                }
+            },
+            "uuid": "2a0db984-65d2-4c1b-a7fe-6a513618937f"
+        },
+        "node2": {
+            "class": "AssignTargets",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "mapping": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": {
+                        "correct": 1,
+                        "incorrect": 0
+                    }
+                }
+            },
+            "uuid": "d9b4d3c7-bc84-443f-81b4-73031e419509"
+        },
+        "node3": {
+            "class": "MeasureLoss",
+            "module": "neuropype.nodes.machine_learning",
+            "params": {
+                "accumulate_offline": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "loss_metric": {
+                    "customized": true,
+                    "type": "EnumPort",
+                    "value": "AUC"
+                }
+            },
+            "uuid": "2848cc65-c834-49a9-b94a-32f76d8b238c"
+        },
+        "node4": {
+            "class": "DejitterTimestamps",
+            "module": "neuropype.nodes.utilities",
+            "params": {
+                "force_monotonic": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "forget_halftime": {
+                    "customized": true,
+                    "type": "FloatPort",
+                    "value": 300
+                },
+                "max_updaterate": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 500
+                },
+                "warmup_samples": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": -1
+                }
+            },
+            "uuid": "9d74ee5d-0cea-4228-8951-ccef1ffdd696"
+        },
+        "node5": {
+            "class": "SelectRange",
+            "module": "neuropype.nodes.general",
+            "params": {
+                "axis": {
+                    "customized": true,
+                    "type": "EnumPort",
+                    "value": "space"
+                },
+                "selection": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": [
+                        0,
+                        64
+                    ]
+                },
+                "unit": {
+                    "customized": false,
+                    "type": "EnumPort",
+                    "value": "indices"
+                }
+            },
+            "uuid": "2827c0d9-7a86-4cb7-8a51-e6b476643173"
+        },
+        "node6": {
+            "class": "FIRFilter",
+            "module": "neuropype.nodes.filters",
+            "params": {
+                "antisymmetric": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": false
+                },
+                "axis": {
+                    "customized": false,
+                    "type": "EnumPort",
+                    "value": "time"
+                },
+                "frequencies": {
+                    "customized": true,
+                    "type": "ListPort",
+                    "value": [
+                        45,
+                        50
+                    ]
+                },
+                "minimum_phase": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "mode": {
+                    "customized": true,
+                    "type": "EnumPort",
+                    "value": "lowpass"
+                },
+                "only_signals": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "order": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": null
+                },
+                "stop_atten": {
+                    "customized": true,
+                    "type": "FloatPort",
+                    "value": 50.0
+                }
+            },
+            "uuid": "a7638198-2832-458f-9b11-ff87438da515"
+        },
+        "node7": {
+            "class": "Decimate",
+            "module": "neuropype.nodes.filters",
+            "params": {
+                "axis": {
+                    "customized": false,
+                    "type": "EnumPort",
+                    "value": "time"
+                },
+                "factor": {
+                    "customized": true,
+                    "type": "IntPort",
+                    "value": 1
+                },
+                "only_signals": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                }
+            },
+            "uuid": "5001f4b1-e033-427f-ba6f-ef7484d2ed96"
+        },
+        "node8": {
+            "class": "SpectralSelection",
+            "module": "neuropype.nodes.spectral",
+            "params": {
+                "blocksize": {
+                    "customized": false,
+                    "type": "IntPort",
+                    "value": 100
+                },
+                "frequencies": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": [
+                        0.1,
+                        15
+                    ]
+                }
+            },
+            "uuid": "6e15f72a-8711-49d0-b940-87798c4a09c3"
+        },
+        "node9": {
+            "class": "HierarchicalDiscriminantComponentAnalysis",
+            "module": "neuropype.nodes.machine_learning",
+            "params": {
+                "class_weights": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": {
+                        "0": 0.5,
+                        "1": 0.5
+                    }
+                },
+                "initialize_once": {
+                    "customized": true,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "probabilistic": {
+                    "customized": false,
+                    "type": "BoolPort",
+                    "value": true
+                },
+                "shrinkage_across": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": 0.07
+                },
+                "shrinkage_within": {
+                    "customized": true,
+                    "type": "Port",
+                    "value": 0.05
+                },
+                "tolerance": {
+                    "customized": false,
+                    "type": "FloatPort",
+                    "value": 0.0001
+                }
+            },
+            "uuid": "eeaf0533-6093-46a5-b131-e25c7a67fe7f"
+        }
+    },
+    "version": 1.1
+}</patch>
+</scheme>
