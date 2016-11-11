@@ -690,6 +690,24 @@ class SchemeEditWidget(QWidget):
             commands.SetAttrCommand(self.__scheme, "title", title)
         )
 
+    def setAccessToken(self, access_token):
+        """
+        Set the scheme access_token.
+        """
+        if self.scheme().access_token != access_token:
+            self.__undoStack.push(
+                commands.SetAttrCommand(self.__scheme, "access_token", access_token)
+                )
+
+    def setApiUrl(self, api_url):
+        """
+        Set the scheme url.
+        """
+        if self.scheme().api_url != api_url:
+            self.__undoStack.push(
+                commands.SetAttrCommand(self.__scheme, "api_url", api_url)
+                )
+
     def setDescription(self, description):
         """
         Set the scheme description string.

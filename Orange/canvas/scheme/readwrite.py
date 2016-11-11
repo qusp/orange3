@@ -400,7 +400,7 @@ def parse_scheme_v_1_0(etree, scheme, error_handler, widget_registry=None,
 # Intermediate scheme representation
 _scheme = namedtuple(
     "_scheme",
-    ["title", "version", "description", "nodes", "links", "annotations"])
+    ["title", "version", "access_token", "api_url", "description", "nodes", "links", "annotations"])
 
 _node = namedtuple(
     "_node",
@@ -502,6 +502,8 @@ def parse_ows_etree_v_2_0(tree):
     return _scheme(
         version=scheme.get("version"),
         title=scheme.get("title", ""),
+        access_token=scheme.get("access_token"),
+        api_url=scheme.get("api_url"),
         description=scheme.get("description"),
         nodes=nodes,
         links=links,
@@ -644,6 +646,10 @@ def scheme_load(scheme, stream, registry=None, error_handler=None):
 
     scheme.title = desc.title
     scheme.description = desc.description
+    try:
+        scheme.set_access_token(desc.access_token)
+    except:
+        pass
 
     for node_d in desc.nodes:
         try:
@@ -726,6 +732,8 @@ def scheme_to_etree(scheme, data_format="literal", pickle_fallback=False):
     builder = TreeBuilder(element_factory=Element)
     builder.start("scheme", {"version": "2.0",
                              "title": scheme.title or "",
+                             "access_token": scheme.access_token or "",
+                             "api_url": scheme.api_url or "",
                              "description": scheme.description or ""})
 
     ## Nodes

@@ -89,6 +89,10 @@ class Scheme(QObject):
     # Signal emitted when the description of scheme changes.
     description_changed = Signal(str)
 
+    access_token_changed = Signal(str)
+
+    api_url_changed = Signal(str)
+
     node_state_changed = Signal()
     channel_state_changed = Signal()
     topology_changed = Signal()
@@ -105,6 +109,28 @@ class Scheme(QObject):
         self.__annotations = []
         self.__nodes = []
         self.__links = []
+        self.__access_token = ''
+        self.__api_url = ''
+
+    def access_token(self):
+        return self.__access_token
+
+    def set_access_token(self, access_token):
+        if self.__access_token != access_token:
+            self.__access_token = access_token
+            self.access_token_changed.emit(access_token)
+
+    access_token = Property(str, fget=access_token, fset=set_access_token)
+
+    def api_url(self):
+        return self.__api_url
+
+    def set_api_url(self, api_url):
+        if self.__api_url != api_url:
+            self.__api_url = api_url
+            self.api_url_changed.emit(api_url)
+
+    api_url = Property(str, fget=api_url, fset=set_api_url)
 
     @property
     def nodes(self):

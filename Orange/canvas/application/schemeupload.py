@@ -264,6 +264,13 @@ class SchemeUploadDialog(QDialog):
     def setScheme(self, scheme):
         """Set the scheme to upload."""
         self.scheme = scheme
+        # Display last used access token
+        if scheme.access_token:
+            self.editor.accesstoken_edit.setText(scheme.access_token)
+        if scheme.api_url:
+            index = self.editor.apiurl_edit.findText(scheme.api_url)
+            if index > -1:
+                self.editor.apiurl_edit.setCurrentIndex(index)
         self.editor.setScheme(scheme)
 
     def upload(self):
@@ -271,6 +278,10 @@ class SchemeUploadDialog(QDialog):
         api_url = self.editor.apiurl_edit.currentText()
         access_token = self.editor.accesstoken_edit.text()
         auth_header = {'Authorization': 'Bearer ' + access_token}
+
+        # Save access_token and api_url in the scheme and trigger isModified if necessary
+        self.parent().scheme_widget.setAccessToken(access_token)
+        self.parent().scheme_widget.setApiUrl(api_url)
 
         new_graph = Graph()
         new_graph.load_graph(self.editor.graph.save_graph())
