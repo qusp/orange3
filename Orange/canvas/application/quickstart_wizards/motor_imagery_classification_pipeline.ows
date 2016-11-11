@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<scheme description="The neural oscillations recorded in brain EEG signal can be used to infer one’s cognitive state or dynamic state. Such cognitive states include relaxation, concentration or different emotions, and dynamic states can involve motor imagery process, where one imagines certain movements. Correct detection and classification of such cognitive and motor imagery states can be advantageous in various BCI applications.&#10;&#10;The Oscillatory Process Classification pipeline provides the signal processing and machine learning tools required to detect and classify the neural oscillatory activities in the EEG signal, which can be used to predict the cognitive or dynamic state of brain. In general, the pipeline can process the data both offline (batch mode) or on the fly (streaming data). The pipeline needs to be trained/calibrated before making predictions, where the training can be done on a portion of data where target values are known or can be performed on  a separate data set. The training can be skipped if a pretrained model exists and can be loaded into the pipeline.&#10;&#10;In this implementation, the input data stream is read from network in Lab Streaming layer (LSL) format, this can be EEG signal of any number of channels and any sampling rate. The outcome is also transmitted as LSL stream where the output stream contains one channel per target class which indicates the probability of that class at the given moment.&#10;&#10;As mentioned this pipeline requires calibration data, i.e., EEG data during which different target conditions occur multiple times, ideally in a randomly alternating manner. The beginning of each condition must be indicated by a marker in a separate marker stream. For example, for motor imagery tasks this can indicate imaging left and right hand movements, as marked by event labels &quot;left&quot; and &quot;right&quot;. Also, the entire calibration section must be preceded by a begin marker (default: &quot;calib-begin&quot;) and followed by an end marker (default: &quot;calib-end&quot;). The number of repetitions for each class should be at least 20 and ideally as much as 80. &#10;&#10;The quick start wizard window can be used to perform following actions:&#10;&#10;- Enter the stream query for the input data stream&#10;&#10;- Enter the name and source ID for output stream&#10;&#10;- Enter the marker labels and their corresponding target values&#10;&#10;- Enter the list of channels to be retained for process in the pipeline. If the data stream includes known flat-line channels, &#10;trigger channels, accelerometer channels,  etc, this parameter can be used to exclude them from being included in the pipeline processing.&#10;&#10;- Enter the time segment to be used to extract the data for the pipeline analysis, in seconds. This segmentation can be either relative to event markers or as a single window at the end of current data chunk.&#10;&#10;- Enter the frequency band of the interest to be used for pipeline analysis, in Hz.&#10;&#10;- Enter the number of spatial filters to be designed per target class." title="Oscillatory process classification" version="2.0">
+<scheme description="The neural oscillations recorded in brain EEG signal can be used to infer one’s cognitive state or dynamic state. Such cognitive states include relaxation, concentration or different emotions, and dynamic states can involve motor imagery process, where one imagines certain movements. Correct detection and classification of such cognitive and motor imagery states can be advantageous in various BCI applications.&#10;&#10;The Oscillatory Process Classification pipeline provides the signal processing and machine learning tools required to detect and classify the neural oscillatory activities in the EEG signal, which can be used to predict the cognitive or dynamic state of brain. In general, the pipeline can process the data both offline (batch mode) or on the fly (streaming data). The pipeline needs to be trained/calibrated before making predictions, where the training can be done on a portion of data where target values are known or can be performed on  a separate data set. The training can be skipped if a pretrained model exists and can be loaded into the pipeline.&#10;&#10;In this implementation, the input data stream is read from network in Lab Streaming layer (LSL) format, this can be EEG signal of any number of channels and any sampling rate. The outcome is also transmitted as LSL stream where the output stream contains one channel per target class which indicates the probability of that class at the given moment.&#10;&#10;As mentioned this pipeline requires calibration data, i.e., EEG data during which different target conditions occur multiple times, ideally in a randomly alternating manner. The beginning of each condition must be indicated by a marker in a separate marker stream. For example, for motor imagery tasks this can indicate imaging left and right hand movements, as marked by event labels &quot;left&quot; and &quot;right&quot;. Also, the entire calibration section must be preceded by a begin marker (default: &quot;calib-begin&quot;) and followed by an end marker (default: &quot;calib-end&quot;). The number of repetitions for each class should be at least 20 and ideally as much as 80. &#10;&#10;The quick start wizard window can be used to perform following actions:&#10;&#10;- Enter the LSL stream name used as the input data stream&#10;&#10;- Enter the name for the output stream&#10;&#10;- Enter the event marker labels to be used for classification&#10;&#10;- Enter the list of channels to be retained for process in the pipeline. If the data stream includes known flat-line channels, &#10;trigger channels, accelerometer channels,  etc, this parameter can be used to exclude them from being included in the pipeline processing.&#10;&#10;- Enter the time segment to be used to extract the data for the pipeline analysis, in seconds. This segmentation can be either relative to event markers or as a single window at the end of current data chunk." title="Oscillatory process classification" version="2.0">
 	<nodes>
 		<node id="0" name="FIR Filter" position="(688.0, 75.0)" project_name="Orange" qualified_name="Orange.widgets.filters.owfirfilter.OWFIRFilter" title="FIR Filter" version="" />
 		<node id="1" name="Segmentation" position="(826.0, 75.0)" project_name="Orange" qualified_name="Orange.widgets.formatting.owsegmentation.OWSegmentation" title="Segmentation" version="" />
@@ -34,35 +34,35 @@
 	<annotations />
 	<thumbnail />
 	<node_properties>
-		<properties format="pickle" node_id="0">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYDQAAAG1pbmltdW1fcGhhc2VxAohYCwAAAGZyZXF1
-ZW5jaWVzcQNdcQQoR0AIAAAAAAAAR0AQAAAAAAAAR0BFAAAAAAAAR0BFgAAAAAAAZVgEAAAAbW9k
-ZXEFWAgAAABiYW5kcGFzc3EGWAQAAABheGlzcQdYBAAAAHRpbWVxCFgFAAAAb3JkZXJxCU5YEwAA
-AHNhdmVkV2lkZ2V0R2VvbWV0cnlxCmNzaXAKX3VucGlja2xlX3R5cGUKcQtYDAAAAFB5UXQ0LlF0
-Q29yZXEMWAoAAABRQnl0ZUFycmF5cQ1DLgHZ0MsAAQAAAAAC5AAAAY8AAARLAAACqAAAAuQAAAGl
-AAAESwAAAqgAAAAAAABxDoVxD4dxEFJxEVgNAAAAYW50aXN5bW1ldHJpY3ESiVgKAAAAc3RvcF9h
+		<properties format="pickle" node_id="0">gAN9cQAoWA0AAABtaW5pbXVtX3BoYXNlcQGIWAQAAABheGlzcQJYBAAAAHRpbWVxA1gEAAAAbW9k
+ZXEEWAgAAABiYW5kcGFzc3EFWA0AAABhbnRpc3ltbWV0cmljcQaJWAUAAABvcmRlcnEHTlgLAAAA
+ZnJlcXVlbmNpZXNxCF1xCShHQAgAAAAAAABHQBAAAAAAAABHQEUAAAAAAABHQEaAAAAAAABlWAwA
+AABvbmx5X3NpZ25hbHNxCohYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxC2NzaXAKX3VucGlja2xl
+X3R5cGUKcQxYDAAAAFB5UXQ0LlF0Q29yZXENWAoAAABRQnl0ZUFycmF5cQ5DLgHZ0MsAAQAAAAAC
+5AAAAY8AAARLAAACqAAAAuQAAAGlAAAESwAAAqgAAAAAAABxD4VxEIdxEVJxElgKAAAAc3RvcF9h
 dHRlbnETR0BOAAAAAAAAdS4=
 </properties>
 		<properties format="pickle" node_id="1">gAN9cQAoWA8AAABvbmxpbmVfZXBvY2hpbmdxAVgHAAAAc2xpZGluZ3ECWAwAAABvbmx5X3NpZ25h
-bHNxA4hYDQAAAHNhbXBsZV9vZmZzZXRxBEsAWAsAAAB0aW1lX2JvdW5kc3EFRz/gAAAAAAAAR0AI
-AAAAAAAAhnEGWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQdjc2lwCl91bnBpY2tsZV90eXBlCnEI
-WAwAAABQeVF0NC5RdENvcmVxCVgKAAAAUUJ5dGVBcnJheXEKQy4B2dDLAAEAAAAAAXYAAAChAAAD
-iQAAAngAAAF2AAAAtwAAA4kAAAJ4AAAAAAAAcQuFcQyHcQ1ScQ51Lg==
+bHNxA4hYCwAAAHRpbWVfYm91bmRzcQRHP+AAAAAAAABHQAwAAAAAAACGcQVYEwAAAHNhdmVkV2lk
+Z2V0R2VvbWV0cnlxBmNzaXAKX3VucGlja2xlX3R5cGUKcQdYDAAAAFB5UXQ0LlF0Q29yZXEIWAoA
+AABRQnl0ZUFycmF5cQlDLgHZ0MsAAQAAAAABdgAAAKEAAAOJAAACeAAAAXYAAAC3AAADiQAAAngA
+AAAAAABxCoVxC4dxDFJxDVgNAAAAc2FtcGxlX29mZnNldHEOSwB1Lg==
 </properties>
-		<properties format="pickle" node_id="2">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYEgAAAGRlZ3JlZXNfb2ZfZnJlZWRvbXECSwBYEwAA
-AHNhdmVkV2lkZ2V0R2VvbWV0cnlxA2NzaXAKX3VucGlja2xlX3R5cGUKcQRYDAAAAFB5UXQ0LlF0
-Q29yZXEFWAoAAABRQnl0ZUFycmF5cQZDLgHZ0MsAAQAAAAADAgAAAa0AAARpAAACUQAAAwIAAAHD
-AAAEaQAAAlEAAAAAAABxB4VxCIdxCVJxClgEAAAAYXhpc3ELWAQAAAB0aW1lcQx1Lg==
+		<properties format="pickle" node_id="2">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYBAAAAGF4aXNxAlgEAAAAdGltZXEDWBIAAABkZWdy
+ZWVzX29mX2ZyZWVkb21xBEsAWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQVjc2lwCl91bnBpY2ts
+ZV90eXBlCnEGWAwAAABQeVF0NC5RdENvcmVxB1gKAAAAUUJ5dGVBcnJheXEIQy4B2dDLAAEAAAAA
+AwIAAAGtAAAEaQAAAlEAAAMCAAABwwAABGkAAAJRAAAAAAAAcQmFcQqHcQtScQx1Lg==
 </properties>
-		<properties format="pickle" node_id="3">gAN9cQAoWA0AAABjbGFzc193ZWlnaHRzcQFYBAAAAGF1dG9xAlgGAAAAYWxwaGFzcQNdcQQoRz+5
-mZmZmZmaRz/gAAAAAAAARz/wAAAAAAAASwVHQCQAAAAAAABlWAwAAABiaWFzX3NjYWxpbmdxBUc/
-8AAAAAAAAFgLAAAAcmVndWxhcml6ZXJxBlgCAAAAbDJxB1gGAAAAc29sdmVycQhYBQAAAGxiZmdz
-cQlYDQAAAHByb2JhYmlsaXN0aWNxCohYCQAAAHZlcmJvc2l0eXELSwBYCQAAAG51bV9mb2xkc3EM
-SwVYCAAAAG51bV9qb2JzcQ1LAVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEOY3NpcApfdW5waWNr
-bGVfdHlwZQpxD1gMAAAAUHlRdDQuUXRDb3JlcRBYCgAAAFFCeXRlQXJyYXlxEUMuAdnQywABAAAA
-AAMCAAABIgAABGkAAAL8AAADAgAAATgAAARpAAAC/AAAAAAAAHEShXETh3EUUnEVWA8AAABpbml0
-aWFsaXplX29uY2VxFohYCQAAAHRvbGVyYW5jZXEXRz8aNuLrHEMtWAgAAABtYXhfaXRlcnEYS2RY
-EAAAAGR1YWxfZm9ybXVsYXRpb25xGYlYCgAAAG11bHRpY2xhc3NxGlgDAAAAb3ZycRtYDAAAAGlu
-Y2x1ZGVfYmlhc3EciFgNAAAAc2VhcmNoX21ldHJpY3EdWAgAAABhY2N1cmFjeXEedS4=
+		<properties format="pickle" node_id="3">gAN9cQAoWAYAAABhbHBoYXNxAV1xAihHP7mZmZmZmZpHP+AAAAAAAABHP/AAAAAAAABLBUdAJAAA
+AAAAAGVYDQAAAHByb2JhYmlsaXN0aWNxA4hYBgAAAHNvbHZlcnEEWAUAAABsYmZnc3EFWAgAAABu
+dW1fam9ic3EGSwFYDAAAAGluY2x1ZGVfYmlhc3EHiFgJAAAAbnVtX2ZvbGRzcQhLBVgKAAAAbXVs
+dGljbGFzc3EJWAMAAABvdnJxClgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXELY3NpcApfdW5waWNr
+bGVfdHlwZQpxDFgMAAAAUHlRdDQuUXRDb3JlcQ1YCgAAAFFCeXRlQXJyYXlxDkMuAdnQywABAAAA
+AAMCAAABIgAABGkAAAL8AAADAgAAATgAAARpAAAC/AAAAAAAAHEPhXEQh3ERUnESWAkAAAB0b2xl
+cmFuY2VxE0c/Gjbi6xxDLVgNAAAAc2VhcmNoX21ldHJpY3EUWAgAAABhY2N1cmFjeXEVWAwAAABi
+aWFzX3NjYWxpbmdxFkc/8AAAAAAAAFgNAAAAY2xhc3Nfd2VpZ2h0c3EXWAQAAABhdXRvcRhYCwAA
+AHJlZ3VsYXJpemVycRlYAgAAAGwycRpYDwAAAGluaXRpYWxpemVfb25jZXEbiFgQAAAAZHVhbF9m
+b3JtdWxhdGlvbnEciVgJAAAAdmVyYm9zaXR5cR1LAFgIAAAAbWF4X2l0ZXJxHktkdS4=
 </properties>
 		<properties format="pickle" node_id="4">gAN9cQAoWAcAAABtYXBwaW5ncQF9cQIoWAQAAABsZWZ0cQNLAFgFAAAAcmlnaHRxBEsBdVgTAAAA
 c2F2ZWRXaWRnZXRHZW9tZXRyeXEFY3NpcApfdW5waWNrbGVfdHlwZQpxBlgMAAAAUHlRdDQuUXRD
@@ -73,57 +73,62 @@ AARpAAACQwAAAAAAAHEJhXEKh3ELUnEMdS4=
 X3VucGlja2xlX3R5cGUKcQNYDAAAAFB5UXQ0LlF0Q29yZXEEWAoAAABRQnl0ZUFycmF5cQVDLgHZ
 0MsAAQAAAAADAgAAAdEAAARpAAACQwAAAwIAAAHnAAAEaQAAAkMAAAAAAABxBoVxB4dxCFJxCXUu
 </properties>
-		<properties format="pickle" node_id="6">gAN9cQAoWBIAAABhY2N1bXVsYXRlX29mZmxpbmVxAYlYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlx
-AmNzaXAKX3VucGlja2xlX3R5cGUKcQNYDAAAAFB5UXQ0LlF0Q29yZXEEWAoAAABRQnl0ZUFycmF5
-cQVDLgHZ0MsAAQAAAAADAgAAAcoAAARpAAACVQAAAwIAAAHgAAAEaQAAAlUAAAAAAABxBoVxB4dx
-CFJxCVgLAAAAbG9zc19tZXRyaWNxClgDAAAATUNScQt1Lg==
+		<properties format="pickle" node_id="6">gAN9cQAoWAsAAABsb3NzX21ldHJpY3EBWAMAAABNQ1JxAlgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRy
+eXEDY3NpcApfdW5waWNrbGVfdHlwZQpxBFgMAAAAUHlRdDQuUXRDb3JlcQVYCgAAAFFCeXRlQXJy
+YXlxBkMuAdnQywABAAAAAAMCAAABygAABGkAAAJVAAADAgAAAeAAAARpAAACVQAAAAAAAHEHhXEI
+h3EJUnEKWBIAAABhY2N1bXVsYXRlX29mZmxpbmVxC4l1Lg==
 </properties>
-		<properties format="pickle" node_id="7">gAN9cQAoWAkAAABzZWxlY3Rpb25xAUsASxOGcQJYBAAAAGF4aXNxA1gFAAAAc3BhY2VxBFgEAAAA
-dW5pdHEFWAcAAABpbmRpY2VzcQZYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxB2NzaXAKX3VucGlj
-a2xlX3R5cGUKcQhYDAAAAFB5UXQ0LlF0Q29yZXEJWAoAAABRQnl0ZUFycmF5cQpDLgHZ0MsAAQAA
-AAAAAAAAABcAAAMjAAABugAAAAAAAAAtAAADIwAAAboAAAAAAABxC4VxDIdxDVJxDnUu
+		<properties format="pickle" node_id="7">gAN9cQAoWAQAAABheGlzcQFYBQAAAHNwYWNlcQJYBAAAAHVuaXRxA1gHAAAAaW5kaWNlc3EEWAkA
+AABzZWxlY3Rpb25xBVgEAAAAMDoyMHEGWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQdjc2lwCl91
+bnBpY2tsZV90eXBlCnEIWAwAAABQeVF0NC5RdENvcmVxCVgKAAAAUUJ5dGVBcnJheXEKQy4B2dDL
+AAEAAAAAAAAAAAAXAAADIwAAAboAAAAAAAAALQAAAyMAAAG6AAAAAAAAcQuFcQyHcQ1ScQ51Lg==
 </properties>
-		<properties format="pickle" node_id="8">gAN9cQAoWAoAAAByb2J1c3RfY292cQGJWAsAAAB0aW1lX3dpbmRvd3ECWAYAAABib3hjYXJxA1gP
-AAAAaW5pdGlhbGl6ZV9vbmNlcQSIWA0AAAB3aW5kb3dfbGVuZ3RocQVOWBkAAABkZXNpcmVkX251
-bWJlcl9vZl9maWx0ZXJzcQZLA1gPAAAAZnJlcXVuY3lfd2luZG93cQddcQgoXXEJKEsESwdlXXEK
-KEsISwxlXXELKEsNSx5lXXEMKEsfSyplZVgIAAAAZmZ0X3NpemVxDU5YDAAAAHdpbmRvd19wYXJh
-bXEOTlgZAAAAbnVtYmVyX29mX292ZXJsYXBfc2FtcGxlc3EPTlgTAAAAc2F2ZWRXaWRnZXRHZW9t
-ZXRyeXEQY3NpcApfdW5waWNrbGVfdHlwZQpxEVgMAAAAUHlRdDQuUXRDb3JlcRJYCgAAAFFCeXRl
-QXJyYXlxE0MuAdnQywABAAAAAAAAAAAAFwAABP8AAAMbAAAAAAAAAC0AAAT/AAADGwAAAAAAAHEU
-hXEVh3EWUnEXWA0AAABzaHJpbmthZ2VfY292cRiJdS4=
+		<properties format="pickle" node_id="8">gAN9cQAoWAgAAABmZnRfc2l6ZXEBTlgZAAAAbnVtYmVyX29mX292ZXJsYXBfc2FtcGxlc3ECTlgZ
+AAAAZGVzaXJlZF9udW1iZXJfb2ZfZmlsdGVyc3EDSwNYCwAAAHRpbWVfd2luZG93cQRYBgAAAGJv
+eGNhcnEFWA8AAABpbml0aWFsaXplX29uY2VxBohYDAAAAHdpbmRvd19wYXJhbXEHTlgKAAAAcm9i
+dXN0X2NvdnEIiVgNAAAAc2hyaW5rYWdlX2NvdnEJiVgNAAAAd2luZG93X2xlbmd0aHEKTlgTAAAA
+c2F2ZWRXaWRnZXRHZW9tZXRyeXELY3NpcApfdW5waWNrbGVfdHlwZQpxDFgMAAAAUHlRdDQuUXRD
+b3JlcQ1YCgAAAFFCeXRlQXJyYXlxDkMuAdnQywABAAAAAAAAAAAAFwAABP8AAAMbAAAAAAAAAC0A
+AAT/AAADGwAAAAAAAHEPhXEQh3ERUnESWA8AAABmcmVxdW5jeV93aW5kb3dxE11xFChdcRUoSwRL
+B2VdcRYoSwhLDGVdcRcoSw1LHmVdcRgoSx9LKmVldS4=
 </properties>
-		<properties format="pickle" node_id="9">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYlYCwAAAHN0cmVhbV9uYW1lcQJYDQAAAE91dFN0cmVh
-bVRlc3RxA1gJAAAAY2h1bmtfbGVucQRLAFgLAAAAbWFya2VyX25hbWVxBVgRAAAAT3V0U3RyZWFt
-LW1hcmtlcnNxBlgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEHY3NpcApfdW5waWNrbGVfdHlwZQpx
-CFgMAAAAUHlRdDQuUXRDb3JlcQlYCgAAAFFCeXRlQXJyYXlxCkMuAdnQywABAAAAAAMCAAABcgAA
-BGkAAAKdAAADAgAAAYgAAARpAAACnQAAAAAAAHELhXEMh3ENUnEOWAsAAABzdHJlYW1fdHlwZXEP
-WAcAAABDb250cm9scRBYDAAAAHNlbmRfbWFya2Vyc3ERiVgFAAAAc3JhdGVxEk5YCQAAAHNvdXJj
-ZV9pZHETWA0AAAB1bmlxdWVzcmNpZDU2cRRYDAAAAG1heF9idWZmZXJlZHEVSzx1Lg==
+		<properties format="pickle" node_id="9">gAN9cQAoWAsAAABzdHJlYW1fbmFtZXEBWA0AAABPdXRTdHJlYW1UZXN0cQJYCQAAAHNvdXJjZV9p
+ZHEDWA0AAAB1bmlxdWVzcmNpZDU2cQRYCwAAAG1hcmtlcl9uYW1lcQVYEQAAAE91dFN0cmVhbS1t
+YXJrZXJzcQZYDAAAAG1heF9idWZmZXJlZHEHSzxYCwAAAHN0cmVhbV90eXBlcQhYBwAAAENvbnRy
+b2xxCVgMAAAAb25seV9zaWduYWxzcQqJWAkAAABjaHVua19sZW5xC0sAWAwAAABzZW5kX21hcmtl
+cnNxDIlYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxDWNzaXAKX3VucGlja2xlX3R5cGUKcQ5YDAAA
+AFB5UXQ0LlF0Q29yZXEPWAoAAABRQnl0ZUFycmF5cRBDLgHZ0MsAAQAAAAADAgAAAXIAAARpAAAC
+nQAAAwIAAAGIAAAEaQAAAp0AAAAAAABxEYVxEodxE1JxFFgFAAAAc3JhdGVxFU51Lg==
 </properties>
-		<properties format="pickle" node_id="10">gAN9cQAoWA8AAABlbWl0X2NhbGliX2RhdGFxAYhYEQAAAGNhbGlicmF0aW9uX2ZpcnN0cQKIWA0A
-AABwcmludF9tYXJrZXJzcQOIWA8AAABjYW5fcmVjYWxpYnJhdGVxBIlYCgAAAGVuZF9tYXJrZXJx
-BVgJAAAAY2FsaWItZW5kcQZYDAAAAGJlZ2luX21hcmtlcnEHWAsAAABjYWxpYi1iZWdpbnEIWBMA
-AABzYXZlZFdpZGdldEdlb21ldHJ5cQljc2lwCl91bnBpY2tsZV90eXBlCnEKWAwAAABQeVF0NC5R
-dENvcmVxC1gKAAAAUUJ5dGVBcnJheXEMQy4B2dDLAAEAAAAAAwIAAAGTAAAEaQAAAn0AAAMCAAAB
-qQAABGkAAAJ9AAAAAAAAcQ2FcQ6HcQ9ScRBYBwAAAHZlcmJvc2VxEYlYEQAAAGVtaXRfcHJlZGlj
-dF9kYXRhcRKIdS4=
+		<properties format="pickle" node_id="10">gAN9cQAoWBEAAABjYWxpYnJhdGlvbl9maXJzdHEBiFgMAAAAYmVnaW5fbWFya2VycQJYCwAAAGNh
+bGliLWJlZ2lucQNYBwAAAHZlcmJvc2VxBIlYDwAAAGVtaXRfY2FsaWJfZGF0YXEFiFgTAAAAc2F2
+ZWRXaWRnZXRHZW9tZXRyeXEGY3NpcApfdW5waWNrbGVfdHlwZQpxB1gMAAAAUHlRdDQuUXRDb3Jl
+cQhYCgAAAFFCeXRlQXJyYXlxCUMuAdnQywABAAAAAAMCAAABkwAABGkAAAJ9AAADAgAAAakAAARp
+AAACfQAAAAAAAHEKhXELh3EMUnENWAoAAABlbmRfbWFya2VycQ5YCQAAAGNhbGliLWVuZHEPWA0A
+AABwcmludF9tYXJrZXJzcRCIWBEAAABlbWl0X3ByZWRpY3RfZGF0YXERiFgPAAAAY2FuX3JlY2Fs
+aWJyYXRlcRKJdS4=
 </properties>
-		<properties format="pickle" node_id="11">gAN9cQAoWA0AAABwcmludF9tYXJrZXJzcQGJWA0AAABwcmludF9jaGFubmVscQKJWA0AAABwcmlu
-dF9zdHJlYW1zcQNYAAAAAHEEWA0AAABvbmx5X25vbmVtcHR5cQWIWBMAAABzYXZlZFdpZGdldEdl
-b21ldHJ5cQZjc2lwCl91bnBpY2tsZV90eXBlCnEHWAwAAABQeVF0NC5RdENvcmVxCFgKAAAAUUJ5
-dGVBcnJheXEJQy4B2dDLAAEAAAAAAwIAAAGYAAAEaQAAAngAAAMCAAABrgAABGkAAAJ4AAAAAAAA
-cQqFcQuHcQxScQ1YDQAAAHByaW50X2NvbXBhY3RxDohYCgAAAHByaW50X3RpbWVxD4lYCwAAAHBy
-aW50X3RyaWFscRCJWAoAAABwcmludF9kYXRhcRGJdS4=
+		<properties format="pickle" node_id="11">gAN9cQAoWA0AAABwcmludF9zdHJlYW1zcQFYAAAAAHECWAoAAABwcmludF90aW1lcQOJWA0AAABw
+cmludF9jaGFubmVscQSJWA0AAABvbmx5X25vbmVtcHR5cQWIWAsAAABwcmludF90cmlhbHEGiVgN
+AAAAcHJpbnRfbWFya2Vyc3EHiVgNAAAAcHJpbnRfY29tcGFjdHEIiFgTAAAAc2F2ZWRXaWRnZXRH
+ZW9tZXRyeXEJY3NpcApfdW5waWNrbGVfdHlwZQpxClgMAAAAUHlRdDQuUXRDb3JlcQtYCgAAAFFC
+eXRlQXJyYXlxDEMuAdnQywABAAAAAAMCAAABmAAABGkAAAJ4AAADAgAAAa4AAARpAAACeAAAAAAA
+AHENhXEOh3EPUnEQWAoAAABwcmludF9kYXRhcRGJdS4=
 </properties>
-		<properties format="pickle" node_id="12">gAN9cQAoWAwAAABub21pbmFsX3JhdGVxAU5YBwAAAHJlY292ZXJxAohYDAAAAG1heF9jaHVua2xl
-bnEDSwBYCgAAAG1heF9idWZsZW5xBEseWAUAAABxdWVyeXEFWBMAAABuYW1lPSdJblN0cmVhbVRl
-c3QncQZYDAAAAG1heF9ibG9ja2xlbnEHTQAEWA0AAABjaGFubmVsX25hbWVzcQhdcQlYCwAAAGRp
-YWdub3N0aWNzcQqJWBQAAAByZXNvbHZlX21pbmltdW1fdGltZXELRz/gAAAAAAAAWBMAAABzYXZl
-ZFdpZGdldEdlb21ldHJ5cQxjc2lwCl91bnBpY2tsZV90eXBlCnENWAwAAABQeVF0NC5RdENvcmVx
-DlgKAAAAUUJ5dGVBcnJheXEPQy4B2dDLAAEAAAAAAwIAAAFmAAAEaQAAAqoAAAMCAAABfAAABGkA
-AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
+		<properties format="pickle" node_id="12">gAN9cQAoWAcAAAByZWNvdmVycQGIWBQAAAByZXNvbHZlX21pbmltdW1fdGltZXECRz/gAAAAAAAA
+WAwAAABtYXhfY2h1bmtsZW5xA0sAWAwAAABub21pbmFsX3JhdGVxBE5YDAAAAG1hcmtlcl9xdWVy
+eXEFWAAAAABxBlgMAAAAbWF4X2Jsb2NrbGVucQdNAARYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlx
+CGNzaXAKX3VucGlja2xlX3R5cGUKcQlYDAAAAFB5UXQ0LlF0Q29yZXEKWAoAAABRQnl0ZUFycmF5
+cQtDLgHZ0MsAAQAAAAADAgAAAWYAAARpAAACqgAAAwIAAAF8AAAEaQAAAqoAAAAAAABxDIVxDYdx
+DlJxD1gFAAAAcXVlcnlxEFgKAAAAdHlwZT0nRUVHJ3ERWAsAAABkaWFnbm9zdGljc3ESiVgNAAAA
+Y2hhbm5lbF9uYW1lc3ETXXEUWAoAAABtYXhfYnVmbGVucRVLHnUu
 </properties>
-		<properties format="literal" node_id="13">{'max_updaterate': 500, 'force_monotonic': True, 'savedWidgetGeometry': None, 'warmup_samples': -1, 'forget_halftime': 90}</properties>
+		<properties format="pickle" node_id="13">gAN9cQAoWA4AAABtYXhfdXBkYXRlcmF0ZXEBTfQBWA8AAABmb3JjZV9tb25vdG9uaWNxAohYDwAA
+AGZvcmdldF9oYWxmdGltZXEDTSwBWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQRjc2lwCl91bnBp
+Y2tsZV90eXBlCnEFWAwAAABQeVF0NC5RdENvcmVxBlgKAAAAUUJ5dGVBcnJheXEHQy4B2dDLAAEA
+AAAAAwIAAAGsAAAEaQAAAmQAAAMCAAABwgAABGkAAAJkAAAAAAAAcQiFcQmHcQpScQtYDgAAAHdh
+cm11cF9zYW1wbGVzcQxK/////3Uu
+</properties>
 	</node_properties>
 	<patch>{
     "edges": [
@@ -228,7 +233,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                         3.0,
                         4.0,
                         42.0,
-                        43.0
+                        45.0
                     ]
                 },
                 "minimum_phase": {
@@ -257,7 +262,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": 60.0
                 }
             },
-            "uuid": "937685a0-3728-4700-8862-33a2515ebc19"
+            "uuid": "f53e3de8-62a5-4be7-b27b-016ce45270ab"
         },
         "node10": {
             "class": "LSLOutput",
@@ -309,7 +314,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": "Control"
                 }
             },
-            "uuid": "686c7089-0ef3-45e7-9c6b-21bf968b4cfe"
+            "uuid": "cdfcfa42-6717-44d9-9174-e5ccf209e7bb"
         },
         "node11": {
             "class": "AccumulateCalibrationData",
@@ -356,7 +361,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": false
                 }
             },
-            "uuid": "c92a5369-10a2-458d-bdaf-50e2e46a6898"
+            "uuid": "000779fb-eaf5-4a56-96d0-18caa4d4bf12"
         },
         "node12": {
             "class": "PrintToConsole",
@@ -403,7 +408,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": false
                 }
             },
-            "uuid": "c42e2fe1-ccce-420c-a31b-b478a2ab1ce7"
+            "uuid": "4c5f3b02-8fe6-4c2a-8296-3bec0959dead"
         },
         "node13": {
             "class": "LSLInput",
@@ -445,9 +450,9 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": null
                 },
                 "query": {
-                    "customized": true,
+                    "customized": false,
                     "type": "StringPort",
-                    "value": "name='InStreamTest'"
+                    "value": "type='EEG'"
                 },
                 "recover": {
                     "customized": false,
@@ -460,7 +465,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": 0.5
                 }
             },
-            "uuid": "8bbbdd2a-f5ed-4b0c-a31f-f491a5b34b53"
+            "uuid": "d98422e4-185c-4384-8fea-120be4b4e90a"
         },
         "node14": {
             "class": "DejitterTimestamps",
@@ -472,9 +477,9 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": true
                 },
                 "forget_halftime": {
-                    "customized": false,
+                    "customized": true,
                     "type": "FloatPort",
-                    "value": 90
+                    "value": 300
                 },
                 "max_updaterate": {
                     "customized": false,
@@ -487,7 +492,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": -1
                 }
             },
-            "uuid": "bd3c1fd0-fda8-4e49-9abf-9ff76fec05d5"
+            "uuid": "b9699195-ea12-4bd9-af71-bf372ab48cb1"
         },
         "node2": {
             "class": "Segmentation",
@@ -513,11 +518,11 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "type": "Port",
                     "value": [
                         0.5,
-                        3.0
+                        3.5
                     ]
                 }
             },
-            "uuid": "8352657b-3682-4665-bfda-2445f2c6a268"
+            "uuid": "18121aae-5f77-4aaf-8dd2-287556f885a8"
         },
         "node3": {
             "class": "Variance",
@@ -539,7 +544,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": true
                 }
             },
-            "uuid": "14a487c5-fb99-43b0-bd6a-de95c9439b0e"
+            "uuid": "3ddd2090-b7b2-46df-82e2-55cbbfbafdcb"
         },
         "node4": {
             "class": "LogisticRegression",
@@ -632,7 +637,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": 0
                 }
             },
-            "uuid": "f2f792ae-7d93-42b2-83df-7add97506d83"
+            "uuid": "cdac3a2d-5ee4-4b35-8d75-35bbd3233508"
         },
         "node5": {
             "class": "AssignTargets",
@@ -647,7 +652,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     }
                 }
             },
-            "uuid": "fd7b7bd7-ec64-4f5e-838c-25a9e70c698e"
+            "uuid": "15c6636d-1822-41f4-8e84-8d10c3430452"
         },
         "node6": {
             "class": "Logarithm",
@@ -659,7 +664,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": true
                 }
             },
-            "uuid": "a610cc6e-858b-4027-b5e9-1d34979fc8d7"
+            "uuid": "dc44a903-da18-4a1d-8939-bd35b46b4a71"
         },
         "node7": {
             "class": "MeasureLoss",
@@ -676,7 +681,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": "MCR"
                 }
             },
-            "uuid": "dbd9caa5-571b-4424-9151-dcaca04071bf"
+            "uuid": "5c242064-b6a5-400b-957d-863d5da9001c"
         },
         "node8": {
             "class": "SelectRange",
@@ -690,10 +695,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                 "selection": {
                     "customized": true,
                     "type": "Port",
-                    "value": [
-                        0,
-                        19
-                    ]
+                    "value": "0:20"
                 },
                 "unit": {
                     "customized": false,
@@ -701,7 +703,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": "indices"
                 }
             },
-            "uuid": "3c0b29ec-4b00-42ba-8040-845395bf5d66"
+            "uuid": "176ff29e-b506-42ec-88a0-c50f40bd3b77"
         },
         "node9": {
             "class": "FilterBankCommonSpatialPattern",
@@ -775,7 +777,7 @@ AAKqAAAAAAAAcRCFcRGHcRJScRNYDAAAAG1hcmtlcl9xdWVyeXEUWAAAAABxFXUu
                     "value": null
                 }
             },
-            "uuid": "b3247d97-df2d-47c6-b3fd-58b1a038289d"
+            "uuid": "71cd3dae-6612-4d73-a3c3-0397e7777817"
         }
     },
     "version": 1.1

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<scheme description="This pipeline provides an indication of person being in relaxed state. &#10;&#10;The quickstart wizard window can be used to perform following actions:&#10;- Enter the stream query for the input data stream&#10;- Enter the name and source ID for the output stream" title="Relaxation Measurement" version="2.0">
+<scheme description="This pipeline provides an indication of person being in relaxed state. &#10;&#10;The quickstart wizard window can be used to perform following actions:&#10;- Enter the LSL stream name for the input data stream&#10;- Enter the name for the output stream" title="Relaxation Measurement" version="2.0">
 	<nodes>
 		<node id="0" name="LSL Input" position="(7.0, 177.0)" project_name="Orange" qualified_name="Orange.widgets.network.owlslinput.OWLSLInput" title="LSL Input" version="" />
 		<node id="1" name="FIR Filter" position="(517.0, 78.0)" project_name="Orange" qualified_name="Orange.widgets.filters.owfirfilter.OWFIRFilter" title="Peak FIR" version="" />
@@ -33,58 +33,58 @@
 	<annotations />
 	<thumbnail />
 	<node_properties>
-		<properties format="pickle" node_id="0">gAN9cQAoWAwAAABtYXJrZXJfcXVlcnlxAVgAAAAAcQJYDAAAAG1heF9jaHVua2xlbnEDSwBYEwAA
-AHNhdmVkV2lkZ2V0R2VvbWV0cnlxBGNzaXAKX3VucGlja2xlX3R5cGUKcQVYDAAAAFB5UXQ0LlF0
-Q29yZXEGWAoAAABRQnl0ZUFycmF5cQdDLgHZ0MsAAQAAAAADAgAAAWYAAARpAAACqgAAAwIAAAF8
-AAAEaQAAAqoAAAAAAABxCIVxCYdxClJxC1gFAAAAcXVlcnlxDFgKAAAAdHlwZT0nRUVHJ3ENWAcA
-AAByZWNvdmVycQ6IWAwAAABub21pbmFsX3JhdGVxD05YFAAAAHJlc29sdmVfbWluaW11bV90aW1l
-cRBHP+AAAAAAAABYCwAAAGRpYWdub3N0aWNzcRGJWAwAAABtYXhfYmxvY2tsZW5xEk0ABFgNAAAA
-Y2hhbm5lbF9uYW1lc3ETXXEUWAoAAABtYXhfYnVmbGVucRVLHnUu
+		<properties format="pickle" node_id="0">gAN9cQAoWAoAAABtYXhfYnVmbGVucQFLHlgMAAAAbWF4X2NodW5rbGVucQJLAFgNAAAAY2hhbm5l
+bF9uYW1lc3EDXXEEWAwAAABtYXJrZXJfcXVlcnlxBVgAAAAAcQZYCwAAAGRpYWdub3N0aWNzcQeJ
+WAUAAABxdWVyeXEIWAkAAABuYW1lPSdiZydxCVgMAAAAbWF4X2Jsb2NrbGVucQpNAARYDAAAAG5v
+bWluYWxfcmF0ZXELTlgUAAAAcmVzb2x2ZV9taW5pbXVtX3RpbWVxDEc/4AAAAAAAAFgHAAAAcmVj
+b3ZlcnENiFgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEOY3NpcApfdW5waWNrbGVfdHlwZQpxD1gM
+AAAAUHlRdDQuUXRDb3JlcRBYCgAAAFFCeXRlQXJyYXlxEUMuAdnQywABAAAAAAMCAAABZgAABGkA
+AAKqAAADAgAAAXwAAARpAAACqgAAAAAAAHEShXETh3EUUnEVdS4=
 </properties>
-		<properties format="pickle" node_id="1">gAN9cQAoWAUAAABvcmRlcnEBTfQBWAsAAABmcmVxdWVuY2llc3ECXXEDKEdAIAAAAAAAAEdAIgAA
-AAAAAEdALAAAAAAAAEdALgAAAAAAAGVYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxBGNzaXAKX3Vu
-cGlja2xlX3R5cGUKcQVYDAAAAFB5UXQ0LlF0Q29yZXEGWAoAAABRQnl0ZUFycmF5cQdDLgHZ0MsA
-AQAAAAAETAAAAjQAAAWzAAADTQAABEwAAAJKAAAFswAAA00AAAAAAABxCIVxCYdxClJxC1gKAAAA
-c3RvcF9hdHRlbnEMR0BJAAAAAAAAWA0AAABhbnRpc3ltbWV0cmljcQ2JWAQAAABtb2RlcQ5YCAAA
-AGJhbmRwYXNzcQ9YDQAAAG1pbmltdW1fcGhhc2VxEIhYBAAAAGF4aXNxEVgEAAAAdGltZXESWAwA
-AABvbmx5X3NpZ25hbHNxE4h1Lg==
+		<properties format="pickle" node_id="1">gAN9cQAoWAQAAABtb2RlcQFYCAAAAGJhbmRwYXNzcQJYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlx
+A2NzaXAKX3VucGlja2xlX3R5cGUKcQRYDAAAAFB5UXQ0LlF0Q29yZXEFWAoAAABRQnl0ZUFycmF5
+cQZDLgHZ0MsAAQAAAAAETAAAAjQAAAWzAAADTQAABEwAAAJKAAAFswAAA00AAAAAAABxB4VxCIdx
+CVJxClgEAAAAYXhpc3ELWAQAAAB0aW1lcQxYCgAAAHN0b3BfYXR0ZW5xDUdASQAAAAAAAFgMAAAA
+b25seV9zaWduYWxzcQ6IWA0AAABtaW5pbXVtX3BoYXNlcQ+IWAsAAABmcmVxdWVuY2llc3EQXXER
+KEdAIAAAAAAAAEdAIgAAAAAAAEdALAAAAAAAAEdALgAAAAAAAGVYBQAAAG9yZGVycRJN9AFYDQAA
+AGFudGlzeW1tZXRyaWNxE4l1Lg==
 </properties>
-		<properties format="pickle" node_id="2">gAN9cQAoWAUAAABvcmRlcnEBTfQBWAsAAABmcmVxdWVuY2llc3ECXXEDKEsASwCGcQRHQAgAAAAA
-AABLAIZxBUdAEAAAAAAAAEsBhnEGR0AgAAAAAAAASwGGcQdHQCIAAAAAAABLAIZxCEdALAAAAAAA
-AEsAhnEJR0AuAAAAAAAASwGGcQpHQDkAAAAAAABLAYZxC0dAOgAAAAAAAEsAhnEMSv////9LAIZx
-DWVYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxDmNzaXAKX3VucGlja2xlX3R5cGUKcQ9YDAAAAFB5
-UXQ0LlF0Q29yZXEQWAoAAABRQnl0ZUFycmF5cRFDLgHZ0MsAAQAAAAAETAAAAjQAAAWzAAADTQAA
-BEwAAAJKAAAFswAAA00AAAAAAABxEoVxE4dxFFJxFVgKAAAAc3RvcF9hdHRlbnEWSzJYDQAAAGFu
-dGlzeW1tZXRyaWNxF4lYBAAAAG1vZGVxGFgIAAAAZnJlZWZvcm1xGVgNAAAAbWluaW11bV9waGFz
-ZXEaiFgEAAAAYXhpc3EbWAQAAAB0aW1lcRxYDAAAAG9ubHlfc2lnbmFsc3EdiHUu
+		<properties format="pickle" node_id="2">gAN9cQAoWAQAAABtb2RlcQFYCAAAAGZyZWVmb3JtcQJYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlx
+A2NzaXAKX3VucGlja2xlX3R5cGUKcQRYDAAAAFB5UXQ0LlF0Q29yZXEFWAoAAABRQnl0ZUFycmF5
+cQZDLgHZ0MsAAQAAAAAETAAAAjQAAAWzAAADTQAABEwAAAJKAAAFswAAA00AAAAAAABxB4VxCIdx
+CVJxClgEAAAAYXhpc3ELWAQAAAB0aW1lcQxYCgAAAHN0b3BfYXR0ZW5xDUsyWAwAAABvbmx5X3Np
+Z25hbHNxDohYDQAAAG1pbmltdW1fcGhhc2VxD4hYCwAAAGZyZXF1ZW5jaWVzcRBdcREoSwBLAIZx
+EkdACAAAAAAAAEsAhnETR0AQAAAAAAAASwGGcRRHQCAAAAAAAABLAYZxFUdAIgAAAAAAAEsAhnEW
+R0AsAAAAAAAASwCGcRdHQC4AAAAAAABLAYZxGEdAOQAAAAAAAEsBhnEZR0A6AAAAAAAASwCGcRpK
+/////0sAhnEbZVgFAAAAb3JkZXJxHE30AVgNAAAAYW50aXN5bW1ldHJpY3EdiXUu
 </properties>
-		<properties format="pickle" node_id="3">gAN9cQAoWAkAAABoYWxmX3RpbWVxAUt4WAMAAABub2ZxAksBWBMAAABzYXZlZFdpZGdldEdlb21l
-dHJ5cQNjc2lwCl91bnBpY2tsZV90eXBlCnEEWAwAAABQeVF0NC5RdENvcmVxBVgKAAAAUUJ5dGVB
-cnJheXEGQy4B2dDLAAEAAAAAAwIAAAGsAAAEaQAAAmQAAAMCAAABwgAABGkAAAJkAAAAAAAAcQeF
-cQiHcQlScQpYCQAAAHNocmlua2FnZXELRz9QYk3S8an8WBAAAABzdHJlYW1pbmdfdXBkYXRlcQyI
+		<properties format="pickle" node_id="3">gAN9cQAoWAkAAABoYWxmX3RpbWVxAUt4WBAAAABzdHJlYW1pbmdfdXBkYXRlcQKIWAMAAABub2Zx
+A0sBWAkAAABzaHJpbmthZ2VxBEc/UGJN0vGp/FgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEFY3Np
+cApfdW5waWNrbGVfdHlwZQpxBlgMAAAAUHlRdDQuUXRDb3JlcQdYCgAAAFFCeXRlQXJyYXlxCEMu
+AdnQywABAAAAAAMCAAABrAAABGkAAAJkAAADAgAAAcIAAARpAAACZAAAAAAAAHEJhXEKh3ELUnEM
 dS4=
 </properties>
-		<properties format="pickle" node_id="4">gAN9cQAoWAsAAABzdHJlYW1fdHlwZXEBWAcAAABDb250cm9scQJYEwAAAHNhdmVkV2lkZ2V0R2Vv
-bWV0cnlxA2NzaXAKX3VucGlja2xlX3R5cGUKcQRYDAAAAFB5UXQ0LlF0Q29yZXEFWAoAAABRQnl0
-ZUFycmF5cQZDLgHZ0MsAAQAAAAAESAAAAicAAAW3AAADMQAABEwAAAI+AAAFswAAAy0AAAAAAABx
-B4VxCIdxCVJxClgJAAAAY2h1bmtfbGVucQtLAFgFAAAAc3JhdGVxDE5YDAAAAG1heF9idWZmZXJl
-ZHENSzxYCQAAAHNvdXJjZV9pZHEOWA0AAAB1bmlxdWVzcmNpZDU2cQ9YDAAAAG9ubHlfc2lnbmFs
-c3EQiVgLAAAAc3RyZWFtX25hbWVxEVgNAAAAT3V0U3RyZWFtVGVzdHESWAwAAABzZW5kX21hcmtl
-cnNxE4lYCwAAAG1hcmtlcl9uYW1lcRRYEQAAAE91dFN0cmVhbS1tYXJrZXJzcRV1Lg==
+		<properties format="pickle" node_id="4">gAN9cQAoWAwAAABtYXhfYnVmZmVyZWRxAUs8WAsAAABtYXJrZXJfbmFtZXECWBEAAABPdXRTdHJl
+YW0tbWFya2Vyc3EDWAkAAABjaHVua19sZW5xBEsAWAsAAABzdHJlYW1fdHlwZXEFWAcAAABDb250
+cm9scQZYDAAAAHNlbmRfbWFya2Vyc3EHiVgJAAAAc291cmNlX2lkcQhYDQAAAHVuaXF1ZXNyY2lk
+NTZxCVgMAAAAb25seV9zaWduYWxzcQqJWAUAAABzcmF0ZXELTlgLAAAAc3RyZWFtX25hbWVxDFgL
+AAAATXlPdXRTdHJlYW1xDVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEOY3NpcApfdW5waWNrbGVf
+dHlwZQpxD1gMAAAAUHlRdDQuUXRDb3JlcRBYCgAAAFFCeXRlQXJyYXlxEUMuAdnQywABAAAAAARI
+AAACJwAABbcAAAMxAAAETAAAAj4AAAWzAAADLQAAAAAAAHEShXETh3EUUnEVdS4=
 </properties>
-		<properties format="pickle" node_id="5">gAN9cQAoWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQFjc2lwCl91bnBpY2tsZV90eXBlCnECWAwA
-AABQeVF0NC5RdENvcmVxA1gKAAAAUUJ5dGVBcnJheXEEQy4B2dDLAAEAAAAAAwIAAAHRAAAEaQAA
-Aj4AAAMCAAAB5wAABGkAAAI+AAAAAAAAcQWFcQaHcQdScQhYDAAAAG9ubHlfc2lnbmFsc3EJiHUu
+		<properties format="pickle" node_id="5">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxAmNzaXAK
+X3VucGlja2xlX3R5cGUKcQNYDAAAAFB5UXQ0LlF0Q29yZXEEWAoAAABRQnl0ZUFycmF5cQVDLgHZ
+0MsAAQAAAAADAgAAAdEAAARpAAACPgAAAwIAAAHnAAAEaQAAAj4AAAAAAABxBoVxB4dxCFJxCXUu
 </properties>
-		<properties format="pickle" node_id="6">gAN9cQAoWAoAAAB6ZXJvX2NvbG9ycQFYCQAAACM3RjdGN0Y3RnECWBMAAABzYXZlZFdpZGdldEdl
-b21ldHJ5cQNjc2lwCl91bnBpY2tsZV90eXBlCnEEWAwAAABQeVF0NC5RdENvcmVxBVgKAAAAUUJ5
-dGVBcnJheXEGQy4B2dDLAAEAAAAABdsAAAIHAAAHQgAAA5YAAAXbAAACHQAAB0IAAAOWAAAAAAAA
-cQeFcQiHcQlScQpYCQAAAGF1dG9zY2FsZXELiFgQAAAAYmFja2dyb3VuZF9jb2xvcnEMWAcAAAAj
-RkZGRkZGcQ1YCwAAAGRvd25zYW1wbGVkcQ6JWAUAAAB0aXRsZXEPWBAAAABUaW1lIHNlcmllcyB2
-aWV3cRBYCgAAAGxpbmVfY29sb3JxEVgHAAAAIzAwMDAwMHESWAgAAAB6ZXJvbWVhbnETiFgNAAAA
-YWJzb2x1dGVfdGltZXEUiVgMAAAAb25seV9zaWduYWxzcRWIWAsAAABhbnRpYWxpYXNlZHEWiVgM
-AAAAaW5pdGlhbF9kaW1zcRddcRhYCgAAAHRpbWVfcmFuZ2VxGUdAFAAAAAAAAFgNAAAAYWx3YXlz
-X29uX3RvcHEaiVgFAAAAc2NhbGVxG0c/uZmZmZmZmlgLAAAAc3RyZWFtX25hbWVxHFgAAAAAcR11
+		<properties format="pickle" node_id="6">gAN9cQAoWAsAAABkb3duc2FtcGxlZHEBiVgNAAAAYWx3YXlzX29uX3RvcHECiVgLAAAAc3RyZWFt
+X25hbWVxA1gAAAAAcQRYEAAAAGJhY2tncm91bmRfY29sb3JxBVgHAAAAI0ZGRkZGRnEGWAoAAAB0
+aW1lX3JhbmdlcQdHQBQAAAAAAABYBQAAAHRpdGxlcQhYEAAAAFRpbWUgc2VyaWVzIHZpZXdxCVgM
+AAAAaW5pdGlhbF9kaW1zcQpdcQtYCgAAAGxpbmVfY29sb3JxDFgHAAAAIzAwMDAwMHENWAsAAABh
+bnRpYWxpYXNlZHEOiVgFAAAAc2NhbGVxD0c/uZmZmZmZmlgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRy
+eXEQY3NpcApfdW5waWNrbGVfdHlwZQpxEVgMAAAAUHlRdDQuUXRDb3JlcRJYCgAAAFFCeXRlQXJy
+YXlxE0MuAdnQywABAAAAAAXbAAACBwAAB0IAAAOWAAAF2wAAAh0AAAdCAAADlgAAAAAAAHEUhXEV
+h3EWUnEXWAkAAABhdXRvc2NhbGVxGIhYCgAAAHplcm9fY29sb3JxGVgJAAAAIzdGN0Y3RjdGcRpY
+DAAAAG9ubHlfc2lnbmFsc3EbiFgIAAAAemVyb21lYW5xHIhYDQAAAGFic29sdXRlX3RpbWVxHYl1
 Lg==
 </properties>
 		<properties format="pickle" node_id="7">gAN9cQAoWAgAAAB0aW1lYmFzZXEBWAkAAAB3YWxsY2xvY2txAlgTAAAAc2F2ZWRXaWRnZXRHZW9t
@@ -92,24 +92,24 @@ ZXRyeXEDY3NpcApfdW5waWNrbGVfdHlwZQpxBFgMAAAAUHlRdDQuUXRDb3JlcQVYCgAAAFFCeXRl
 QXJyYXlxBkMuAdnQywABAAAAAAAAAAAAAAAAB38AAAQcAAAAAAAAAAAAAAd/AAAEBgAAAAAAAHEH
 hXEIh3EJUnEKdS4=
 </properties>
-		<properties format="pickle" node_id="8">gAN9cQAoWA8AAABmb3JnZXRfaGFsZnRpbWVxAU0sAVgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXEC
-Y3NpcApfdW5waWNrbGVfdHlwZQpxA1gMAAAAUHlRdDQuUXRDb3JlcQRYCgAAAFFCeXRlQXJyYXlx
-BUMuAdnQywABAAAAAAMCAAABrAAABGkAAAJkAAADAgAAAcIAAARpAAACZAAAAAAAAHEGhXEHh3EI
-UnEJWA8AAABmb3JjZV9tb25vdG9uaWNxCohYDgAAAG1heF91cGRhdGVyYXRlcQtN9AFYDgAAAHdh
-cm11cF9zYW1wbGVzcQxK/////3Uu
+		<properties format="pickle" node_id="8">gAN9cQAoWA8AAABmb3JnZXRfaGFsZnRpbWVxAU0sAVgOAAAAd2FybXVwX3NhbXBsZXNxAkr/////
+WA4AAABtYXhfdXBkYXRlcmF0ZXEDTfQBWA8AAABmb3JjZV9tb25vdG9uaWNxBIhYEwAAAHNhdmVk
+V2lkZ2V0R2VvbWV0cnlxBWNzaXAKX3VucGlja2xlX3R5cGUKcQZYDAAAAFB5UXQ0LlF0Q29yZXEH
+WAoAAABRQnl0ZUFycmF5cQhDLgHZ0MsAAQAAAAADAgAAAawAAARpAAACZAAAAwIAAAHCAAAEaQAA
+AmQAAAAAAABxCYVxCodxC1JxDHUu
 </properties>
-		<properties format="literal" node_id="9">{'savedWidgetGeometry': None, 'only_signals': True}</properties>
-		<properties format="literal" node_id="10">{'print_channel': False, 'print_data': False, 'savedWidgetGeometry': None, 'print_trial': False, 'print_compact': True, 'print_time': False, 'print_markers': False, 'print_streams': '', 'only_nonempty': True}</properties>
-		<properties format="pickle" node_id="11">gAN9cQAoWAUAAABvcmRlcnEBS2RYEwAAAHNhdmVkV2lkZ2V0R2VvbWV0cnlxAmNzaXAKX3VucGlj
-a2xlX3R5cGUKcQNYDAAAAFB5UXQ0LlF0Q29yZXEEWAoAAABRQnl0ZUFycmF5cQVDLgHZ0MsAAQAA
-AAAB8wAAAPsAAANaAAABvQAAAfMAAAERAAADWgAAAb0AAAAAAABxBoVxB4dxCFJxCVgKAAAAb3Jk
-ZXJfdW5pdHEKWAcAAABzYW1wbGVzcQtYBAAAAGF4aXNxDFgEAAAAdGltZXENWAwAAABvbmx5X3Np
-Z25hbHNxDoh1Lg==
+		<properties format="literal" node_id="9">{'only_signals': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="literal" node_id="10">{'print_streams': '', 'print_trial': False, 'print_markers': False, 'print_channel': False, 'print_time': False, 'print_data': False, 'only_nonempty': True, 'print_compact': True, 'savedWidgetGeometry': None}</properties>
+		<properties format="pickle" node_id="11">gAN9cQAoWAwAAABvbmx5X3NpZ25hbHNxAYhYCgAAAG9yZGVyX3VuaXRxAlgHAAAAc2FtcGxlc3ED
+WAUAAABvcmRlcnEES2RYBAAAAGF4aXNxBVgEAAAAdGltZXEGWBMAAABzYXZlZFdpZGdldEdlb21l
+dHJ5cQdjc2lwCl91bnBpY2tsZV90eXBlCnEIWAwAAABQeVF0NC5RdENvcmVxCVgKAAAAUUJ5dGVB
+cnJheXEKQy4B2dDLAAEAAAAAAfMAAAD7AAADWgAAAb0AAAHzAAABEQAAA1oAAAG9AAAAAAAAcQuF
+cQyHcQ1ScQ51Lg==
 </properties>
-		<properties format="pickle" node_id="12">gAN9cQAoWAQAAAB1bml0cQFYBwAAAGluZGljZXNxAlgTAAAAc2F2ZWRXaWRnZXRHZW9tZXRyeXED
-Y3NpcApfdW5waWNrbGVfdHlwZQpxBFgMAAAAUHlRdDQuUXRDb3JlcQVYCgAAAFFCeXRlQXJyYXlx
-BkMuAdnQywABAAAAAAMCAAABrgAABGkAAAJhAAADAgAAAcQAAARpAAACYQAAAAAAAHEHhXEIh3EJ
-UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
+		<properties format="pickle" node_id="12">gAN9cQAoWAkAAABzZWxlY3Rpb25xAVgBAAAAOnECWAQAAABheGlzcQNYBQAAAHNwYWNlcQRYBAAA
+AHVuaXRxBVgHAAAAaW5kaWNlc3EGWBMAAABzYXZlZFdpZGdldEdlb21ldHJ5cQdjc2lwCl91bnBp
+Y2tsZV90eXBlCnEIWAwAAABQeVF0NC5RdENvcmVxCVgKAAAAUUJ5dGVBcnJheXEKQy4B2dDLAAEA
+AAAAAwIAAAGuAAAEaQAAAmEAAAMCAAABxAAABGkAAAJhAAAAAAAAcQuFcQyHcQ1ScQ51Lg==
 </properties>
 	</node_properties>
 	<patch>{
@@ -201,32 +201,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                 "channel_names": {
                     "customized": true,
                     "type": "Port",
-                    "value": [
-                        "F7",
-                        "Fp1",
-                        "Fp2",
-                        "F8",
-                        "F3",
-                        "Fz",
-                        "F4",
-                        "C3",
-                        "P8",
-                        "P7",
-                        "Pz",
-                        "P4",
-                        "T3",
-                        "P3",
-                        "O1",
-                        "O2",
-                        "C4",
-                        "T4",
-                        "A2",
-                        "ACC0",
-                        "ACC1",
-                        "ACC2",
-                        "Packet Counter",
-                        "TRIGGER"
-                    ]
+                    "value": []
                 },
                 "diagnostics": {
                     "customized": false,
@@ -254,14 +229,14 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": 0
                 },
                 "nominal_rate": {
-                    "customized": true,
+                    "customized": false,
                     "type": "Port",
-                    "value": 250.0
+                    "value": null
                 },
                 "query": {
-                    "customized": false,
+                    "customized": true,
                     "type": "StringPort",
-                    "value": "type='EEG'"
+                    "value": "name='bg'"
                 },
                 "recover": {
                     "customized": false,
@@ -274,7 +249,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": 0.5
                 }
             },
-            "uuid": "521c696b-5ee2-4bf5-8fcd-59f9a87a8dcc"
+            "uuid": "3ce76b53-0cbb-4018-94fe-ee5528678a8c"
         },
         "node10": {
             "class": "SquareRoot",
@@ -286,7 +261,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": true
                 }
             },
-            "uuid": "473e25c1-04e6-4c7f-9b8d-4b7d4942473b"
+            "uuid": "2f0fc04f-2d1f-421f-86e6-7b61d23b7593"
         },
         "node11": {
             "class": "PrintToConsole",
@@ -333,7 +308,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": false
                 }
             },
-            "uuid": "040a7cda-7d02-45bb-8ff4-124908306888"
+            "uuid": "54a82379-19df-4eba-b4df-b45a0394614f"
         },
         "node12": {
             "class": "MovingAverage",
@@ -360,7 +335,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": "samples"
                 }
             },
-            "uuid": "9aa334ac-0acd-48c2-b087-15349cecbe99"
+            "uuid": "0d749089-6fbb-4ec7-91d3-8bd11d9dcce4"
         },
         "node13": {
             "class": "SelectRange",
@@ -382,7 +357,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": "indices"
                 }
             },
-            "uuid": "ff530aee-e040-4c3a-bd86-f16664336778"
+            "uuid": "b2ee3a77-8a82-4256-82b2-0241a5add5a1"
         },
         "node2": {
             "class": "FIRFilter",
@@ -434,7 +409,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": 50.0
                 }
             },
-            "uuid": "11273566-ecdd-450c-ab83-dd110c527e08"
+            "uuid": "a93cdf61-188d-471a-b736-93ba130586db"
         },
         "node3": {
             "class": "FIRFilter",
@@ -522,7 +497,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": 50
                 }
             },
-            "uuid": "014d0a37-2459-4095-abd4-9067d1040bd2"
+            "uuid": "50098ea5-3af4-432f-aaa4-1928e2dad10b"
         },
         "node4": {
             "class": "SpatioSpectralDecomposition",
@@ -549,7 +524,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": true
                 }
             },
-            "uuid": "eb290c85-1821-4ec8-aeea-275ed6ba0248"
+            "uuid": "a514afbd-2ca0-43ef-affa-71a02335a5e6"
         },
         "node5": {
             "class": "LSLOutput",
@@ -593,7 +568,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                 "stream_name": {
                     "customized": true,
                     "type": "StringPort",
-                    "value": "OutStreamTest"
+                    "value": "MyOutStream"
                 },
                 "stream_type": {
                     "customized": false,
@@ -601,7 +576,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": "Control"
                 }
             },
-            "uuid": "e52e0d1b-286b-4502-b9f0-50d7a614e841"
+            "uuid": "0aa9e049-6f4e-4eee-9e4f-32cfff1493af"
         },
         "node6": {
             "class": "Squaring",
@@ -613,7 +588,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": true
                 }
             },
-            "uuid": "0fdbe512-71a1-48a9-a369-59de4f442c82"
+            "uuid": "cca8bd8c-5fa0-41a2-a004-b831c772ffbb"
         },
         "node7": {
             "class": "TimeSeriesPlot",
@@ -695,7 +670,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": true
                 }
             },
-            "uuid": "41e02ddd-98dc-45d0-8016-f84470378080"
+            "uuid": "b19d8851-6651-439f-9697-e2b451afb821"
         },
         "node8": {
             "class": "OverrideTimestamps",
@@ -707,7 +682,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": "wallclock"
                 }
             },
-            "uuid": "788c63a2-28f7-461d-985c-62e6470193e0"
+            "uuid": "a5a3ff67-daab-4aca-a43a-f44d2d2d1513"
         },
         "node9": {
             "class": "DejitterTimestamps",
@@ -734,7 +709,7 @@ UnEKWAkAAABzZWxlY3Rpb25xC1gBAAAAOnEMWAQAAABheGlzcQ1YBQAAAHNwYWNlcQ51Lg==
                     "value": -1
                 }
             },
-            "uuid": "dc7f2f53-3760-4e6a-807a-7204dab574bd"
+            "uuid": "94e2fd56-3698-4899-9598-c12ae811235f"
         }
     },
     "version": 1.1

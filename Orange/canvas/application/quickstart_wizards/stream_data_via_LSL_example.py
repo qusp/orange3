@@ -10,7 +10,7 @@ class StreamDataviaLSLQuickstartWizardDialog(QuickstartWizardDialog):
 
         ######## Step 1
 
-        step_1 = self.step('Enter the recording to be streamed.')
+        step_1 = self.step('Please choose the recording you want to stream.')
         step_1.setContentsMargins(0, 5, 0, 0)
 
         # File dialog.

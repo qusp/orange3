@@ -1,5 +1,6 @@
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QDialog, QDialogButtonBox, QSizePolicy, QLabel, QVBoxLayout, QWidget
+from PyQt4.QtGui import QDialog, QDialogButtonBox, QSizePolicy, QLabel, \
+    QVBoxLayout, QWidget,QTextDocument
 
 
 class QuickstartWizardDialog(QDialog):
@@ -48,6 +49,7 @@ class QuickstartWizardDialog(QDialog):
     def step(self, content):
         """Make a step label."""
         return QLabel('<h4>%s</h4>' % self.tr(content))
+
 
     def get_custom_layout(self):
         return QVBoxLayout()
