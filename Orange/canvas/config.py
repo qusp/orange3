@@ -40,7 +40,7 @@ def init():
     version = ".".join(version.split(".", 2)[:2])
 
     QCoreApplication.setOrganizationDomain("biolab.si")
-    QCoreApplication.setApplicationName("Orange Canvas")
+    QCoreApplication.setApplicationName("NeuroPype")
     QCoreApplication.setApplicationVersion(version)
     QSettings.setDefaultFormat(QSettings.IniFormat)
 
@@ -192,6 +192,15 @@ def log_dir():
     return logdir
 
 
+def widget_settings_dir():
+    """
+    Return the widget settings directory.
+    """
+    from Orange.canvas.utils import environ
+    # Remove cached settings for Orange widgets to avoid stale defaults.
+    return os.path.abspath(environ.widget_settings_dir)
+
+
 def open_config():
     global rc
     app_dir = data_dir()
@@ -276,28 +285,28 @@ def splash_screen():
     """
     pm = QPixmap(
         pkg_resources.resource_filename(
-            __name__, "icons/orange-splash-screen.png")
+            __name__, "icons/vpe-splash-screen.png")
     )
 
-    version = QCoreApplication.applicationVersion()
-    size = 21 if len(version) < 5 else 16
-    font = QFont("Helvetica")
-    font.setPixelSize(size)
-    font.setBold(True)
-    font.setItalic(True)
-    font.setLetterSpacing(QFont.AbsoluteSpacing, 2)
-    metrics = QFontMetrics(font)
-    br = metrics.boundingRect(version).adjusted(-5, 0, 5, 0)
-    br.moveCenter(QPoint(436, 224))
-
-    p = QPainter(pm)
-    p.setRenderHint(QPainter.Antialiasing)
-    p.setRenderHint(QPainter.TextAntialiasing)
-    p.setFont(font)
-    p.setPen(QColor("#231F20"))
-    p.drawText(br, Qt.AlignCenter, version)
-    p.end()
-    return pm, QRect(88, 193, 200, 20)
+    # version = QCoreApplication.applicationVersion()
+    # size = 21 if len(version) < 5 else 16
+    # font = QFont("Helvetica")
+    # font.setPixelSize(size)
+    # font.setBold(True)
+    # font.setItalic(True)
+    # font.setLetterSpacing(QFont.AbsoluteSpacing, 2)
+    # metrics = QFontMetrics(font)
+    # br = metrics.boundingRect(version).adjusted(-5, 0, 5, 0)
+    # br.moveCenter(QPoint(436, 224))
+    #
+    # p = QPainter(pm)
+    # p.setRenderHint(QPainter.Antialiasing)
+    # p.setRenderHint(QPainter.TextAntialiasing)
+    # p.setFont(font)
+    # p.setPen(QColor("#231F20"))
+    # p.drawText(br, Qt.AlignCenter, version)
+    # p.end()
+    return pm, QRect(12, 285, 200, 20)
 
 
 def application_icon():
@@ -305,7 +314,7 @@ def application_icon():
     Return the main application icon.
     """
     path = pkg_resources.resource_filename(
-        __name__, "icons/orange-canvas.svg"
+        __name__, "icons/vpe.ico"
     )
     return QIcon(path)
 

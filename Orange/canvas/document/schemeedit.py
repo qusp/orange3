@@ -18,7 +18,7 @@ from PyQt4.QtGui import (
     QWidget, QVBoxLayout, QInputDialog, QMenu, QAction, QActionGroup,
     QKeySequence, QUndoStack, QGraphicsItem, QGraphicsObject,
     QGraphicsTextItem, QCursor, QFont, QPainter, QPixmap, QColor,
-    QIcon, QWhatsThisClickedEvent, QBrush
+    QIcon, QWhatsThisClickedEvent, QBrush, QLabel
 )
 
 from PyQt4.QtCore import (
@@ -361,6 +361,12 @@ class SchemeEditWidget(QWidget):
         self.__scene = scene
 
         layout.addWidget(view)
+
+        # add a widget that indicates that we're calibrating
+        self.__calibrateOverlay = QLabel("[Calibrating...]", parent=view)
+        self.__calibrateOverlay.setVisible(False)
+        self.__calibrateOverlay.move(10, 10)
+
         self.setLayout(layout)
 
     def __setupScene(self, scene):
@@ -592,10 +598,13 @@ class SchemeEditWidget(QWidget):
             if self.__scheme:
                 self.__scheme.title_changed.disconnect(self.titleChanged)
                 self.__scheme.removeEventFilter(self)
+                self.__scheme.release_resources()
                 sm = self.__scheme.findChild(signalmanager.SignalManager)
                 if sm:
                     sm.stateChanged.disconnect(
                         self.__signalManagerStateChanged)
+                    sm.calibratingStarted.disconnect(self.__onCalibratingStarted)
+                    sm.calibratingStopped.disconnect(self.__onCalibratingStopped)
 
             self.__scheme = scheme
 
@@ -608,6 +617,8 @@ class SchemeEditWidget(QWidget):
                 sm = scheme.findChild(signalmanager.SignalManager)
                 if sm:
                     sm.stateChanged.connect(self.__signalManagerStateChanged)
+                    sm.calibratingStarted.connect(self.__onCalibratingStarted)
+                    sm.calibratingStopped.connect(self.__onCalibratingStopped)
             else:
                 self.__cleanProperties = []
 
@@ -829,7 +840,7 @@ class SchemeEditWidget(QWidget):
         """
         view = self.view()
         if zoom:
-            view.scale(1.5, 1.5)
+            view.scale(1.0/1.5, 1.0/1.5)
         else:
             view.resetTransform()
 
@@ -838,7 +849,7 @@ class SchemeEditWidget(QWidget):
         Align nodes to a grid.
         """
         # TODO: The the current layout implementation is BAD (fix is urgent).
-        tile_size = 150
+        tile_size = 100
         tiles = {}
 
         nodes = sorted(self.scheme().nodes, key=attrgetter("position"))
@@ -1539,10 +1550,14 @@ class SchemeEditWidget(QWidget):
     def __signalManagerStateChanged(self, state):
         if state == signalmanager.SignalManager.Running:
             self.__view.setBackgroundBrush(QBrush(Qt.NoBrush))
-#            self.__view.setBackgroundIcon(QIcon())
         elif state == signalmanager.SignalManager.Paused:
             self.__view.setBackgroundBrush(QBrush(QColor(235, 235, 235)))
-#            self.__view.setBackgroundIcon(QIcon("canvas_icons:Pause.svg"))
+
+    def __onCalibratingStarted(self):
+        self.__calibrateOverlay.setVisible(True)
+
+    def __onCalibratingStopped(self):
+        self.__calibrateOverlay.setVisible(False)
 
 
 def geometry_from_annotation_item(item):

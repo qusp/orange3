@@ -69,6 +69,12 @@ class SignalManager(QObject):
     runtimeStateChanged = Signal(int)
     """Emitted when `SignalManager`'s runtime state changes."""
 
+    calibratingStarted = Signal()
+    """Emitted when the graph enters a "calibrating" state."""
+
+    calibratingStopped = Signal()
+    """Emitted when the graph leaves the "calibrating" state."""
+
     def __init__(self, scheme):
         assert(scheme)
         QObject.__init__(self, scheme)

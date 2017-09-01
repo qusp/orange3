@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="96px" height="96px" viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
+<circle fill="none" cx="48.004" cy="48.006" r="48"/>
+<ellipse transform="matrix(0.829 0.5592 -0.5592 0.829 31.2473 -29.5031)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="63.873" cy="36.35" rx="4.612" ry="4.672"/>
+<ellipse transform="matrix(0.829 0.5592 -0.5592 0.829 22.6565 -1.1405)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="13.193" cy="36.482" rx="4.612" ry="4.672"/>
+<ellipse transform="matrix(0.829 0.5592 -0.5592 0.829 34.9195 -4.988)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="25.616" cy="54.609" rx="4.611" ry="4.671"/>
+<ellipse transform="matrix(0.8291 0.5591 -0.5591 0.8291 27.3886 -6.781)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="24.786" cy="41.408" rx="4.611" ry="4.671"/>
+<path fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" d="M67.192,64.715
+	c-1.442,2.14-4.323,2.719-6.436,1.295c-2.111-1.425-2.652-4.312-1.21-6.453c1.438-2.132,4.32-2.711,6.432-1.287
+	C68.089,59.693,68.633,62.581,67.192,64.715z"/>
+<ellipse transform="matrix(0.829 0.5592 -0.5592 0.829 36.2783 3.6607)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="12.153" cy="61.155" rx="4.612" ry="4.671"/>
+<ellipse transform="matrix(0.829 0.5593 -0.5593 0.829 39.903 -18.0503)" fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" cx="49.467" cy="56.224" rx="4.612" ry="4.672"/>
+<path fill="#666666" stroke="#666666" stroke-linecap="round" stroke-miterlimit="10" d="M54.645,42.187
+	c-1.443,2.138-4.326,2.717-6.443,1.289c-2.111-1.424-2.653-4.312-1.21-6.451c1.442-2.141,4.323-2.72,6.435-1.296
+	C55.543,37.158,56.088,40.047,54.645,42.187z"/>
+<radialGradient id="SVGID_1_" cx="41.1206" cy="53.5742" r="28.0946" gradientTransform="matrix(0.9999 -0.0174 0.007 0.4 -3.7685 27.9434)" gradientUnits="userSpaceOnUse">
+	<stop  offset="0" style="stop-color:#000000"/>
+	<stop  offset="1" style="stop-color:#A8A8A8"/>
+</radialGradient>
+<path opacity="0.7" fill="url(#SVGID_1_)" d="M73.463,48.056c0.168,9.584-15.677,17.601-35.412,17.945
+	C18.283,66.325,2.15,58.835,1.981,49.252c-0.166-9.583,15.686-17.613,35.413-17.945C57.154,30.979,73.295,38.473,73.463,48.056z"/>
+<g>
+	<g>
+		<line fill="none" stroke="#444444" stroke-width="5" stroke-miterlimit="10" x1="36.728" y1="49.352" x2="36.128" y2="15.404"/>
+		<g>
+			<polygon fill="#444444" points="43.395,17.392 35.944,5 28.937,17.647 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" x1="34.187" y1="48.531" x2="85.098" y2="47.826"/>
+		<g>
+			<polygon points="83.082,55.085 95.502,47.682 82.882,40.626 			"/>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" d="M42.293,39.369"/>
+<path fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" d="M33.011,39.529"/>
+<path fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" d="M69.112,29.271"/>
+<path fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" d="M71.715,9.441"/>
+<line fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" x1="-15.667" y1="-36.667" x2="-15.5" y2="-36.667"/>
+<g>
+	<line fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" x1="26.385" y1="22.835" x2="47.251" y2="41.623"/>
+	<line fill="none" stroke="#000000" stroke-width="5" stroke-miterlimit="10" x1="27.424" y1="42.662" x2="46.212" y2="21.796"/>
+</g>
+</svg>

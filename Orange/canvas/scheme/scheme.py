@@ -10,6 +10,9 @@ The :class:`Scheme` class defines a DAG (Directed Acyclic Graph) workflow.
 from operator import itemgetter
 from collections import deque
 
+from io import BytesIO
+from tempfile import TemporaryFile
+
 import logging
 
 from PyQt4.QtCore import QObject
@@ -626,6 +629,7 @@ class Scheme(QObject):
         """
         Load the scheme from xml formated stream.
         """
+        print("Loading patch...")
         if self.__nodes or self.__links or self.__annotations:
             # TODO: should we clear the scheme and load it.
             raise ValueError("Scheme is not empty.")
@@ -634,3 +638,16 @@ class Scheme(QObject):
             stream = open(stream, "rb")
         readwrite.scheme_load(self, stream)
 #         parse_scheme(self, stream)
+
+    def reload(self):
+        """
+        Reload the scheme (resets internal state of all nodes).
+        """
+        buffer = BytesIO()
+        self.save_to(buffer, pickle_fallback=True)
+        self.clear()
+        self.load_from(BytesIO(buffer.getvalue()))
+
+    def release_resources(self):
+        """Release the graph's resources."""
+        pass  # may be overridden by sublasses

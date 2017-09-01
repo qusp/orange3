@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+
+import builtins
+import traceback
+
+from Orange.widgets import widget, gui, cpewidget
+from Orange.widgets.settings import Setting
+import neuropype.engine
+try:
+    from {{ node.__module__ }} import {{ node.__name__ }}
+except ImportError:
+    print("Not importing source code for node {{ node.__name__ }}.")
+    traceback.print_exc()
+
+class OW{{ node.__name__ }}(cpewidget.CPEWidget):
+
+    # Node meta-data.
+    name = "{{ node.description().name }}"
+    description = "{{ node.description().description }}"
+    author = "{{ node.description().author }}"
+    icon = "{{ icon }}"
+    priority = {{ priority }}
+    category = "{{ category|title }}"
+
+    # Input/output ports.
+    inputs = [{% for name, port in node.ports(direction='IN*', editable=False).items() %}
+        {'name': '{{ port.verbose_name|title }}', 'type': {{ port.value_type.__module__ }}.{{ port.value_type.__name__ }}, 'handler': 'set_{{ name }}', 'flags': {{'widget.Explicit' if port.builtin else '0'}}},{% endfor %}
+    ]
+
+    outputs = [{% for name, port in node.ports(direction='*OUT', editable=False).items() %}
+        {'name': '{{ port.verbose_name|title }}', 'type': {{ port.value_type.__module__ }}.{{ port.value_type.__name__ }}, 'flags': {{'widget.Explicit' if port.implicit else '0'}}},{% endfor %}
+    ]
+
+    # Configuration properties.{% for name, port in node.ports(editable=True).items() %}
+    {{ name }} = Setting(None){% endfor %}
+
+    def __init__(self):
+        # Initialize with a newly instantiated node.
+        super().__init__({{ node.__name__ }}())
+
+        # Sync properties between node and widget wrapper.
+        self.sync_properties()
+
+        # Initialize GUI controls for editing node properties.
+        box = gui.widgetBox(self.controlArea, 'Properties'){% for name, port in node.ports(editable=True).items() %}
+
+        tooltip_text = "<span>{{ port.help }}</span>"
+        {% if port.__class__.__name__ == 'BoolPort' %}self.{{ name }}_control = gui.checkBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text)
+        {%- elif port.__class__.__name__ == 'EnumPort'  %}self.{{ name }}_control = gui.comboBox(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', items={{ port.domain }}, sendSelectedValue=True, orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text)
+        {%- else %}self.{{ name }}_control = gui.lineEdit(box, self, '{{ name }}', label='{{ port.verbose_name|capitalize }}:', orientation='horizontal', callback=lambda: self.property_changed('{{ name }}'), tooltip=tooltip_text){% endif %}{% endfor %}
+        self.reset_button = gui.button(box, self, 'Reset defaults', autoDefault=False, callback=self.reset_default_properties)
+
+    # Port setters.{% for name, port in node.ports(direction='IN*', editable=False).items() %}
+    def set_{{ name }}(self, {{ name }}):
+        self.node.{{ name }} = {{ name }}
+{% endfor %}
