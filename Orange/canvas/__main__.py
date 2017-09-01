@@ -11,11 +11,19 @@ import logging
 import optparse
 import pickle
 import shlex
+import shutil
 
 import pkg_resources
 
 from PyQt4.QtGui import QFont, QColor
 from PyQt4.QtCore import Qt, QDir
+
+# noinspection PyBroadException
+try:
+    import neuropype
+except:
+    cpe_path = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'cpe')
+    sys.path.append(cpe_path)
 
 from Orange import canvas
 from Orange.canvas.application.application import CanvasApplication
@@ -86,11 +94,17 @@ def main(argv=None):
                       action="store_true",
                       help="Don't run widget discovery "
                            "(use full cache instead)")
-
     parser.add_option("--force-discovery",
                       action="store_true",
                       help="Force full widget discovery "
                            "(invalidate cache)")
+    parser.add_option("--clear-widget-settings",
+                      action="store_true",
+                      help="Remove stored widget setting",
+                      default=True)
+    parser.add_option("--autolaunch",
+                      action="store_true",
+                      help="Launch given scheme automatically, if any")
     parser.add_option("--no-welcome",
                       action="store_true",
                       help="Don't show welcome dialog.")
@@ -99,7 +113,7 @@ def main(argv=None):
                       help="Don't show splash screen.")
     parser.add_option("-l", "--log-level",
                       help="Logging level (0, 1, 2, 3, 4)",
-                      type="int", default=1)
+                      type="int", default=2)
     parser.add_option("--no-redirect",
                       action="store_true",
                       help="Do not redirect stdout/err to canvas output view.")
@@ -139,7 +153,7 @@ def main(argv=None):
     stream_hander.setLevel(level=levels[options.log_level])
     rootlogger.addHandler(stream_hander)
 
-    log.info("Starting 'Orange Canvas' application.")
+    log.info("Starting 'NeuroPype' application.")
 
     qt_argv = argv[:1]
 
@@ -156,6 +170,16 @@ def main(argv=None):
 
     # NOTE: config.init() must be called after the QApplication constructor
     config.init()
+
+    clear_settings_flag = os.path.join(
+        config.widget_settings_dir(), "DELETE_ON_START")
+
+    if options.clear_widget_settings or \
+            os.path.isfile(clear_settings_flag):
+        log.info("Clearing widget settings")
+        shutil.rmtree(
+            config.widget_settings_dir(),
+            ignore_errors=False)
 
     file_handler = logging.FileHandler(
         filename=os.path.join(config.log_dir(), "canvas.log"),
@@ -246,14 +270,14 @@ def main(argv=None):
     )
 
     want_splash = \
-        settings.value("startup/show-splash-screen", True, type=bool) and \
+        settings.value("startup/show-splash-screen", False, type=bool) and \
         not options.no_splash
 
     if want_splash:
         pm, rect = config.splash_screen()
         splash_screen = SplashScreen(pixmap=pm, textRect=rect)
         splash_screen.setFont(QFont("Helvetica", 12))
-        color = QColor("#FFD39F")
+        color = QColor("#AAAAAA")
 
         def show_message(message):
             splash_screen.showMessage(message, color=color)
@@ -294,14 +318,20 @@ def main(argv=None):
     if want_welcome and not args and not open_requests:
         canvas_window.welcome_dialog()
 
+
     elif args:
         log.info("Loading a scheme from the command line argument %r",
                  args[0])
-        canvas_window.load_scheme(args[0])
+        if args[0] == 'latest' or args[0] == '<latest>':
+            canvas_window.reload_last()
+        else:
+            canvas_window.load_scheme(args[0])
     elif open_requests:
         log.info("Loading a scheme from an `QFileOpenEvent` for %r",
                  open_requests[-1])
         canvas_window.load_scheme(open_requests[-1].toLocalFile())
+    if options.autolaunch:
+        canvas_window.freeze_action.trigger()
 
     stdout_redirect = \
         settings.value("output/redirect-stdout", True, type=bool)

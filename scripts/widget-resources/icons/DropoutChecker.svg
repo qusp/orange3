@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="96px"
+	 height="96px" viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
+<g id="Layer_1" display="none">
+	<path display="inline" fill="none" stroke="#000000" stroke-width="0.1" stroke-miterlimit="10" d="M96.986,47.998
+		c0,26.487-21.49,47.977-47.988,47.977c-26.507,0-47.997-21.49-47.997-47.977C1.001,21.49,22.491,0,48.998,0
+		C75.496,0,96.986,21.49,96.986,47.998z"/>
+</g>
+<g id="Layer_2">
+	<rect x="3.63" y="37.803" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="12.345" height="12.008"/>
+	<rect x="22.444" y="37.802" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="12.345" height="12.008"/>
+	<g>
+		<g>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="53.625,49.308 53.625,49.808 53.125,49.808 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0334,1.0334" x1="52.092" y1="49.808" x2="42.275" y2="49.808"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="41.758,49.808 41.258,49.808 41.258,49.308 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0007,1.0007" x1="41.258" y1="48.307" x2="41.258" y2="38.8"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="41.258,38.299 41.258,37.799 41.758,37.799 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0334,1.0334" x1="42.792" y1="37.799" x2="52.608" y2="37.799"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="53.125,37.799 53.625,37.799 53.625,38.299 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0007,1.0007" x1="53.625" y1="39.3" x2="53.625" y2="48.808"/>
+		</g>
+	</g>
+	<rect x="60.094" y="37.8" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="12.347" height="12.008"/>
+	<rect x="78.907" y="37.799" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="12.347" height="12.008"/>
+	<text transform="matrix(1 0 0 1 45.8735 48.3945)" font-family="'MyriadPro-Regular'" font-size="13.6581">!</text>
+	<path fill="#FFFFFF" stroke="#FFFFFF" stroke-miterlimit="10" d="M67.386,44.354c0,10.405-8.631,18.863-19.284,18.863
+		c-10.646,0-19.276-8.458-19.276-18.863c0-10.434,8.63-18.892,19.276-18.892C58.755,25.463,67.386,33.921,67.386,44.354z"/>
+	<rect x="29.926" y="36.148" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="6.404" height="15.322"/>
+	<g>
+		<g>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="56.527,50.969 56.527,51.469 56.027,51.469 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0059,1.0059" x1="55.021" y1="51.469" x2="41.444" y2="51.469"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="40.941,51.469 40.441,51.469 40.441,50.969 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="0.9548,0.9548" x1="40.441" y1="50.014" x2="40.441" y2="37.124"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="40.441,36.646 40.441,36.146 40.941,36.146 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="1.0059,1.0059" x1="41.947" y1="36.146" x2="55.524" y2="36.146"/>
+			<polyline fill="none" stroke="#000000" stroke-miterlimit="10" points="56.027,36.146 56.527,36.146 56.527,36.646 			"/>
+			
+				<line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="0.9548,0.9548" x1="56.527" y1="37.601" x2="56.527" y2="50.491"/>
+		</g>
+	</g>
+	<rect x="61.209" y="36.146" fill="#666666" stroke="#666666" stroke-miterlimit="10" width="6.162" height="15.322"/>
+	<g>
+		<path d="M46.928,46.178l-0.02-0.501c-0.059-0.983,0.275-1.986,1.16-3.028c0.629-0.732,1.141-1.35,1.141-2.006
+			c0-0.675-0.452-1.118-1.436-1.157c-0.649,0-1.436,0.231-1.947,0.579l-0.669-2.103c0.708-0.405,1.889-0.791,3.285-0.791
+			c2.596,0,3.777,1.408,3.777,3.009c0,1.466-0.925,2.431-1.672,3.24c-0.728,0.791-1.023,1.543-1.003,2.411v0.347H46.928z
+			 M46.416,48.84c0-1.022,0.728-1.755,1.751-1.755c1.062,0,1.75,0.732,1.77,1.755c0,1.003-0.708,1.755-1.77,1.755
+			C47.125,50.595,46.416,49.843,46.416,48.84z"/>
+	</g>
+	<path d="M66.576,54.193c2.01-3.225,3.177-6.974,3.177-11.058c0-11.605-9.465-21.071-21.076-21.071
+		c-11.611,0-21.077,9.466-21.077,21.071c0,11.568,9.466,21.026,21.077,21.026c4.025,0,7.784-1.167,11.026-3.112l17.96,17.897
+		c0.972,0.973,2.204,1.424,3.436,1.424c1.232,0,2.464-0.451,3.437-1.424c0.907-0.91,1.426-2.141,1.426-3.438
+		c0-1.295-0.519-2.525-1.426-3.437L66.576,54.193z M48.677,60.921c-9.861,0-17.835-7.95-17.835-17.786
+		c0-9.855,7.974-17.83,17.835-17.83c9.86,0,17.834,7.975,17.834,17.83C66.511,52.971,58.537,60.921,48.677,60.921z M82.266,76.673
+		c-0.649,0.651-1.684,0.651-2.271,0L62.361,59.104c0.843-0.711,1.622-1.49,2.271-2.268l17.633,17.505
+		c0.323,0.326,0.455,0.712,0.455,1.167C82.721,75.961,82.525,76.35,82.266,76.673z"/>
+</g>
+</svg>

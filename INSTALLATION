@@ -1,0 +1,238 @@
+Preliminaries
+=============
+
+These instructions assume that you have cloned the VPE into a folder named vpe, and checked out the "realtime" branch. This can be accomplished as follows (note that on Windows you may need to install/run the Git Bash to invoke these commands, or do the equivalent with a graphical git front-end):
+
+$ git clone https://github.com/qusp/orange3 vpe
+$ git checkout realtime
+
+These instructions also assume that you want to install Python into a virtual environment (virtualenv) to prevent version conflicts with packages needed by other Python software on your computer; if this is no concern for you (e.g., you have no other Python software), you can skip the virtualenv-related steps.
+
+
+On Linux
+========
+
+* note for legacy Ubuntu systems: if the Python 3.4 package is not available on your system, you can first add an external repository to your package manager:
+  $ sudo add-apt-repository ppa:fkrull/deadsnakes
+
+* make sure that your package list is up to date
+  (written for Ubuntu):
+  $ sudo apt-get update
+  
+* install the following packages through your package manager (the following list uses the package names for use with apt-get install, tested on Ubuntu 14.10; these may differ for other distributions):
+  - build-essential
+  - libblas-dev
+  - liblapack-dev
+  - libgmp-dev
+  - gfortran
+  - python3
+  - python3-dev
+  - python3-pip
+  - virtualenvpython3-pyqt4
+  
+* go to the directory where you placed the vpe:
+  $ cd /path/to/vpe
+
+* create a virtual environment:
+  $ pip3 install virtualenv
+  $ virtualenv venv --python=python3 --system-site-packages
+
+* activate virtual environment:
+  $ source venv/bin/activate
+
+* install requirements
+  $ pip install numpy
+  $ pip install -r vpe/requirements.txt
+
+* clone the CPE repo & install its dependencies into vpe venv:
+  $ cd ..
+  $ git clone https://github.com/qusp/cpe
+  $ git checkout your-branch (could be testing, develop, master, or a tag/release)
+  $ pip install -r cpe/requirements.txt
+
+* auto-generate widgets for CPE nodes:
+  $ python vpe/scripts/regenerate_widgets.py --neuropype-path cpe/neuropype
+  (you can re-invoke this command whenever you have edited your CPE code)
+
+* initialize VPE package
+  $ cd vpe
+  $ python setup.py develop
+
+* you can now launch the VPE using the command:
+  > python -m Orange.canvas --clear-widget-settings
+
+* for a good development experience, we recommend
+  that you install and set up PyCharm:
+  * open the vpe folder from PyCharm
+  * under Settings / Project: vpe / Project Interpreter / Project Interpreter make sure that it picked up the folder path\to\cpe\venv; if it didn't (e.g., older PyCharm version), do the following:
+      - under Settings / Project: vpe / Project Interpreter / Project Interpreter click the gear icon
+      - click Add local..., and select the python executable in your cpe/venv/Lib folder.
+      - accept and close the settings dialog. PyCharm will scan your virtualenv once, which will take a few minutes (see bottom progress bar)
+  * in the project pane on the left you can now navigate to the file
+    Orange / canvas / __main__.py, and then right-click and select
+    "Run '__main__'" to run the VPE (or Debug '__main__' to run it in debug mode)
+
+* to launch from the command line, make sure that you have your venv activated like you did during the installation
+
+* you can also use the launch.sh script in the vpe folder  
+  
+On Windows
+==========
+
+Note that, when you switch between git-related commands and Python-related commands (e.g., pip) on Windows, you will likely have to switch between the git bash and a regular command line (cmd.exe).
+
+* Make sure that you have Python 3.4 installed (preferably the 64-bit version). We assume here that you have it in C:\Python34; otherwise adjust the path in the below instructions.
+
+* create a virtual environment:
+  > C:\Python34\Scripts\pip3 install virtualenv
+  > cd path\to\vpe
+  > C:\Python34\Scripts\virtualenv venv
+
+* activate virtual environment:
+  > venv\Scripts\activate
+
+* install binary dependencies
+  * if you are on a 64-bit Python:
+    > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win_amd64.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win_amd64.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win_amd64.whl?raw=true
+  * if you are on a 32-bit Python:
+    > pip install https://github.com/qusp/dependencies/blob/master/python/numpy/numpy-1.9.2+mkl-cp34-none-win32.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/scipy/scipy-0.15.1-cp34-none-win32.whl?raw=true
+    > pip install https://github.com/qusp/dependencies/blob/master/python/pyqt/PyQt4-4.11.3-cp34-none-win32.whl?raw=true
+
+* install requirements
+  > pip install -r requirements.txt
+
+* go one step up
+  > cd ..
+
+* clone CPE & install its dependencies into vpe/venv (unless you already have the cpe and you're installing the vpe into the cpe's venv):
+  > git clone https://github.com/qusp/cpe
+  > git checkout your-branch (could be testing, develop, master, or a tag/release)
+  > pip install -r cpe/requirements.txt
+
+* auto-generate widgets for CPE nodes:
+  > python vpe\scripts\regenerate_widgets.py --neuropype-path cpe\neuropype
+  (you can re-invoke this command whenever you have edited your CPE code)
+
+* initialize vpe package
+  > cd vpe
+  > python setup.py develop
+
+* you can now launch the VPE using the command:
+  > python -m Orange.canvas --clear-widget-settings
+
+* for a good development experience, we recommend
+  that you install and set up PyCharm:
+  * open the vpe folder from PyCharm
+  * under Settings / Project: vpe / Project Interpreter / Project Interpreter make sure that it picked up the folder path\to\cpe\venv; if it didn't (e.g., older PyCharm version), do the following:
+      - under Settings / Project: vpe / Project Interpreter / Project Interpreter click the gear icon
+      - click Add local..., and select the python executable in your cpe/venv/Lib folder.
+      - accept and close the settings dialog. PyCharm will scan your virtualenv once, which will take a few minutes (see bottom progress bar)
+  * in the project pane on the left you can now navigate to the file
+    Orange / canvas / __main__.py, and then right-click and select
+    "Run '__main__'" to run the VPE (or Debug '__main__' to run it in debug mode)
+
+* to launch from the command line, make sure that you have your venv activated like you did during the installation
+  
+* you can also use the launch.bat file in the vpe folder
+
+
+On Mac OS
+=========
+
+* You will first need to have a compiler toolchain installed. For this, install XCode from the App Store.
+
+* You also need to have xcode command line developer tools, if not yet installed you can activate that by typing the following  in the command line (a software update pop up window will open and you can continue the steps from there)
+$ xcode-select --install
+
+* Then, install the homebrew package manager by executing the following command:
+ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+* Now install the science packages and other necessary tools:
+ $ brew tap homebrew/science
+
+* To ensure that you get the right version of Python (currently 3.4.x), install pyenv (you have to define the Python version, eg. use 3.4.5):
+ $ brew install pyenv
+
+* also get the virtualenv plugin for pyenv so we can create a virtual environment:
+ $ brew install pyenv-virtualenv
+
+* Need to modify the profile setting, the required commands are noted at the end of installation process, as shown also below:
+$ export PATH=”Users/YOURUSERNAME/.pyenv/bin:$PATH”
+$ eval “$(pyenv init -)”
+$ eval “$(pyenv virtualenv-init -)”
+
+* install Python 3.4.5:
+ $ pyenv install 3.4.5
+
+* go to the directory where you placed the source code:
+ $ cd  path_to_NeuroPype_source_code
+
+* make a directory for virtual_env:
+$ mkdir virtual_env
+$ cd virtual_env
+
+* create a virtual environment:
+ $ pyenv virtualenv 3.4.5 venv
+
+* activate virtual environment:
+ $ pyenv activate venv
+
+
+* download the sip and PyQt4 source code (sip is the glue code generator for PyQt4).
+Unpack and install each package, from within your virtual environment, using these commands:
+
+* get the sip and PyQt4 install packages from here:
+https://www.riverbankcomputing.com/software/sip/download
+https://www.riverbankcomputing.com/software/pyqt/download
+* copy and unzip them in the “site-packages” for the python version connected to your venv (it should look like ~/.pyenv/versions/3.x.x/lib/python3.x/site-packages)
+* install sip as follows:
+ $ python configure.py
+ $ make –j4
+ $ make install
+
+
+* for PyQT4 installation, follow similar steps as above with one  modifications:
+$ python configure-ng.py
+$ make -j4
+$ make install
+
+* install requirements, change directory to where the NeuroPype source code is located:
+$ cd path_to_NeuroPype_source_code
+$ pip install numpy
+$ pip install -r vpe/requirements.txt
+
+* LSL UPDATE, manually update the LSL package:
+$ pip install pylsl==1.10.5
+
+$ pip install -r cpe/requirements.txt
+
+* In case the pyzmq package fails to install correctly, try manually installing the following packages and then retry installing pyzmq.
+ $ brew install zeromq
+ $ python -m pip install pyzmq
+
+* auto-generate widgets for CPE nodes:
+ $ python vpe/scripts/regenerate_widgets.py --neuropype-path cpe/neuropype
+ (you can re-invoke this command whenever you have edited your CPE code)
+
+* initialize VPE package
+ $ cd vpe
+ $ python setup.py develop
+
+* you can now launch the VPE using the command:
+ $ python -m Orange.canvas --clear-widget-settings
+
+* for a good development experience, we recommend
+ that you install and setup PyCharm:
+ * open the vpe folder from PyCharm
+ * under Preferences / Project: vpe / Project Interpreter / Project Interpreter make sure that from the drop down list choose the one that points to your virtualenv python version; if it didn't (e.g., older PyCharm version), do the following:
+     - under Settings / Project: vpe / Project Interpreter / Project Interpreter click the gear icon
+     - click Add local..., and select the python executable in your virtualenv python version.
+     - accept and close the settings dialog. PyCharm will scan your virtualenv once, which will take a few minutes (see bottom progress bar)
+ * in the project pane on the left you can now navigate to the file
+   Orange / canvas / __main__.py, and then right-click and select
+   "Run '__main__'" to run the VPE (or Debug '__main__' to run it in debug mode)
+
+* to launch from the command line, make sure that you have your venv activated like you did during the installation

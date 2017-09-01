@@ -8,6 +8,7 @@ import logging
 import operator
 from functools import partial
 from io import BytesIO
+import warnings
 
 import pkg_resources
 
@@ -45,10 +46,13 @@ from .schemeinfo import SchemeInfoDialog
 from .outputview import OutputView
 from .settings import UserSettingsDialog
 
+
 from ..document.schemeedit import SchemeEditWidget
 
 from ..scheme import widgetsscheme
 from ..scheme.readwrite import scheme_load, sniff_version
+from ..scheme.neuropypesignalmanager import NeuropypeSignalManager
+
 
 from . import welcomedialog
 from ..preview import previewdialog, previewmodel
@@ -57,17 +61,32 @@ from .. import config
 
 from . import tutorials
 
+from . import quickstart_wizards
+
+from .settings import FrequencyUIDefaultValue
+
 log = logging.getLogger(__name__)
 
-# TODO: Orange Version in the base link
+use_online_help = True
 
-BASE_LINK = "http://orange.biolab.si/"
 
-LINKS = \
-    {"start-using": BASE_LINK + "start-using/",
-     "tutorial": BASE_LINK + "tutorial/",
-     "reference": BASE_LINK + "doc/"
-     }
+
+if use_online_help:
+    LINKS = \
+        {"start-using": "http://doc.neuropype.io/getting_started/",
+         "tutorial": "http://doc.neuropype.io/user_guide/",
+         "reference": "http://doc.neuropype.io/architecture/"
+         }
+else:
+    basepath = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                             '../../../../'))
+    basepath = basepath.replace('\\', '/')
+    BASE_LINK = "file:///" + basepath + '/'
+    LINKS = \
+        {"start-using": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+         "tutorial": BASE_LINK + "docs/User Guide 1.0 Beta.pdf",
+         "reference": BASE_LINK + "docs/Architecture Reference.pdf"
+         }
 
 
 def style_icons(widget, standard_pixmap):
@@ -199,6 +218,10 @@ class CanvasMainWindow(QMainWindow):
 
         self.restore()
 
+        # ensure that we are frozen, regardless of persistent settings
+        if not self.freeze_action.isChecked():
+            self.freeze_action.trigger()
+
     def setup_ui(self):
         """Setup main canvas ui
         """
@@ -229,6 +252,7 @@ class CanvasMainWindow(QMainWindow):
 
         self.scheme_widget = SchemeEditWidget()
         self.scheme_widget.setScheme(widgetsscheme.WidgetsScheme(parent=self))
+        self.scheme_widget.scheme().signal_manager.frequency = self.get_tick_rate(QSettings())
 
         w.layout().addWidget(self.scheme_widget)
 
@@ -312,11 +336,12 @@ class CanvasMainWindow(QMainWindow):
         dock_actions = [self.show_properties_action] + \
                        tool_actions + \
                        [self.freeze_action,
-                        self.dock_help_action]
+                        self.reset_action]
 
         # Tool bar in the collapsed dock state (has the same actions as
         # the tool bar in the CanvasToolDock
-        actions_toolbar = QToolBar(orientation=Qt.Vertical)
+        actions_toolbar = QToolBar()
+        actions_toolbar.setOrientation(Qt.Vertical)
         actions_toolbar.setFixedWidth(38)
         actions_toolbar.layout().setSpacing(0)
 
@@ -353,6 +378,7 @@ class CanvasMainWindow(QMainWindow):
         # Set widget before calling addDockWidget, otherwise the dock
         # does not resize properly on first undock
         self.output_dock.setWidget(output_view)
+        self.output_dock.setFloating(False)
         self.output_dock.hide()
 
         self.help_dock = DockableWindow(self.tr("Help"), self,
@@ -392,12 +418,12 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Open.svg")
                     )
 
-        self.open_and_freeze_action = \
-            QAction(self.tr("Open and Freeze"), self,
-                    objectName="action-open-and-freeze",
-                    toolTip=self.tr("Open a new workflow and freeze signal "
+        self.open_and_unfreeze_action = \
+            QAction(self.tr("Open and Unfreeze"), self,
+                    objectName="action-open-and-unfreeze",
+                    toolTip=self.tr("Open a new workflow and unfreeze signal "
                                     "propagation."),
-                    triggered=self.open_and_freeze_scheme
+                    triggered=self.open_and_unfreeze_scheme
                     )
 
         self.save_action = \
@@ -416,10 +442,31 @@ class CanvasMainWindow(QMainWindow):
                     shortcut=QKeySequence.SaveAs,
                     )
 
+        self.export_action = \
+            QAction(self.tr("Export ..."), self,
+                    objectName="action-export",
+                    toolTip=self.tr("Export current workflow."),
+                    triggered=self.export_scheme
+                    )
+
+        self.savemodel_action = \
+            QAction(self.tr("Save Model ..."), self,
+                    objectName="action-savemodel",
+                    toolTip=self.tr("Save current model."),
+                    triggered=self.save_model
+                    )
+
+        self.loadmodel_action = \
+            QAction(self.tr("Load Model ..."), self,
+                    objectName="action-loadmodel",
+                    toolTip=self.tr("Load model into current workflow."),
+                    triggered=self.open_model
+                    )
+
         self.quit_action = \
             QAction(self.tr("Quit"), self,
                     objectName="quit-action",
-                    toolTip=self.tr("Quit Orange Canvas."),
+                    toolTip=self.tr("Quit NeuroPype."),
                     triggered=self.quit,
                     menuRole=QAction.QuitRole,
                     shortcut=QKeySequence.Quit,
@@ -440,16 +487,25 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Get Started.svg")
                     )
 
+        self.quickstart_wizards_action = \
+            QAction(self.tr("Quickstart Wizards"), self,
+                    objectName="quickstart-wizards-action",
+                    toolTip=self.tr("Browse quickstart wizards."),
+                    triggered=self.browse_quickstart_wizards,
+                    icon=canvas_icons("Get Started.svg"),
+                    shortcut=QKeySequence(Qt.CTRL + Qt.Key_Q)
+                    )
+
         self.tutorials_action = \
-            QAction(self.tr("Tutorials"), self,
+            QAction(self.tr("User Guide"), self,
                     objectName="tutorial-action",
                     toolTip=self.tr("Browse tutorials."),
-                    triggered=self.tutorial_scheme,
+                    triggered=self.tutorial,
                     icon=canvas_icons("Tutorials.svg")
                     )
 
         self.documentation_action = \
-            QAction(self.tr("Documentation"), self,
+            QAction(self.tr("Reference"), self,
                     objectName="documentation-action",
                     toolTip=self.tr("View reference documentation."),
                     triggered=self.documentation,
@@ -504,6 +560,15 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Document Info.svg")
                     )
 
+        self.upload_scheme_action = \
+            QAction(self.tr("Upload Patch"), self,
+                    objectName="upload-scheme-action",
+                    toolTip=self.tr("Upload the current patch."),
+                    triggered=self.upload_scheme,
+                    shortcut=QKeySequence(Qt.ControlModifier | Qt.Key_U),
+                    icon=canvas_icons("Document Info.svg")
+                    )
+
         self.canvas_settings_action = \
             QAction(self.tr("Settings"), self,
                     objectName="canvas-settings-action",
@@ -526,11 +591,6 @@ class CanvasMainWindow(QMainWindow):
                     triggered=self.show_output_view,
                     )
 
-        self.show_report_action = \
-            QAction(self.tr("Show Report View"), self,
-                    triggered=self.show_report_view
-                    )
-
         if sys.platform == "darwin":
             # Actions for native Mac OSX look and feel.
             self.minimize_action = \
@@ -549,9 +609,20 @@ class CanvasMainWindow(QMainWindow):
             QAction(self.tr("Freeze"), self,
                     objectName="signal-freeze-action",
                     checkable=True,
+                    checked=True,
                     toolTip=self.tr("Freeze signal propagation."),
                     triggered=self.set_signal_freeze,
+                    shortcut=QKeySequence(Qt.Key_Space),
                     icon=canvas_icons("Pause.svg")
+                    )
+
+        self.reset_action = \
+            QAction(self.tr("Reset"), self,
+                    objectName="signal-reset-action",
+                    toolTip=self.tr("Reset signal propagation."),
+                    triggered=self.reset_signal_propagation,
+                    shortcut=QKeySequence(Qt.Key_Backspace),
+                    icon=canvas_icons("Reset.svg")
                     )
 
         self.toggle_tool_dock_expand = \
@@ -575,6 +646,21 @@ class CanvasMainWindow(QMainWindow):
                     toggled=self.set_scheme_margins_enabled
                     )
 
+        self.lsl_panel_action = \
+            QAction(self.tr("LSL Streams"), self,
+                    objectName="lsl-panel-action",
+                    toolTip=self.tr("Show LSL streams."),
+                    triggered=self.open_lsl_panel,
+                    menuRole=QAction.PreferencesRole,
+                    shortcut=QKeySequence.Preferences
+                    )
+
+    def open_lsl_panel(self):
+        """
+        Open a panel showing LSL streams
+        """
+        self.lsl_panel = LSLPanel()
+
     def setup_menu(self):
         menu_bar = QMenuBar()
 
@@ -582,7 +668,7 @@ class CanvasMainWindow(QMainWindow):
         file_menu = QMenu(self.tr("&File"), menu_bar)
         file_menu.addAction(self.new_action)
         file_menu.addAction(self.open_action)
-        file_menu.addAction(self.open_and_freeze_action)
+        file_menu.addAction(self.open_and_unfreeze_action)
         file_menu.addAction(self.reload_last_action)
 
         # File -> Open Recent submenu
@@ -591,8 +677,13 @@ class CanvasMainWindow(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction(self.save_action)
         file_menu.addAction(self.save_as_action)
+        file_menu.addAction(self.export_action)
+        file_menu.addSeparator()
+        file_menu.addAction(self.savemodel_action)
+        file_menu.addAction(self.loadmodel_action)
         file_menu.addSeparator()
         file_menu.addAction(self.show_properties_action)
+        file_menu.addAction(self.upload_scheme_action)
         file_menu.addAction(self.quit_action)
 
         self.recent_menu.addAction(self.recent_action)
@@ -603,9 +694,8 @@ class CanvasMainWindow(QMainWindow):
 
         # Add recent items.
         for title, filename in self.recent_schemes:
-            action = QAction(title or self.tr("untitled"), self,
-                             toolTip=filename)
-
+            action = QAction("%s (%s)" % (filename, title or self.tr("untitled")),
+                             self, toolTip=filename)
             action.setData(filename)
             self.recent_menu.addAction(action)
             self.recent_scheme_action_group.addAction(action)
@@ -640,15 +730,12 @@ class CanvasMainWindow(QMainWindow):
         # Options menu
         self.options_menu = QMenu(self.tr("&Options"), self)
         self.options_menu.addAction(self.show_output_action)
-        self.options_menu.addAction(self.show_report_action)
 #        self.options_menu.addAction("Add-ons")
 #        self.options_menu.addAction("Developers")
 #        self.options_menu.addAction("Run Discovery")
 #        self.options_menu.addAction("Show Canvas Log")
 #        self.options_menu.addAction("Attach Python Console")
-        self.options_menu.addSeparator()
         self.options_menu.addAction(self.canvas_settings_action)
-        self.options_menu.addAction(self.canvas_addons_action)
 
         # Widget menu
         menu_bar.addMenu(self.widget_menu)
@@ -664,10 +751,13 @@ class CanvasMainWindow(QMainWindow):
 
         # Help menu.
         self.help_menu = QMenu(self.tr("&Help"), self)
-        self.help_menu.addAction(self.about_action)
         self.help_menu.addAction(self.welcome_action)
+        self.help_menu.addAction(self.get_started_action)
         self.help_menu.addAction(self.tutorials_action)
         self.help_menu.addAction(self.documentation_action)
+        self.help_menu.addAction(self.quickstart_wizards_action)
+        self.help_menu.addAction(self.lsl_panel_action)
+        self.help_menu.addAction(self.about_action)
         menu_bar.addMenu(self.help_menu)
 
         self.setMenuBar(menu_bar)
@@ -880,8 +970,8 @@ class CanvasMainWindow(QMainWindow):
         # set one or more extra sidebar locations where Schemes are stored.
         # Also use setHistory
         filename = QFileDialog.getOpenFileName(
-            self, self.tr("Open Orange Workflow File"),
-            start_dir, self.tr("Orange Workflow (*.ows)"),
+            self, self.tr("Open NeuroPype Workflow File"),
+            start_dir, self.tr("NeuroPype Workflow (*.ows)"),
         )
 
         if filename:
@@ -890,21 +980,22 @@ class CanvasMainWindow(QMainWindow):
         else:
             return QDialog.Rejected
 
-    def open_and_freeze_scheme(self):
+    def open_and_unfreeze_scheme(self):
         """
-        Open a new scheme and freeze signal propagation. Return
+        Open a new scheme and unfreeze signal propagation. Return
         QDialog.Rejected if the user canceled the operation and
         QDialog.Accepted otherwise.
 
         """
         frozen = self.freeze_action.isChecked()
-        if not frozen:
+        if frozen:
             self.freeze_action.trigger()
 
         state = self.open_scheme()
+
         if state == QDialog.Rejected:
             # If the action was rejected restore the original frozen state
-            if not frozen:
+            if frozen:
                 self.freeze_action.trigger()
         return state
 
@@ -927,13 +1018,12 @@ class CanvasMainWindow(QMainWindow):
         """Load a scheme from a file (`filename`) into the current
         document updates the recent scheme list and the loaded scheme path
         property.
-
         """
         dirname = os.path.dirname(filename)
-
         self.last_scheme_dir = dirname
-
         new_scheme = self.new_scheme_from(filename)
+        new_scheme.signal_manager.frequency = self.get_tick_rate(QSettings())
+
         if new_scheme is not None:
             self.set_new_scheme(new_scheme)
 
@@ -1001,9 +1091,8 @@ class CanvasMainWindow(QMainWindow):
         scheme_doc = self.current_document()
         old_scheme = scheme_doc.scheme()
 
-        manager = new_scheme.signal_manager
-        if self.freeze_action.isChecked():
-            manager.pause()
+        if not self.freeze_action.isChecked():
+            self.freeze_action.trigger()
 
         scheme_doc.setScheme(new_scheme)
 
@@ -1119,8 +1208,8 @@ class CanvasMainWindow(QMainWindow):
             start_dir = os.path.join(str(start_dir), title + ".ows")
 
         filename = QFileDialog.getSaveFileName(
-            self, self.tr("Save Orange Workflow File"),
-            start_dir, self.tr("Orange Workflow (*.ows)")
+            self, self.tr("Save NeuroPype Workflow File"),
+            start_dir, self.tr("NeuroPype Workflow (*.ows)")
         )
 
         if filename:
@@ -1137,6 +1226,78 @@ class CanvasMainWindow(QMainWindow):
                 return QFileDialog.Accepted
 
         return QFileDialog.Rejected
+
+    def export_scheme(self):
+        """
+        Export the current scheme by asking the user for a filename. Return
+        `QFileDialog.Accepted` if the scheme was saved successfully and
+        `QFileDialog.Rejected` if not.
+
+        """
+        document = self.current_document()
+        curr_scheme = document.scheme()
+        title = curr_scheme.title or "untitled"
+
+        if document.path():
+            start_dir = document.path()
+        else:
+            if self.last_scheme_dir is not None:
+                start_dir = self.last_scheme_dir
+            else:
+                start_dir = QDesktopServices.storageLocation(
+                    QDesktopServices.DocumentsLocation
+                )
+            start_dir = os.path.join(str(start_dir), title + ".py")
+
+        if start_dir.endswith('.ows'):
+            start_dir = start_dir[:-4]
+        filename = QFileDialog.getSaveFileName(
+            self, self.tr("Export Patch"),
+            start_dir, self.tr("Python Script (*.py);;CPE Patch (*.pat)")
+        )
+
+        if filename:
+            if not self.check_can_save(document, filename):
+                return QDialog.Rejected
+            self.last_scheme_dir = os.path.dirname(filename)
+            if self.export_scheme_to(curr_scheme, filename):
+                return QFileDialog.Accepted
+
+        return QFileDialog.Rejected
+
+    def save_model(self):
+        """
+        Save the trainable parameters of the current graph as a model,
+        by asking the user for a filename. Return `QFileDialog.Accepted` if
+        the scheme was saved successfully and `QFileDialog.Rejected` if not.
+
+        """
+        document = self.current_document()
+        curr_scheme = document.scheme()
+        title = curr_scheme.title or "untitled"
+
+        if document.path():
+            start_dir = document.path().replace('.ows', '.model')
+        else:
+            if self.last_scheme_dir is not None:
+                start_dir = self.last_scheme_dir
+            else:
+                start_dir = QDesktopServices.storageLocation(
+                    QDesktopServices.DocumentsLocation
+                )
+            start_dir = os.path.join(str(start_dir), title + ".model")
+
+        filename = QFileDialog.getSaveFileName(
+            self, self.tr("Save Model"),
+            start_dir, self.tr("NeuroPype Model (*.model)")
+        )
+
+        if filename:
+            if not self.check_can_save(document, filename):
+                return QDialog.Rejected
+            self.last_scheme_dir = os.path.dirname(filename)
+            if self.save_model_to(curr_scheme, filename):
+                return QFileDialog.Accepted
 
     def save_scheme_to(self, scheme, filename):
         """
@@ -1212,6 +1373,155 @@ class CanvasMainWindow(QMainWindow):
             )
             return False
 
+    def export_scheme_to(self, scheme, filename):
+        """
+        Export a Scheme instance `scheme` to `filename`. On success return
+        `True`, else show a message to the user explaining the error and
+        return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPype and '
+                        'cannot be exported.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            if filename.endswith('.py'):
+                scheme.signal_manager.graph.save_script(filename)
+            elif filename.endswith('.pat'):
+                with open(filename,'r') as fp:
+                    scheme.signal_manager.graph.save_graph(fp)
+            else:
+                raise RuntimeError("Unsupported file type: %s" % filename)
+            return True
+        except Exception:
+            log.error("Error saving %r to %r", scheme, filename, exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to export workflow '
+                        '"%s" to "%s"') % (title, basename),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+    def save_model_to(self, scheme, filename):
+        """
+        Save trainable parameters of the given `scheme` to a model named
+        `filename`. On success return `True`, else show a message to the user
+        explaining the error and return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPype and '
+                        'a model cannot be saved.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            with open(filename, 'wb') as fp:
+                scheme.signal_manager.graph.save_model(fp)
+            return True
+        except Exception:
+            log.error("Error saving %r to %r", scheme, filename, exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to save model '
+                        '"%s" to "%s"') % (title, basename),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+    def open_model(self):
+        """Open a model file. Return QDialog.Rejected if the user canceled
+        the operation and QDialog.Accepted otherwise.
+
+        """
+        document = self.current_document()
+        if document.isModifiedStrict():
+            if self.ask_save_changes() == QDialog.Rejected:
+                return QDialog.Rejected
+
+        if self.last_scheme_dir is None:
+            # Get user 'Documents' folder
+            start_dir = QDesktopServices.storageLocation(
+                            QDesktopServices.DocumentsLocation)
+        else:
+            start_dir = self.last_scheme_dir
+
+        # TODO: Use a dialog instance and use 'addSidebarUrls' to
+        # set one or more extra sidebar locations where Schemes are stored.
+        # Also use setHistory
+        filename = QFileDialog.getOpenFileName(
+            self, self.tr("Open NeuroPype Model"),
+            start_dir, self.tr("NeuroPype Model (*.model)"),
+        )
+
+        if filename:
+            self.load_model(filename)
+            return QDialog.Accepted
+        else:
+            return QDialog.Rejected
+
+    def load_model(self, filename):
+        """
+        Load trainable parameters of the given `scheme` from a model file named
+        `filename`. On success return `True`, else show a message to the user
+        explaining the error and return `False`.
+
+        """
+        dirname, basename = os.path.split(filename)
+        self.last_scheme_dir = dirname
+        document = self.current_document()
+        scheme = document.scheme()
+        title = scheme.title or "untitled"
+
+        if not isinstance(scheme.signal_manager, NeuropypeSignalManager):
+            message_warning(
+                self.tr('The current workflow is not based on NeuroPype and '
+                        'a model cannot be loaded for it.'),
+                title=self.tr("Error saving %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
+        try:
+            with open(filename, 'rb') as fp:
+                scheme.signal_manager.graph.load_model(fp,
+                                                       override_params=False,
+                                                       override_graph=False)
+            return True
+        except Exception:
+            log.error("Error loading %r from %r", scheme, filename,
+                      exc_info=True)
+            message_critical(
+                self.tr('An error occurred while trying to load model '
+                        '"%s" from "%s"') % (title, basename),
+                title=self.tr("Error loading %s") % basename,
+                exc_info=True,
+                parent=self
+            )
+            return False
+
     def get_started(self, *args):
         """Show getting started video
         """
@@ -1227,7 +1537,7 @@ class CanvasMainWindow(QMainWindow):
     def documentation(self, *args):
         """Show reference documentation.
         """
-        url = QUrl(LINKS["tutorial"])
+        url = QUrl(LINKS["reference"])
         QDesktopServices.openUrl(url)
 
     def recent_scheme(self, *args):
@@ -1267,6 +1577,80 @@ class CanvasMainWindow(QMainWindow):
             selected = model.item(index)
 
             self.load_scheme(str(selected.path()))
+
+        return status
+
+    def browse_quickstart_wizards(self, *args):
+        wizards = quickstart_wizards.quickstart_wizards()
+        items = [previewmodel.PreviewItem(path=w.abspath()) for w in wizards]
+        model = previewmodel.PreviewModel(items=items)
+        dialog = previewdialog.PreviewDialog(self)
+        title = self.tr("Quickstart Wizards")
+        dialog.setWindowTitle(title)
+        template = ('<h3 style="font-size: 26px">\n'
+                    '{0}\n'
+                    '</h3>')
+
+        dialog.setHeading(template.format(title))
+        dialog.setModel(model)
+
+        model.delayedScanUpdate()
+        status = dialog.exec_()
+        index = dialog.currentIndex()
+
+        dialog.deleteLater()
+
+        if status == QDialog.Accepted:
+            return self.run_quickstart_wizard(wizards[index], model.item(index))
+
+        return status
+
+    def run_quickstart_wizard(self, quickstart_wizard, preview_item):
+        dialog = quickstart_wizard.dialog(self)
+        title = self.tr('Quickstart Wizard')
+        dialog.setWindowTitle(title)
+
+        if preview_item.name():
+            dialog.setHeading('<h3>{0}</h3>'.format(preview_item.name()))
+
+        status = dialog.exec_()
+        patch = dialog.get_patch()    # Patch gets applied to the newly loaded scheme to 'customize' it (see below).
+
+        dialog.deleteLater()
+
+        if status == QDialog.Accepted:
+            doc = self.current_document()
+            if doc.isModifiedStrict():
+                if self.ask_save_changes() == QDialog.Rejected:
+                    return QDialog.Rejected
+
+            new_scheme = self.new_scheme_from(str(preview_item.path()))
+            if new_scheme is not None:
+                nodes = new_scheme.nodes
+
+                def find_widget(name):
+                    for node in nodes:
+                        try:
+                            if node.title == name:
+                                widget = new_scheme.widget_for_node(node)
+                                return widget
+                        except Exception:
+                            continue
+                    return None
+
+                def apply_patch(widget, patch):
+                    for name, value in patch.items():
+                        setattr(widget, name, value)
+                        widget.property_changed(name)
+                        log.info('Applied patch (%r, %r) to widget %r %r.', name, value, widget.name, widget)
+
+                # Apply patch.
+                for name, value in patch.items():
+                    widget = find_widget(name)
+                    if widget:
+                        apply_patch(widget, value)
+
+                self.set_new_scheme(new_scheme)
 
         return status
 
@@ -1315,7 +1699,7 @@ class CanvasMainWindow(QMainWindow):
         """
 
         dialog = welcomedialog.WelcomeDialog(self)
-        dialog.setWindowTitle(self.tr("Welcome to Orange Data Mining"))
+        dialog.setWindowTitle(self.tr("Welcome to NeuroPype"))
 
         def new_scheme():
             if self.new_scheme() == QDialog.Accepted:
@@ -1327,6 +1711,10 @@ class CanvasMainWindow(QMainWindow):
 
         def open_recent():
             if self.recent_scheme() == QDialog.Accepted:
+                dialog.accept()
+
+        def quickstart():
+            if self.browse_quickstart_wizards() == QDialog.Accepted:
                 dialog.accept()
 
         def tutorial():
@@ -1360,6 +1748,14 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Recent.svg")
                     )
 
+        quickstart_action = \
+            QAction(self.tr("Quickstart"), dialog,
+                    objectName="welcome-quickstart-action",
+                    toolTip=self.tr("Browse quickstart wizards."),
+                    triggered=quickstart,
+                    icon=canvas_icons("wizard.png")
+                    )
+
         tutorials_action = \
             QAction(self.tr("Tutorial"), dialog,
                     objectName="welcome-tutorial-action",
@@ -1368,7 +1764,7 @@ class CanvasMainWindow(QMainWindow):
                     icon=canvas_icons("Tutorials.svg")
                     )
 
-        bottom_row = [self.get_started_action, tutorials_action,
+        bottom_row = [quickstart_action, self.tutorials_action,
                       self.documentation_action]
 
         self.new_action.triggered.connect(dialog.accept)
@@ -1458,6 +1854,25 @@ class CanvasMainWindow(QMainWindow):
 
         return status
 
+    def scheme_upload_dialog(self):
+        """Return an empty `SchemeUpload` dialog instance."""
+        from .schemeupload import SchemeUploadDialog
+        dialog = SchemeUploadDialog(self)
+        dialog.setWindowTitle(self.tr("Upload Patch"))
+        dialog.setFixedSize(725, 720)
+        return dialog
+
+    def upload_scheme(self):
+        """Open Scheme upload dialog."""
+        current_doc = self.current_document()
+        scheme = current_doc.scheme()
+        dlg = self.scheme_upload_dialog()
+        dlg.setScheme(scheme)
+        status = dlg.exec_()
+        if status == QDialog.Accepted:
+            dlg.upload()
+        return status
+
     def set_signal_freeze(self, freeze):
         scheme = self.current_document().scheme()
         manager = scheme.signal_manager
@@ -1465,6 +1880,10 @@ class CanvasMainWindow(QMainWindow):
             manager.pause()
         else:
             manager.resume()
+
+    def reset_signal_propagation(self, freeze):
+        scheme = self.current_document().scheme()
+        scheme.reload()
 
     def remove_selected(self):
         """Remove current scheme selection.
@@ -1527,7 +1946,9 @@ class CanvasMainWindow(QMainWindow):
     def output_view(self):
         """Return the output text widget.
         """
-        return self.output_dock.widget()
+        res = self.output_dock.widget()
+        self.output_dock.setFloating(False)  # hack
+        return res
 
     def open_about(self):
         """Open the about dialog.
@@ -1803,8 +2224,23 @@ class CanvasMainWindow(QMainWindow):
         """
         return str(QMainWindow.tr(self, sourceText, disambiguation, n))
 
+    @staticmethod
+    def get_tick_rate(settings):
+        settings.beginGroup("tick_rate")
+        tick_rate = settings.value('tick_rate_value', defaultValue=FrequencyUIDefaultValue).value
+        settings.endGroup()
+        try:
+            value = int(float(tick_rate))
+        except:
+            warnings.warn('Tick rate value '+tick_rate+' is not allowed. Using default instead.')
+            value = int(FrequencyUIDefaultValue)
+        return value
+
     def __update_from_settings(self):
         settings = QSettings()
+
+        self.scheme_widget.scheme().signal_manager.frequency = self.get_tick_rate(settings)
+
         settings.beginGroup("mainwindow")
         toolbox_floatable = settings.value("toolbox-dock-floatable",
                                            defaultValue=False,
@@ -1935,3 +2371,105 @@ def index(sequence, *what, **kwargs):
         if predicate(what, item_key):
             return i
     raise ValueError("%r not in sequence" % what)
+
+
+
+from pylsl import resolve_streams, StreamInlet
+import numpy as np
+
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class LSLPanel(QtGui.QDialog):
+    """
+    Open a panel showing LSL streams
+    """
+    def __init__(self):
+        super(LSLPanel, self).__init__()
+        self.setup_ui()
+        self.refresh()
+        self.show()
+
+    def setup_ui(self):
+        self.setObjectName(_fromUtf8("Dialog"))
+        self.resize(600, 450)
+        self.gridLayout_2 = QtGui.QGridLayout(self)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+
+        self.tableWidget = QtGui.QTableWidget(self)
+        self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setRowCount(1)
+        self.gridLayout_2.addWidget(self.tableWidget, 0, 0, 1, 1)
+
+        self.buttonBox = QtGui.QDialogButtonBox(self)
+        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close|QtGui.QDialogButtonBox.Retry)
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.gridLayout_2.addWidget(self.buttonBox, 1, 0, 1, 1)
+
+        self.retranslateUi()
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.refresh)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), self.reject)
+        QtCore.QMetaObject.connectSlotsByName(self)
+
+    def retranslateUi(self):
+        self.setWindowTitle(_translate("LSL Streams", "LSL Streams", None))
+
+    def refresh(self):
+        self.tableWidget.clear()
+        self.tableWidget.setHorizontalHeaderLabels(['Name', 'Type', 'Channels', 'Hostname', 'Stream_id'])
+        streams = resolve_streams()
+        self.tableWidget.setRowCount(len(streams))
+        for i, stream_i in enumerate(streams):
+            stream = StreamInlet(stream_i)
+            try:
+                info = stream.info(timeout=1)
+            except:
+                continue
+            channels = extract_channel_names(info)
+            channels_str = ''
+            for ch in channels:
+                channels_str += ' '+str(ch)
+            if not str(stream_i.name()) or not str(stream_i.type()) or not channels_str:
+                continue
+            self.tableWidget.setItem(i, 0, QtGui.QTableWidgetItem(str(stream_i.name())))
+            self.tableWidget.setItem(i, 1, QtGui.QTableWidgetItem(str(stream_i.type())))
+            self.tableWidget.setItem(i, 2, QtGui.QTableWidgetItem(channels_str))
+            self.tableWidget.setItem(i, 3, QtGui.QTableWidgetItem(str(stream_i.hostname())))
+            self.tableWidget.setItem(i, 4, QtGui.QTableWidgetItem(str(stream_i.source_id())))
+
+
+def extract_channel_names(info):
+    try:
+        channel_labels = []
+        ch = info.desc().child("channels").child("channel")
+        for k in range(info.channel_count()):
+            if ch.child_value("label"):
+                channel_labels.append(ch.child_value("label"))
+            else:
+                channel_labels.append(str(k+1))
+            ch = ch.next_sibling()
+
+        tmp = np.array(channel_labels)
+        for c in set(channel_labels):
+            loc = np.where(tmp == c)[0]
+            if len(loc) > 0:
+                for k, l in enumerate(loc[1:]):
+                    channel_labels[l] = channel_labels[l]+'.'+str(k+1)
+    except:
+        channel_labels = ['Ch_'+str(ch) for ch in range(info.channel_count())]
+    return channel_labels

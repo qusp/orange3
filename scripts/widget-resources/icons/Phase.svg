@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="96px" height="96px" viewBox="0 0 96 96" enable-background="new 0 0 96 96" xml:space="preserve">
+<circle fill="none" cx="48" cy="48" r="48"/>
+<g>
+	<g>
+		<line fill="none" stroke="#666666" stroke-miterlimit="10" x1="21.782" y1="16.262" x2="21.782" y2="82.501"/>
+		<g>
+			<polygon fill="#666666" points="17.795,17.429 21.782,10.521 25.773,17.429 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#666666" stroke-miterlimit="10" x1="11.066" y1="74.969" x2="77.305" y2="74.969"/>
+		<g>
+			<polygon fill="#666666" points="76.139,78.958 83.047,74.969 76.139,70.979 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="21.731" y1="74.876" x2="58.215" y2="31.051"/>
+		<g>
+			<polygon points="61.463,35.88 63.359,24.875 52.879,28.734 			"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 42.4863 89.1172)" font-family="'MyriadPro-Regular'" font-size="16">Re</text>
+<text transform="matrix(1 0 0 1 2.6616 49.8525)" font-family="'MyriadPro-Regular'" font-size="16">Im</text>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M39.476,53.415
+	c10.192,8.594,10.534,7.99,11.019,21.703"/>
+<g id="page1" transform="matrix(1.12578 0 0 1.12578 -63.986 -68.7417)">
+	<g>
+		<path id="g0-11" d="M119.936,109.812c0-3.492-1.98-6.771-5.798-6.771c-4.715,0-9.431,5.151-9.431,10.262
+			c0,3.13,1.946,5.978,5.618,5.978c2.231,0,4.894-0.864,7.453-3.027c0.501,2.016,1.617,3.027,3.165,3.027
+			c1.946,0,2.916-2.019,2.916-2.486c0-0.324-0.25-0.324-0.359-0.324c-0.288,0-0.323,0.108-0.432,0.396
+			c-0.323,0.9-1.154,1.693-2.018,1.693c-1.115,0-1.115-2.304-1.115-4.499c3.674-4.395,4.538-8.93,4.538-8.964
+			c0-0.324-0.291-0.324-0.397-0.324c-0.323,0-0.361,0.108-0.502,0.756c-0.468,1.587-1.404,4.395-3.635,7.344L119.936,109.812
+			L119.936,109.812z M117.666,115.392c-3.166,2.842-6.01,3.168-7.269,3.168c-2.559,0-3.277-2.266-3.277-3.961
+			c0-1.549,0.791-5.217,1.908-7.202c1.476-2.519,3.494-3.636,5.111-3.636c3.494,0,3.494,4.573,3.494,7.598
+			c0,0.9-0.038,1.836-0.038,2.739C117.594,114.816,117.632,114.996,117.666,115.392z"/>
+	</g>
+</g>
+</svg>

@@ -10,6 +10,9 @@ The :class:`Scheme` class defines a DAG (Directed Acyclic Graph) workflow.
 from operator import itemgetter
 from collections import deque
 
+from io import BytesIO
+from tempfile import TemporaryFile
+
 import logging
 
 from PyQt4.QtCore import QObject
@@ -86,6 +89,10 @@ class Scheme(QObject):
     # Signal emitted when the description of scheme changes.
     description_changed = Signal(str)
 
+    access_token_changed = Signal(str)
+
+    api_url_changed = Signal(str)
+
     node_state_changed = Signal()
     channel_state_changed = Signal()
     topology_changed = Signal()
@@ -102,6 +109,28 @@ class Scheme(QObject):
         self.__annotations = []
         self.__nodes = []
         self.__links = []
+        self.__access_token = ''
+        self.__api_url = ''
+
+    def access_token(self):
+        return self.__access_token
+
+    def set_access_token(self, access_token):
+        if self.__access_token != access_token:
+            self.__access_token = access_token
+            self.access_token_changed.emit(access_token)
+
+    access_token = Property(str, fget=access_token, fset=set_access_token)
+
+    def api_url(self):
+        return self.__api_url
+
+    def set_api_url(self, api_url):
+        if self.__api_url != api_url:
+            self.__api_url = api_url
+            self.api_url_changed.emit(api_url)
+
+    api_url = Property(str, fget=api_url, fset=set_api_url)
 
     @property
     def nodes(self):
@@ -626,6 +655,7 @@ class Scheme(QObject):
         """
         Load the scheme from xml formated stream.
         """
+        print("Loading patch...")
         if self.__nodes or self.__links or self.__annotations:
             # TODO: should we clear the scheme and load it.
             raise ValueError("Scheme is not empty.")
@@ -634,3 +664,16 @@ class Scheme(QObject):
             stream = open(stream, "rb")
         readwrite.scheme_load(self, stream)
 #         parse_scheme(self, stream)
+
+    def reload(self):
+        """
+        Reload the scheme (resets internal state of all nodes).
+        """
+        buffer = BytesIO()
+        self.save_to(buffer, pickle_fallback=True)
+        self.clear()
+        self.load_from(BytesIO(buffer.getvalue()))
+
+    def release_resources(self):
+        """Release the graph's resources."""
+        pass  # may be overridden by sublasses

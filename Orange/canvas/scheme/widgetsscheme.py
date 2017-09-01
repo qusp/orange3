@@ -18,10 +18,11 @@ companion :class:`WidgetsSignalManager` class.
 """
 import sys
 import logging
+import numpy as np
 
 import sip
 from PyQt4.QtGui import (
-    QShortcut, QKeySequence, QWhatsThisClickedEvent, QWidget
+    QShortcut, QKeySequence, QWhatsThisClickedEvent, QWidget, QMessageBox
 )
 
 from PyQt4.QtCore import Qt, QObject, QCoreApplication, QEvent
@@ -32,6 +33,8 @@ from .scheme import Scheme, SchemeNode
 from .node import UserMessage
 from ..utils import name_lookup
 from ..resources import icon_loader
+from .neuropypesignalmanager import NeuropypeSignalManager
+
 
 log = logging.getLogger(__name__)
 
@@ -50,9 +53,10 @@ class WidgetsScheme(Scheme):
     def __init__(self, parent=None, title=None, description=None):
         Scheme.__init__(self, parent, title, description)
 
-        self.signal_manager = WidgetsSignalManager(self)
+        self.signal_manager = NeuropypeSignalManager(self)
         self.widget_manager = WidgetManager()
         self.widget_manager.set_scheme(self)
+        self.signal_manager.link_to_widget_manager(self.widget_manager)
 
     def widget_for_node(self, node):
         """
@@ -77,9 +81,23 @@ class WidgetsScheme(Scheme):
         for node in self.nodes:
             widget = self.widget_for_node(node)
             settings = widget.settingsHandler.pack_data(widget)
-            if settings != node.properties:
-                node.properties = settings
+            changed = False
+            if settings.keys() != node.properties.keys():
                 changed = True
+            else:
+                changed = False
+                for n in settings.keys():
+                    a = settings[n]
+                    b = node.properties[n]
+                    if isinstance(a, np.ndarray) or isinstance(b, np.ndarray):
+                        if np.any(a != b):
+                            changed = True
+                            break
+                    elif a != b:
+                        changed = True
+                        break
+            if changed:
+                node.properties = settings
         log.debug("Scheme node properties sync (changed: %s)", changed)
         return changed
 
@@ -88,6 +106,10 @@ class WidgetsScheme(Scheme):
         inst = get_instance()
         inst.show()
         inst.raise_()
+
+    def release_resources(self):
+        """Release the graph's resources."""
+        self.signal_manager.graph.release_resources()
 
 
 class WidgetManager(QObject):
@@ -178,15 +200,24 @@ class WidgetManager(QObject):
         """
         Create a new OWWidget instance for the corresponding scheme node.
         """
-        widget = self.create_widget_instance(node)
+        try:
+            widget = self.create_widget_instance(node)
 
-        self.__widgets.append(widget)
-        self.__widget_for_node[node] = widget
-        self.__node_for_widget[widget] = node
+            self.__widgets.append(widget)
+            self.__widget_for_node[node] = widget
+            self.__node_for_widget[widget] = node
 
-        self.__initialize_widget_state(node, widget)
+            self.__initialize_widget_state(node, widget)
 
-        self.widget_for_node_added.emit(node, widget)
+            self.widget_for_node_added.emit(node, widget)
+        except NameError:
+            QMessageBox.information(None, "Note", "The source code for this "
+                                    "node is not available in this edition of "
+                                    "NeuroPype. Please check the commercial "
+                                    "package. If you believe this is an error, "
+                                    "please contact us at "
+                                    "support@qusp.io.")
+            return
 
     def remove_widget_for_node(self, node):
         """

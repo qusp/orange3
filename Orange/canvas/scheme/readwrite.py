@@ -23,6 +23,7 @@ import logging
 from . import SchemeNode, SchemeLink
 from .annotations import SchemeTextAnnotation, SchemeArrowAnnotation
 from .errors import IncompatibleChannelTypeError
+from .neuropypesignalmanager import NeuropypeSignalManager
 
 from ..registry import global_registry
 
@@ -399,7 +400,7 @@ def parse_scheme_v_1_0(etree, scheme, error_handler, widget_registry=None,
 # Intermediate scheme representation
 _scheme = namedtuple(
     "_scheme",
-    ["title", "version", "description", "nodes", "links", "annotations"])
+    ["title", "version", "access_token", "api_url", "description", "nodes", "links", "annotations"])
 
 _node = namedtuple(
     "_node",
@@ -501,6 +502,8 @@ def parse_ows_etree_v_2_0(tree):
     return _scheme(
         version=scheme.get("version"),
         title=scheme.get("title", ""),
+        access_token=scheme.get("access_token"),
+        api_url=scheme.get("api_url"),
         description=scheme.get("description"),
         nodes=nodes,
         links=links,
@@ -643,6 +646,10 @@ def scheme_load(scheme, stream, registry=None, error_handler=None):
 
     scheme.title = desc.title
     scheme.description = desc.description
+    try:
+        scheme.set_access_token(desc.access_token)
+    except:
+        pass
 
     for node_d in desc.nodes:
         try:
@@ -725,6 +732,8 @@ def scheme_to_etree(scheme, data_format="literal", pickle_fallback=False):
     builder = TreeBuilder(element_factory=Element)
     builder.start("scheme", {"version": "2.0",
                              "title": scheme.title or "",
+                             "access_token": scheme.access_token or "",
+                             "api_url": scheme.api_url or "",
                              "description": scheme.description or ""})
 
     ## Nodes
@@ -836,6 +845,10 @@ def scheme_to_etree(scheme, data_format="literal", pickle_fallback=False):
                 builder.end("properties")
 
     builder.end("node_properties")
+    if isinstance(scheme.signal_manager, NeuropypeSignalManager):
+        builder.start("patch", {})
+        builder.data(scheme.signal_manager.graph.save_graph())
+        builder.end("patch")
     builder.end("scheme")
     root = builder.close()
     tree = ElementTree(root)
@@ -919,9 +932,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         except (ValueError, TypeError) as ex:
             if not pickle_fallback:
                 raise
-
-            log.warning("Could not serialize to a literal string",
-                        exc_info=True)
+            log.info("Could not serialize to a literal string")
 
     elif format == "json":
         try:
@@ -930,9 +941,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         except (ValueError, TypeError):
             if not pickle_fallback:
                 raise
-
-            log.warning("Could not serialize to a json string",
-                        exc_info=True)
+            log.info("Could not serialize to a json string")
 
     elif format == "pickle":
         return base64.encodebytes(pickle.dumps(obj)).decode('ascii'), "pickle"
@@ -941,7 +950,7 @@ def dumps(obj, format="literal", prettyprint=False, pickle_fallback=False):
         raise ValueError("Unsupported format %r" % format)
 
     if pickle_fallback:
-        log.warning("Using pickle fallback")
+        # log.warning("Using pickle fallback")  # ck: disabled noisy logging
         return base64.encodebytes(pickle.dumps(obj)).decode('ascii'), "pickle"
     else:
         raise Exception("Something strange happened.")
